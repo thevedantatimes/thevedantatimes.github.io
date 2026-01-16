@@ -1,5 +1,8 @@
 name: Build & Deploy (Daily)
 
+schedule:
+  - cron: "26 2 * * *"
+
 on:
   push:
     branches: ["main"]
