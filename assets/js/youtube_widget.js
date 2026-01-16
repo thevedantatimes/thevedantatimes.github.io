@@ -17,13 +17,13 @@
 
   // Single channel mode: show 10 initially; then keep adding +10 when nearing the end.
   const CH_INITIAL = 10;
-  const CH_STEP = 10;
+  const CH_STEP = 20;
 
   // All-channels mode: start with 2 per feed; when user reaches video 19-20, add +10 per feed.
   // Repeat at 39-40, 59-60, ... up to 100 per feed.
   const ALL_INITIAL_PER_FEED = 2;
-  const ALL_STEP = 10;
-  const ALL_MAX_PER_FEED = 100;
+  const ALL_STEP = 20;
+  const ALL_MAX_PER_FEED = 400;
   const ALL_STEP_EVERY_GLOBAL_VIDEOS = 20; // 19-20, 39-40, ... (because PAGE_SIZE=2)
 
   // Background warm cache (so dropdown is instant): keep fetching until 100 per feed is cached.
