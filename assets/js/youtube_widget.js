@@ -14,16 +14,20 @@
 
   // UX: render whatever is ready within ~2s, then silently enrich.
   const INITIAL_RENDER_BUDGET_MS = 2000;
-  // Start fetching more when user is within the last 3 pages (incl current).
-  const PREFETCH_THRESHOLD_REMAINING = 2; // last-3 pages => remaining pages <= 2
 
-  // Default (All): only 2 per channel initially; when user pages past, expand by +10 per channel (total 12).
-  const ALL_INITIAL_PER_FEED = 2;
-  const ALL_EXPANDED_TOTAL_PER_FEED = 12; // 2 + 10
-
-  // Single channel mode: show 10 initially; then keep adding +10 when user pages past.
+  // Single channel mode: show 10 initially; then keep adding +10 when nearing the end.
   const CH_INITIAL = 10;
   const CH_STEP = 10;
+
+  // All-channels mode: start with 2 per feed; when user reaches video 19-20, add +10 per feed.
+  // Repeat at 39-40, 59-60, ... up to 100 per feed.
+  const ALL_INITIAL_PER_FEED = 2;
+  const ALL_STEP = 10;
+  const ALL_MAX_PER_FEED = 100;
+  const ALL_STEP_EVERY_GLOBAL_VIDEOS = 20; // 19-20, 39-40, ... (because PAGE_SIZE=2)
+
+  // Background warm cache (so dropdown is instant): keep fetching until 100 per feed is cached.
+  const WARM_CACHE_TO_MAX = true;
 
   const FEEDS = [
     { name: '@ChicagoVedanta', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC64nHa3IWptZ-KPlQxdfsbw' },
@@ -52,6 +56,7 @@
   let page = 0;
   let items = [];
   let allPerFeedShown = ALL_INITIAL_PER_FEED;
+  let nextAllStepAt = ALL_STEP_EVERY_GLOBAL_VIDEOS; // next global video count where we step +10 per feed
   const channelShown = Object.create(null); // feedName -> count
   let isFetchingMore = false;
 
@@ -106,17 +111,6 @@
     }
   }
 
-  function maybePrefetchMore() {
-    if (!items.length) return;
-    if (isFetchingMore) return;
-    const totalPages = pagesCount();
-    const remaining = (totalPages - 1) - page;
-    if (remaining <= PREFETCH_THRESHOLD_REMAINING) {
-      // Silent background prefetch (no loading text / no button flicker).
-      ensureMore(true);
-    }
-  }
-
   function render() {
     if (!listEl) return;
 
@@ -126,8 +120,9 @@
     const start = page * PAGE_SIZE;
     const slice = items.slice(start, start + PAGE_SIZE);
 
+    // Never show empty/error messages: if nothing yet, keep it blank.
     if (!slice.length) {
-      listEl.innerHTML = '<div class="vw-empty">No videos yet.</div>';
+      listEl.innerHTML = '';
       if (statusEl) statusEl.textContent = '';
       if (btnPrev) btnPrev.disabled = true;
       if (btnNext) btnNext.disabled = true;
@@ -159,6 +154,7 @@
     if (statusEl) statusEl.textContent = (page + 1) + ' / ' + totalPages;
     if (btnPrev) btnPrev.disabled = page <= 0;
     if (btnNext) btnNext.disabled = page >= totalPages - 1;
+
     maybePrefetchMore();
   }
 
@@ -301,34 +297,73 @@
     await fetchFeedToCache(f, total);
   }
 
+  function maybePrefetchMore() {
+    if (!items.length) return;
+    if (isFetchingMore) return;
+
+    if (mode === 'all') {
+      const totalPages = pagesCount();
+      const remaining = (totalPages - 1) - page;
+      const visibleEnd = (page + 1) * PAGE_SIZE; // e.g. page 9 => 20
+
+      const byIndex = visibleEnd >= nextAllStepAt;
+      // If the list is too small to even reach the next (20/40/60...) step,
+      // silently expand when the user is near the end, without advancing the step marker.
+      const byNearEnd = remaining <= 2 && items.length < nextAllStepAt;
+
+      if ((byIndex || byNearEnd) && allPerFeedShown < ALL_MAX_PER_FEED) {
+        if (byIndex) nextAllStepAt += ALL_STEP_EVERY_GLOBAL_VIDEOS;
+        ensureMore(true);
+      }
+      return;
+    }
+
+    // Channel-mode: prefetch when user is within the last 3 pages.
+    const totalPages = pagesCount();
+    const remaining = (totalPages - 1) - page;
+    if (remaining <= 2) {
+      ensureMore(true);
+    }
+  }
+
   async function ensureMore(silent) {
     if (isFetchingMore) return false;
-
-    // Nothing to expand in All-mode after first expansion.
-    if (mode === 'all' && allPerFeedShown >= ALL_EXPANDED_TOTAL_PER_FEED) return false;
 
     isFetchingMore = true;
     try {
       if (!silent && btnNext) btnNext.disabled = true;
 
       if (mode === 'all') {
-        // Expand from 2 -> 12 per feed (2 + 10).
-        await ensureAll(ALL_EXPANDED_TOTAL_PER_FEED);
-        allPerFeedShown = ALL_EXPANDED_TOTAL_PER_FEED;
+        const next = Math.min(ALL_MAX_PER_FEED, allPerFeedShown + ALL_STEP);
+        if (next <= allPerFeedShown) return false;
+        // Immediate UX: expand using whatever is already cached.
+        allPerFeedShown = next;
+        rebuildItems();
+        render();
+
+        // Then try to ensure the cache actually has that many (silent).
+        try {
+          await ensureAll(next);
+        } catch (e) {}
         rebuildItems();
       } else {
         const cur = channelShown[mode] || CH_INITIAL;
-        const next = cur + CH_STEP;
-        await ensureChannel(mode, next);
+        const next = Math.min(ALL_MAX_PER_FEED, cur + CH_STEP);
+        if (next <= cur) return false;
+
         channelShown[mode] = next;
+        rebuildItems();
+        render();
+
+        try {
+          await ensureChannel(mode, next);
+        } catch (e) {}
         rebuildItems();
       }
 
-      // Update UI silently; no loading messages.
       render();
       return true;
     } catch (e) {
-      // Keep current items visible.
       return false;
     } finally {
       isFetchingMore = false;
@@ -339,14 +374,9 @@
   async function go(delta) {
     if (!delta) return;
 
-    if (delta > 0) {
+    // For channel mode, if user tries to go beyond last page, expand first (await).
+    if (delta > 0 && mode !== 'all') {
       const totalPages = pagesCount();
-      const remaining = (totalPages - 1) - page;
-
-      // Kick prefetch early (last-3 pages).
-      if (remaining <= PREFETCH_THRESHOLD_REMAINING) ensureMore(true);
-
-      // If user tries to move beyond the last page, expand first (await).
       if (page + delta > totalPages - 1) {
         await ensureMore(false);
       }
@@ -363,7 +393,6 @@
 
     const sel = document.createElement('select');
     sel.setAttribute('aria-label', 'Filter video channel');
-    // Plain dropdown, no design.
 
     const optAll = document.createElement('option');
     optAll.value = 'all';
@@ -384,32 +413,24 @@
       mode = v;
       page = 0;
 
-      // Instant UI: render from whatever is already in cache (0-lag).
       if (mode === 'all') {
         allPerFeedShown = ALL_INITIAL_PER_FEED;
+        nextAllStepAt = ALL_STEP_EVERY_GLOBAL_VIDEOS;
         rebuildItems();
         render();
-
-        // Background refresh (no UI blocking).
-        ensureAll(ALL_INITIAL_PER_FEED)
-          .then(function () {
-            rebuildItems();
-            render();
-          })
-          .catch(function () {});
         return;
       }
 
+      // Instant: render from cache (ideally already warmed).
       const cachedLen = feedCache[mode] && Array.isArray(feedCache[mode].items) ? feedCache[mode].items.length : 0;
-      // Use the already-fetched 2 items (from All-mode load) so the dropdown feels instant.
       channelShown[mode] = Math.max(2, Math.min(CH_INITIAL, cachedLen || 2));
       rebuildItems();
       render();
 
-      // Then silently expand to 10 in the background.
-      ensureChannel(mode, CH_INITIAL)
+      // Background: ensure we have at least 10 for that channel (no UI blocking).
+      ensureChannel(mode, Math.min(CH_INITIAL, ALL_MAX_PER_FEED))
         .then(function () {
-          channelShown[mode] = CH_INITIAL;
+          channelShown[mode] = Math.min(CH_INITIAL, ALL_MAX_PER_FEED);
           rebuildItems();
           render();
         })
@@ -417,8 +438,18 @@
     });
   }
 
+  async function warmCacheToMax() {
+    if (!WARM_CACHE_TO_MAX) return;
+    try {
+      await ensureAll(ALL_MAX_PER_FEED);
+    } catch (e) {
+      // no messages
+    }
+  }
+
   async function load() {
-    if (listEl) listEl.innerHTML = '<div class="vw-empty">Loading…</div>';
+    // No loading/empty messages.
+    if (listEl) listEl.innerHTML = '';
     if (btnPrev) btnPrev.disabled = true;
     if (btnNext) btnNext.disabled = true;
 
@@ -439,10 +470,9 @@
     render();
     renderedKey = cacheKey();
 
-    // 2) After the first render, keep silently enriching as feeds finish.
-    //    (No loading messages; users just see the list refine/expand.)
-    const pollMs = 700;
-    const maxPollMs = 8000;
+    // 2) Keep silently enriching as feeds finish (and as warm-cache pulls more).
+    const pollMs = 600;
+    const maxPollMs = 25000;
     const t0 = Date.now();
     const poll = setInterval(function () {
       if (Date.now() - t0 > maxPollMs) {
@@ -457,9 +487,22 @@
       }
     }, pollMs);
 
+    // Start background warm-cache after initial render.
+    warmCacheToMax()
+      .then(function () {
+        const k = cacheKey();
+        if (k !== renderedKey) {
+          rebuildItems();
+          render();
+          renderedKey = k;
+        }
+      })
+      .catch(function () {});
+
     settleAll
       .then(function () {
-        clearInterval(poll);
+        // don't clear poll immediately; warm-cache may still be running.
+        // Let the poll finish naturally.
         const k = cacheKey();
         if (k !== renderedKey) {
           rebuildItems();
@@ -468,7 +511,7 @@
         }
       })
       .catch(function () {
-        clearInterval(poll);
+        // no messages
       });
   }
 
