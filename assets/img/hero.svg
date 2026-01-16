@@ -1,23 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0b1020"/>
-      <stop offset="0.55" stop-color="#1f3a5f"/>
-      <stop offset="1" stop-color="#b43a2b"/>
+      <stop offset="0" stop-color="#1b2a41"/>
+      <stop offset="1" stop-color="#7a1e2c"/>
     </linearGradient>
-    <radialGradient id="r" cx="65%" cy="45%" r="55%">
-      <stop offset="0" stop-color="#ffffff" stop-opacity="0.28"/>
-      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
-    </radialGradient>
   </defs>
-  <rect width="1600" height="900" fill="url(#g)"/>
-  <rect width="1600" height="900" fill="url(#r)"/>
-  <g fill="#ffffff" fill-opacity="0.95">
-    <text x="80" y="110" font-family="Georgia, 'Times New Roman', Times, serif" font-size="54" font-weight="700">The Vedanta Times</text>
-    <text x="80" y="170" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="22" opacity="0.85">Hero image placeholder — set <tspan font-weight="700">image:</tspan> in post front matter</text>
-  </g>
-  <g fill="#ffffff" fill-opacity="0.22">
-    <circle cx="1150" cy="470" r="240"/>
-    <circle cx="1320" cy="560" r="150"/>
-  </g>
+  <rect width="1200" height="650" fill="url(#g)"/>
+  <circle cx="880" cy="260" r="190" fill="#ffffff" opacity="0.14"/>
+  <text x="70" y="120" fill="#fff" opacity="0.9" font-family="Georgia,serif" font-size="52" font-weight="700">The Vedanta Times</text>
+  <text x="70" y="170" fill="#fff" opacity="0.7" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="18">Hero image placeholder</text>
 </svg>

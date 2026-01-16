@@ -1,27 +1,10 @@
 ---
 layout: default
 ---
-
 <article class="post">
-  <header class="post-head">
-    <h1 class="post-title">{{ page.title }}</h1>
-    <div class="post-meta">{{ page.date | date: '%A, %B %-d, %Y' }}</div>
-  </header>
-
-  {% assign img = page.image %}
-  {% if img %}
-    <figure class="post-hero">
-      <img src="{{ img | relative_url }}" alt="" loading="lazy" />
-    </figure>
-  {% endif %}
-
-  <div class="post-body">
+  <h1 class="postTitle">{{ page.title }}</h1>
+  <div class="postMeta">{{ page.date | date: "%B %-d, %Y" }}</div>
+  <div class="postBody">
     {{ content }}
   </div>
-
-  <hr class="post-rule" />
-
-  <nav class="post-nav" aria-label="More">
-    <a href="{{ '/' | relative_url }}">← Back to Home</a>
-  </nav>
 </article>

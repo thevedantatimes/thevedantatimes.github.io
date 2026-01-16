@@ -1,12 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0d1b2a"/>
-      <stop offset="1" stop-color="#1b5e20"/>
+      <stop offset="0" stop-color="#204b68"/>
+      <stop offset="1" stop-color="#f08c5a"/>
     </linearGradient>
   </defs>
-  <rect width="900" height="900" fill="url(#g)"/>
-  <path d="M0 720 L240 540 L360 650 L560 420 L900 720 L900 900 L0 900 Z" fill="#ffffff" fill-opacity="0.18"/>
-  <text x="50" y="95" font-family="Georgia, 'Times New Roman', Times, serif" font-size="40" fill="#fff" fill-opacity="0.95" font-weight="700">Feature</text>
-  <text x="50" y="140" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="18" fill="#fff" fill-opacity="0.85">Placeholder image</text>
+  <rect width="800" height="520" fill="url(#g)"/>
+  <circle cx="580" cy="150" r="80" fill="#fff" opacity="0.16"/>
+  <text x="28" y="70" fill="#fff" opacity="0.85" font-family="system-ui,Segoe UI,Roboto,Arial" font-size="16" font-weight="700">FEATURE</text>
 </svg>
