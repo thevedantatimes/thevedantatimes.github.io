@@ -8,11 +8,18 @@
   const listEl = root.querySelector('[data-vw-list]');
 
   const PAGE_SIZE = 2;
-  const MAX_ITEMS = 80;
-  let items = [];
-  let page = 0;
+  const MAX_ITEMS = 200;
+  const TITLE_MAX = 20;
+  const CH_MAX = 8;
 
-  // Merge these RSS feeds (newest on top)
+  // Default (All): only 2 per channel initially; when user pages past, expand by +10 per channel (total 12).
+  const ALL_INITIAL_PER_FEED = 2;
+  const ALL_EXPANDED_TOTAL_PER_FEED = 12; // 2 + 10
+
+  // Single channel mode: show 10 initially; then keep adding +10 when user pages past.
+  const CH_INITIAL = 10;
+  const CH_STEP = 10;
+
   const FEEDS = [
     { name: '@ChicagoVedanta', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC64nHa3IWptZ-KPlQxdfsbw' },
     { name: '@VedantaNY', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCZOKv_xnTzyLD9RJmbBUV9Q' },
@@ -28,10 +35,20 @@
       return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u);
     },
     function (u) {
-      // Jina will often bypass CORS; response may include a short header we strip later.
       return 'https://r.jina.ai/' + u;
     }
   ];
+
+  // Per-feed cache: name -> { items: [], lastTotal: number }
+  const feedCache = Object.create(null);
+
+  // UI state
+  let mode = 'all'; // 'all' or a feed handle
+  let page = 0;
+  let items = [];
+  let allPerFeedShown = ALL_INITIAL_PER_FEED;
+  const channelShown = Object.create(null); // feedName -> count
+  let isFetchingMore = false;
 
   function clamp(n, min, max) {
     return Math.min(max, Math.max(min, n));
@@ -44,6 +61,13 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
+  }
+
+  function trimTo(s, n) {
+    const t = String(s || '').trim();
+    if (!t) return '';
+    if (t.length <= n) return t;
+    return t.slice(0, Math.max(0, n)) + '…';
   }
 
   function ytThumb(videoId) {
@@ -83,8 +107,8 @@
 
     const html = slice
       .map(function (it) {
-        const t = esc(it.title);
-        const ch = esc(it.channel);
+        const t = esc(trimTo(it.title, TITLE_MAX));
+        const ch = esc(trimTo(it.channel, CH_MAX));
         const dt = fmtDate(it.published);
         const href = esc(it.url);
         const thumb = esc(it.thumbnail);
@@ -103,16 +127,55 @@
 
     listEl.innerHTML = html;
 
-    if (statusEl) {
-      statusEl.textContent = (page + 1) + ' / ' + totalPages;
-    }
+    if (statusEl) statusEl.textContent = (page + 1) + ' / ' + totalPages;
     if (btnPrev) btnPrev.disabled = page <= 0;
     if (btnNext) btnNext.disabled = page >= totalPages - 1;
   }
 
-  function go(delta) {
-    page += delta;
-    render();
+  function mergeAndSort(limitPerFeedMap) {
+    let merged = [];
+
+    FEEDS.forEach(function (f) {
+      const c = feedCache[f.name];
+      if (!c || !Array.isArray(c.items)) return;
+      const lim = (limitPerFeedMap && limitPerFeedMap[f.name]) || c.items.length;
+      merged = merged.concat(c.items.slice(0, lim));
+    });
+
+    // Dedup by videoId
+    const seen = Object.create(null);
+    merged = merged.filter(function (v) {
+      const id = v && v.videoId;
+      if (!id) return false;
+      if (seen[id]) return false;
+      seen[id] = 1;
+      return true;
+    });
+
+    // Newest first
+    merged.sort(function (a, b) {
+      return new Date(b.published).getTime() - new Date(a.published).getTime();
+    });
+
+    return merged.slice(0, MAX_ITEMS);
+  }
+
+  function rebuildItems() {
+    if (mode === 'all') {
+      const map = Object.create(null);
+      FEEDS.forEach(function (f) {
+        map[f.name] = allPerFeedShown;
+      });
+      items = mergeAndSort(map);
+    } else {
+      const c = feedCache[mode];
+      const lim = channelShown[mode] || CH_INITIAL;
+      items = c && Array.isArray(c.items) ? c.items.slice(0, lim) : [];
+      items.sort(function (a, b) {
+        return new Date(b.published).getTime() - new Date(a.published).getTime();
+      });
+      items = items.slice(0, MAX_ITEMS);
+    }
   }
 
   function sleep(ms) {
@@ -130,7 +193,6 @@
   }
 
   async function fetchTextWithProxy(url) {
-    // Try each proxy, and retry (a couple times) because proxies can be flaky.
     const maxAttemptsPerProxy = 3;
     for (let p = 0; p < PROXIES.length; p++) {
       for (let a = 0; a < maxAttemptsPerProxy; a++) {
@@ -141,7 +203,6 @@
           const txt = await res.text();
           return normalizeXmlText(txt);
         } catch (e) {
-          // small backoff then retry
           await sleep(300 + a * 350);
         }
       }
@@ -149,25 +210,16 @@
     throw new Error('All proxies failed');
   }
 
-  function parseRss(xmlText, channelFallback) {
+  function parseRss(xmlText, channelHandle, limit) {
     const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
     const entries = Array.from(doc.getElementsByTagName('entry'));
+    const picked = typeof limit === 'number' && limit > 0 ? entries.slice(0, limit) : entries;
 
-    // Try to read channel name from feed, fallback to provided handle
-    let channelName = channelFallback || '';
-    try {
-      const author = doc.getElementsByTagName('author')[0];
-      const nm = author && author.getElementsByTagName('name')[0];
-      const t = nm && (nm.textContent || '').trim();
-      if (t) channelName = t;
-    } catch (e) {}
-
-    return entries
+    return picked
       .map(function (e) {
         const title = (e.getElementsByTagName('title')[0] || {}).textContent || '';
-        const link = (e.getElementsByTagName('link')[0] || {}).getAttribute
-          ? e.getElementsByTagName('link')[0].getAttribute('href')
-          : '';
+        const linkEl = e.getElementsByTagName('link')[0];
+        const link = linkEl && linkEl.getAttribute ? linkEl.getAttribute('href') : '';
         const vid = (e.getElementsByTagName('yt:videoId')[0] || {}).textContent || '';
         const pub = (e.getElementsByTagName('published')[0] || {}).textContent || '';
 
@@ -176,7 +228,7 @@
           url: (link || '').trim(),
           videoId: (vid || '').trim(),
           published: (pub || '').trim(),
-          channel: channelFallback || channelName,
+          channel: channelHandle || '',
           thumbnail: vid ? ytThumb(vid.trim()) : ''
         };
       })
@@ -185,65 +237,155 @@
       });
   }
 
+  async function fetchFeedToCache(feed, limit) {
+    const existing = feedCache[feed.name];
+    if (existing && Array.isArray(existing.items) && existing.lastTotal >= (limit || 0)) return;
+
+    const txt = await fetchTextWithProxy(feed.url);
+    const parsed = parseRss(txt, feed.name, limit);
+    parsed.sort(function (a, b) {
+      return new Date(b.published).getTime() - new Date(a.published).getTime();
+    });
+    feedCache[feed.name] = { items: parsed, lastTotal: limit || parsed.length };
+  }
+
+  async function ensureAll(minPerFeed) {
+    const settled = await Promise.allSettled(
+      FEEDS.map(async function (f) {
+        await fetchFeedToCache(f, minPerFeed);
+        return true;
+      })
+    );
+
+    const ok = settled.some(function (r) {
+      return r.status === 'fulfilled';
+    });
+    if (!ok) throw new Error('all feeds failed');
+  }
+
+  async function ensureChannel(feedName, total) {
+    const f = FEEDS.find(function (x) {
+      return x.name === feedName;
+    });
+    if (!f) throw new Error('unknown feed');
+    await fetchFeedToCache(f, total);
+  }
+
+  async function ensureMore() {
+    if (isFetchingMore) return;
+    isFetchingMore = true;
+    if (btnNext) btnNext.disabled = true;
+
+    try {
+      if (mode === 'all') {
+        if (allPerFeedShown < ALL_EXPANDED_TOTAL_PER_FEED) {
+          // No loading message; keep UI steady while fetching.
+          await ensureAll(ALL_EXPANDED_TOTAL_PER_FEED);
+          allPerFeedShown = ALL_EXPANDED_TOTAL_PER_FEED;
+          rebuildItems();
+        }
+      } else {
+        const cur = channelShown[mode] || CH_INITIAL;
+        const next = cur + CH_STEP;
+        await ensureChannel(mode, next);
+        channelShown[mode] = next;
+        rebuildItems();
+      }
+    } catch (e) {
+      // Silently ignore; keep current items visible.
+    } finally {
+      isFetchingMore = false;
+      if (btnNext) btnNext.disabled = page >= pagesCount() - 1;
+    }
+  }
+
+  async function go(delta) {
+    if (!delta) return;
+
+    if (delta > 0) {
+      const nextPage = page + delta;
+      const totalPages = pagesCount();
+      if (nextPage > totalPages - 1) {
+        await ensureMore();
+      }
+    }
+
+    page += delta;
+    page = clamp(page, 0, pagesCount() - 1);
+    render();
+  }
+
+  function installDropdown() {
+    const head = root.querySelector('.vw-head');
+    if (!head) return;
+
+    const sel = document.createElement('select');
+    sel.setAttribute('aria-label', 'Filter video channel');
+    // Plain dropdown, no design.
+
+    const optAll = document.createElement('option');
+    optAll.value = 'all';
+    optAll.textContent = 'All channels';
+    sel.appendChild(optAll);
+
+    FEEDS.forEach(function (f) {
+      const o = document.createElement('option');
+      o.value = f.name;
+      o.textContent = f.name;
+      sel.appendChild(o);
+    });
+
+    head.insertAdjacentElement('afterend', sel);
+
+    sel.addEventListener('change', async function () {
+      const v = sel.value || 'all';
+      mode = v;
+      page = 0;
+
+      try {
+        if (mode === 'all') {
+          allPerFeedShown = ALL_INITIAL_PER_FEED;
+          await ensureAll(ALL_INITIAL_PER_FEED);
+        } else {
+          channelShown[mode] = CH_INITIAL;
+          await ensureChannel(mode, CH_INITIAL);
+        }
+        rebuildItems();
+        render();
+      } catch (e) {
+        if (listEl) listEl.innerHTML = '<div class="vw-empty">Videos unavailable right now. Please refresh.</div>';
+        if (statusEl) statusEl.textContent = '';
+      }
+    });
+  }
+
   async function load() {
-    if (statusEl) statusEl.textContent = 'Loading…';
-    if (listEl) listEl.innerHTML = '';
+    if (listEl) listEl.innerHTML = '<div class="vw-empty">Loading…</div>';
     if (btnPrev) btnPrev.disabled = true;
     if (btnNext) btnNext.disabled = true;
 
     try {
-      // Fetch in parallel; each feed fetch already has internal retries.
-      const settled = await Promise.allSettled(
-        FEEDS.map(async function (f) {
-          const txt = await fetchTextWithProxy(f.url);
-          return parseRss(txt, f.name);
-        })
-      );
-
-      let merged = [];
-      settled.forEach(function (r) {
-        if (r.status === 'fulfilled' && Array.isArray(r.value)) merged = merged.concat(r.value);
-      });
-
-      // Dedup by videoId
-      const seen = Object.create(null);
-      merged = merged.filter(function (v) {
-        const id = v.videoId;
-        if (!id) return false;
-        if (seen[id]) return false;
-        seen[id] = 1;
-        return true;
-      });
-
-      // newest first
-      merged.sort(function (a, b) {
-        return new Date(b.published).getTime() - new Date(a.published).getTime();
-      });
-
-      items = merged.slice(0, MAX_ITEMS);
+      await ensureAll(ALL_INITIAL_PER_FEED);
+      rebuildItems();
       page = 0;
       render();
-
-      if (statusEl) {
-        statusEl.textContent = items.length ? '1 / ' + pagesCount() : '0 / 0';
-      }
     } catch (e) {
-      if (listEl) {
-        listEl.innerHTML =
-          '<div class="vw-empty">Videos unavailable right now. Please refresh.</div>';
-      }
+      if (listEl) listEl.innerHTML = '<div class="vw-empty">Videos unavailable right now. Please refresh.</div>';
       if (statusEl) statusEl.textContent = '';
       if (btnPrev) btnPrev.disabled = true;
       if (btnNext) btnNext.disabled = true;
     }
   }
 
-  if (btnPrev) btnPrev.addEventListener('click', function () {
-    go(-1);
-  });
-  if (btnNext) btnNext.addEventListener('click', function () {
-    go(1);
-  });
+  if (btnPrev)
+    btnPrev.addEventListener('click', function () {
+      go(-1);
+    });
+
+  if (btnNext)
+    btnNext.addEventListener('click', function () {
+      go(1);
+    });
 
   // Optional: mouse wheel scroll through pages
   root.addEventListener(
@@ -257,5 +399,6 @@
     { passive: false }
   );
 
+  installDropdown();
   load();
 })();
