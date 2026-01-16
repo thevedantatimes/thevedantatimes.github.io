@@ -6,29 +6,20 @@
   const btnNext = root.querySelector('[data-vw-next]');
   const statusEl = root.querySelector('[data-vw-status]');
   const listEl = root.querySelector('[data-vw-list]');
+  const gateEl = root.querySelector('[data-vw-gate]');
 
   const PAGE_SIZE = 2;
-  const MAX_ITEMS = 200;
+  const MAX_ITEMS_GLOBAL = 200;
   const TITLE_MAX = 30;
   const CH_MAX = 14;
 
-  // UX: render whatever is ready within ~2s, then silently enrich.
-  const INITIAL_RENDER_BUDGET_MS = 2000;
+  // Cache policy
+  const CACHE_TARGET = 50;           // stop fetching for a channel once it reaches this
+  const RETRY_EVERY_MS = 20000;      // 20 seconds
+  const RETRY_MAX = 60;             // up to 60 attempts
+  const STORAGE_PREFIX = 'vtt_yt_cache_v1::';
 
-  // Single channel mode: show 10 initially; then keep adding +10 when nearing the end.
-  const CH_INITIAL = 10;
-  const CH_STEP = 20;
-
-  // All-channels mode: start with 2 per feed; when user reaches video 19-20, add +10 per feed.
-  // Repeat at 39-40, 59-60, ... up to 100 per feed.
-  const ALL_INITIAL_PER_FEED = 2;
-  const ALL_STEP = 20;
-  const ALL_MAX_PER_FEED = 400;
-  const ALL_STEP_EVERY_GLOBAL_VIDEOS = 20; // 19-20, 39-40, ... (because PAGE_SIZE=2)
-
-  // Background warm cache (so dropdown is instant): keep fetching until 100 per feed is cached.
-  const WARM_CACHE_TO_MAX = true;
-
+  // Feeds
   const FEEDS = [
     { name: '@ChicagoVedanta', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC64nHa3IWptZ-KPlQxdfsbw' },
     { name: '@VedantaNY', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCZOKv_xnTzyLD9RJmbBUV9Q' },
@@ -48,17 +39,14 @@
     }
   ];
 
-  // Per-feed cache: name -> { items: [], lastTotal: number }
+  // In-memory per-feed cache: name -> items[]
   const feedCache = Object.create(null);
 
   // UI state
-  let mode = 'all'; // 'all' or a feed handle
+  let mode = 'all';
   let page = 0;
   let items = [];
-  let allPerFeedShown = ALL_INITIAL_PER_FEED;
-  let nextAllStepAt = ALL_STEP_EVERY_GLOBAL_VIDEOS; // next global video count where we step +10 per feed
-  const channelShown = Object.create(null); // feedName -> count
-  let isFetchingMore = false;
+  let dropdownEl = null;
 
   function clamp(n, min, max) {
     return Math.min(max, Math.max(min, n));
@@ -98,109 +86,48 @@
     return Math.max(1, Math.ceil(items.length / PAGE_SIZE));
   }
 
-  function cacheKey() {
+  function setGated(on, msg) {
+    if (on) root.classList.add('vw-gated');
+    else root.classList.remove('vw-gated');
+    if (gateEl) gateEl.textContent = msg || (on ? 'Loading videos…' : '');
+  }
+
+  function gateProgressText() {
+    const counts = FEEDS.map(function (f) {
+      const arr = feedCache[f.name];
+      return Array.isArray(arr) ? arr.length : 0;
+    });
+    const ready = counts.filter(function (n) {
+      return n >= CACHE_TARGET;
+    }).length;
+    const min = counts.length ? Math.min.apply(null, counts) : 0;
+    return 'Syncing videos… ' + ready + '/' + FEEDS.length + ' channels ready (min ' + min + '/' + CACHE_TARGET + ')';
+  }
+
+  function validItem(v) {
+    return !!(v && v.videoId && v.url);
+  }
+
+  function readCache(feedName) {
     try {
-      return FEEDS.map(function (f) {
-        const c = feedCache[f.name];
-        const n = c && Array.isArray(c.items) ? c.items.length : 0;
-        const top = c && c.items && c.items[0] ? (c.items[0].videoId || '') : '';
-        return f.name + ':' + n + ':' + top;
-      }).join('|');
+      const raw = localStorage.getItem(STORAGE_PREFIX + feedName);
+      if (!raw) return [];
+      const obj = JSON.parse(raw);
+      const arr = obj && Array.isArray(obj.items) ? obj.items : [];
+      return arr.filter(validItem).slice(0, CACHE_TARGET);
     } catch (e) {
-      return String(Date.now());
+      return [];
     }
   }
 
-  function render() {
-    if (!listEl) return;
-
-    const totalPages = pagesCount();
-    page = clamp(page, 0, totalPages - 1);
-
-    const start = page * PAGE_SIZE;
-    const slice = items.slice(start, start + PAGE_SIZE);
-
-    // Never show empty/error messages: if nothing yet, keep it blank.
-    if (!slice.length) {
-      listEl.innerHTML = '';
-      if (statusEl) statusEl.textContent = '';
-      if (btnPrev) btnPrev.disabled = true;
-      if (btnNext) btnNext.disabled = true;
-      return;
-    }
-
-    const html = slice
-      .map(function (it) {
-        const t = esc(trimTo(it.title, TITLE_MAX));
-        const ch = esc(trimTo(it.channel, CH_MAX));
-        const dt = fmtDate(it.published);
-        const href = esc(it.url);
-        const thumb = esc(it.thumbnail);
-
-        return (
-          '<a class="vw-item" href="' + href + '" target="_blank" rel="noopener noreferrer">' +
-          '  <span class="vw-thumb"><img src="' + thumb + '" alt="" loading="lazy"></span>' +
-          '  <span class="vw-info">' +
-          '    <span class="vw-title">' + t + '</span>' +
-          '    <span class="vw-meta">' + (ch ? ch + ' · ' : '') + dt + '</span>' +
-          '  </span>' +
-          '</a>'
-        );
-      })
-      .join('');
-
-    listEl.innerHTML = html;
-
-    if (statusEl) statusEl.textContent = (page + 1) + ' / ' + totalPages;
-    if (btnPrev) btnPrev.disabled = page <= 0;
-    if (btnNext) btnNext.disabled = page >= totalPages - 1;
-
-    maybePrefetchMore();
-  }
-
-  function mergeAndSort(limitPerFeedMap) {
-    let merged = [];
-
-    FEEDS.forEach(function (f) {
-      const c = feedCache[f.name];
-      if (!c || !Array.isArray(c.items)) return;
-      const lim = (limitPerFeedMap && limitPerFeedMap[f.name]) || c.items.length;
-      merged = merged.concat(c.items.slice(0, lim));
-    });
-
-    // Dedup by videoId
-    const seen = Object.create(null);
-    merged = merged.filter(function (v) {
-      const id = v && v.videoId;
-      if (!id) return false;
-      if (seen[id]) return false;
-      seen[id] = 1;
-      return true;
-    });
-
-    // Newest first
-    merged.sort(function (a, b) {
-      return new Date(b.published).getTime() - new Date(a.published).getTime();
-    });
-
-    return merged.slice(0, MAX_ITEMS);
-  }
-
-  function rebuildItems() {
-    if (mode === 'all') {
-      const map = Object.create(null);
-      FEEDS.forEach(function (f) {
-        map[f.name] = allPerFeedShown;
-      });
-      items = mergeAndSort(map);
-    } else {
-      const c = feedCache[mode];
-      const lim = channelShown[mode] || CH_INITIAL;
-      items = c && Array.isArray(c.items) ? c.items.slice(0, lim) : [];
-      items.sort(function (a, b) {
-        return new Date(b.published).getTime() - new Date(a.published).getTime();
-      });
-      items = items.slice(0, MAX_ITEMS);
+  function writeCache(feedName, arr) {
+    try {
+      localStorage.setItem(
+        STORAGE_PREFIX + feedName,
+        JSON.stringify({ updatedAt: new Date().toISOString(), items: (arr || []).slice(0, CACHE_TARGET) })
+      );
+    } catch (e) {
+      // ignore (storage full / disabled)
     }
   }
 
@@ -211,7 +138,6 @@
   }
 
   function normalizeXmlText(txt) {
-    // If a proxy prepends headers, strip until the first '<feed' or '<?xml'.
     const iFeed = txt.indexOf('<feed');
     const iXml = txt.indexOf('<?xml');
     const i = iXml >= 0 ? iXml : iFeed;
@@ -229,19 +155,18 @@
           const txt = await res.text();
           return normalizeXmlText(txt);
         } catch (e) {
-          await sleep(300 + a * 350);
+          await sleep(250 + a * 300);
         }
       }
     }
     throw new Error('All proxies failed');
   }
 
-  function parseRss(xmlText, channelHandle, limit) {
+  function parseRss(xmlText, channelHandle) {
     const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
     const entries = Array.from(doc.getElementsByTagName('entry'));
-    const picked = typeof limit === 'number' && limit > 0 ? entries.slice(0, limit) : entries;
 
-    return picked
+    const parsed = entries
       .map(function (e) {
         const title = (e.getElementsByTagName('title')[0] || {}).textContent || '';
         const linkEl = e.getElementsByTagName('link')[0];
@@ -255,133 +180,127 @@
           videoId: (vid || '').trim(),
           published: (pub || '').trim(),
           channel: channelHandle || '',
-          thumbnail: vid ? ytThumb(vid.trim()) : ''
+          thumbnail: vid ? ytThumb(String(vid).trim()) : ''
         };
       })
-      .filter(function (x) {
-        return !!(x && x.videoId && x.url);
-      });
-  }
+      .filter(validItem);
 
-  async function fetchFeedToCache(feed, limit) {
-    const existing = feedCache[feed.name];
-    if (existing && Array.isArray(existing.items) && existing.lastTotal >= (limit || 0)) return;
-
-    const txt = await fetchTextWithProxy(feed.url);
-    const parsed = parseRss(txt, feed.name, limit);
     parsed.sort(function (a, b) {
       return new Date(b.published).getTime() - new Date(a.published).getTime();
     });
-    feedCache[feed.name] = { items: parsed, lastTotal: limit || parsed.length };
+
+    return parsed;
   }
 
-  async function ensureAll(minPerFeed) {
-    const settled = await Promise.allSettled(
-      FEEDS.map(async function (f) {
-        await fetchFeedToCache(f, minPerFeed);
-        return true;
-      })
-    );
+  function mergeUnique(existing, incoming) {
+    const out = [];
+    const seen = Object.create(null);
 
-    const ok = settled.some(function (r) {
-      return r.status === 'fulfilled';
+    function add(v) {
+      if (!validItem(v)) return;
+      const id = String(v.videoId || '');
+      if (!id || seen[id]) return;
+      seen[id] = 1;
+      out.push(v);
+    }
+
+    (existing || []).forEach(add);
+    (incoming || []).forEach(add);
+
+    out.sort(function (a, b) {
+      return new Date(b.published).getTime() - new Date(a.published).getTime();
     });
-    if (!ok) throw new Error('all feeds failed');
+
+    return out.slice(0, CACHE_TARGET);
   }
 
-  async function ensureChannel(feedName, total) {
-    const f = FEEDS.find(function (x) {
-      return x.name === feedName;
-    });
-    if (!f) throw new Error('unknown feed');
-    await fetchFeedToCache(f, total);
-  }
-
-  function maybePrefetchMore() {
-    if (!items.length) return;
-    if (isFetchingMore) return;
-
+  function rebuildItems() {
     if (mode === 'all') {
-      const totalPages = pagesCount();
-      const remaining = (totalPages - 1) - page;
-      const visibleEnd = (page + 1) * PAGE_SIZE; // e.g. page 9 => 20
+      let merged = [];
+      FEEDS.forEach(function (f) {
+        const arr = feedCache[f.name];
+        if (Array.isArray(arr) && arr.length) merged = merged.concat(arr);
+      });
 
-      const byIndex = visibleEnd >= nextAllStepAt;
-      // If the list is too small to even reach the next (20/40/60...) step,
-      // silently expand when the user is near the end, without advancing the step marker.
-      const byNearEnd = remaining <= 2 && items.length < nextAllStepAt;
+      // Dedup by videoId
+      const seen = Object.create(null);
+      merged = merged.filter(function (v) {
+        const id = v && v.videoId;
+        if (!id) return false;
+        if (seen[id]) return false;
+        seen[id] = 1;
+        return true;
+      });
 
-      if ((byIndex || byNearEnd) && allPerFeedShown < ALL_MAX_PER_FEED) {
-        if (byIndex) nextAllStepAt += ALL_STEP_EVERY_GLOBAL_VIDEOS;
-        ensureMore(true);
-      }
+      merged.sort(function (a, b) {
+        return new Date(b.published).getTime() - new Date(a.published).getTime();
+      });
+
+      items = merged.slice(0, MAX_ITEMS_GLOBAL);
       return;
     }
 
-    // Channel-mode: prefetch when user is within the last 3 pages.
+    const arr = feedCache[mode];
+    items = Array.isArray(arr) ? arr.slice(0, MAX_ITEMS_GLOBAL) : [];
+    items.sort(function (a, b) {
+      return new Date(b.published).getTime() - new Date(a.published).getTime();
+    });
+  }
+
+  function render() {
+    if (!listEl) return;
+
     const totalPages = pagesCount();
-    const remaining = (totalPages - 1) - page;
-    if (remaining <= 2) {
-      ensureMore(true);
+    page = clamp(page, 0, totalPages - 1);
+
+    const start = page * PAGE_SIZE;
+    const slice = items.slice(start, start + PAGE_SIZE);
+
+    if (!slice.length) {
+      listEl.innerHTML = '';
+      if (statusEl) statusEl.textContent = '';
+      if (btnPrev) btnPrev.disabled = true;
+      if (btnNext) btnNext.disabled = true;
+      return;
     }
+
+    const html = slice
+      .map(function (it) {
+        const t = esc(trimTo(it.title, TITLE_MAX));
+        const ch = esc(trimTo(it.channel, CH_MAX));
+        const dt = fmtDate(it.published);
+        const href = esc(it.url);
+        const thumb = esc(it.thumbnail);
+
+        return (
+          '<a class="vw-item" href="' +
+          href +
+          '" target="_blank" rel="noopener noreferrer">' +
+          '  <span class="vw-thumb"><img src="' +
+          thumb +
+          '" alt="" loading="lazy"></span>' +
+          '  <span class="vw-info">' +
+          '    <span class="vw-title">' +
+          t +
+          '</span>' +
+          '    <span class="vw-meta">' +
+          (ch ? ch + ' · ' : '') +
+          dt +
+          '</span>' +
+          '  </span>' +
+          '</a>'
+        );
+      })
+      .join('');
+
+    listEl.innerHTML = html;
+    if (statusEl) statusEl.textContent = page + 1 + ' / ' + totalPages;
+    if (btnPrev) btnPrev.disabled = page <= 0;
+    if (btnNext) btnNext.disabled = page >= totalPages - 1;
   }
 
-  async function ensureMore(silent) {
-    if (isFetchingMore) return false;
-
-    isFetchingMore = true;
-    try {
-      if (!silent && btnNext) btnNext.disabled = true;
-
-      if (mode === 'all') {
-        const next = Math.min(ALL_MAX_PER_FEED, allPerFeedShown + ALL_STEP);
-        if (next <= allPerFeedShown) return false;
-        // Immediate UX: expand using whatever is already cached.
-        allPerFeedShown = next;
-        rebuildItems();
-        render();
-
-        // Then try to ensure the cache actually has that many (silent).
-        try {
-          await ensureAll(next);
-        } catch (e) {}
-        rebuildItems();
-      } else {
-        const cur = channelShown[mode] || CH_INITIAL;
-        const next = Math.min(ALL_MAX_PER_FEED, cur + CH_STEP);
-        if (next <= cur) return false;
-
-        channelShown[mode] = next;
-        rebuildItems();
-        render();
-
-        try {
-          await ensureChannel(mode, next);
-        } catch (e) {}
-        rebuildItems();
-      }
-
-      render();
-      return true;
-    } catch (e) {
-      return false;
-    } finally {
-      isFetchingMore = false;
-      if (!silent && btnNext) btnNext.disabled = page >= pagesCount() - 1;
-    }
-  }
-
-  async function go(delta) {
+  function go(delta) {
     if (!delta) return;
-
-    // For channel mode, if user tries to go beyond last page, expand first (await).
-    if (delta > 0 && mode !== 'all') {
-      const totalPages = pagesCount();
-      if (page + delta > totalPages - 1) {
-        await ensureMore(false);
-      }
-    }
-
     page += delta;
     page = clamp(page, 0, pagesCount() - 1);
     render();
@@ -407,112 +326,92 @@
     });
 
     head.insertAdjacentElement('afterend', sel);
+    dropdownEl = sel;
 
     sel.addEventListener('change', function () {
-      const v = sel.value || 'all';
-      mode = v;
+      mode = sel.value || 'all';
       page = 0;
-
-      if (mode === 'all') {
-        allPerFeedShown = ALL_INITIAL_PER_FEED;
-        nextAllStepAt = ALL_STEP_EVERY_GLOBAL_VIDEOS;
-        rebuildItems();
-        render();
-        return;
-      }
-
-      // Instant: render from cache (ideally already warmed).
-      const cachedLen = feedCache[mode] && Array.isArray(feedCache[mode].items) ? feedCache[mode].items.length : 0;
-      channelShown[mode] = Math.max(2, Math.min(CH_INITIAL, cachedLen || 2));
       rebuildItems();
       render();
-
-      // Background: ensure we have at least 10 for that channel (no UI blocking).
-      ensureChannel(mode, Math.min(CH_INITIAL, ALL_MAX_PER_FEED))
-        .then(function () {
-          channelShown[mode] = Math.min(CH_INITIAL, ALL_MAX_PER_FEED);
-          rebuildItems();
-          render();
-        })
-        .catch(function () {});
     });
   }
 
-  async function warmCacheToMax() {
-    if (!WARM_CACHE_TO_MAX) return;
-    try {
-      await ensureAll(ALL_MAX_PER_FEED);
-    } catch (e) {
-      // no messages
+  async function fillFeedToTarget(feed) {
+    let cur = feedCache[feed.name];
+    if (!Array.isArray(cur)) cur = [];
+    let attempts = 0;
+
+    while (cur.length < CACHE_TARGET && attempts < RETRY_MAX) {
+      attempts++;
+      try {
+        const txt = await fetchTextWithProxy(feed.url);
+        const parsed = parseRss(txt, feed.name);
+        const next = mergeUnique(cur, parsed);
+        if (next.length !== cur.length) {
+          cur = next;
+          feedCache[feed.name] = cur;
+          writeCache(feed.name, cur);
+        }
+      } catch (e) {
+        // ignore; we'll retry
+      }
+
+      if (gateEl) gateEl.textContent = gateProgressText();
+
+      if (cur.length >= CACHE_TARGET) break;
+      if (attempts < RETRY_MAX) await sleep(RETRY_EVERY_MS);
     }
+
+    feedCache[feed.name] = cur;
+    return cur;
+  }
+
+  async function primeCaches() {
+    // 1) Hydrate from localStorage (instant)
+    FEEDS.forEach(function (f) {
+      feedCache[f.name] = readCache(f.name);
+    });
+
+    // 2) If every channel already has 50, do not fetch at all.
+    const allReady = FEEDS.every(function (f) {
+      return (feedCache[f.name] || []).length >= CACHE_TARGET;
+    });
+    if (allReady) return;
+
+    // 3) Otherwise, keep fetching until each channel reaches 50 (or retry cap).
+    if (gateEl) gateEl.textContent = gateProgressText();
+
+    await Promise.all(
+      FEEDS.map(function (f) {
+        const cur = feedCache[f.name] || [];
+        if (cur.length >= CACHE_TARGET) return Promise.resolve(cur);
+        return fillFeedToTarget(f);
+      })
+    );
   }
 
   async function load() {
-    // No loading/empty messages.
+    // Start gated: nothing in the widget chrome should show until caches are filled.
+    setGated(true, 'Loading videos…');
     if (listEl) listEl.innerHTML = '';
+    if (statusEl) statusEl.textContent = '';
     if (btnPrev) btnPrev.disabled = true;
     if (btnNext) btnNext.disabled = true;
 
-    const tasks = FEEDS.map(function (f) {
-      return fetchFeedToCache(f, ALL_INITIAL_PER_FEED);
-    });
+    // Build UI chrome now (dropdown exists), but it will be hidden while gated.
+    installDropdown();
 
-    const settleAll = Promise.allSettled(tasks);
-    let renderedKey = '';
+    // Prefetch caches (may retry in the background for up to ~20 minutes).
+    await primeCaches();
 
-    // 1) Render whatever is ready within ~2s.
-    try {
-      await Promise.race([settleAll, sleep(INITIAL_RENDER_BUDGET_MS)]);
-    } catch (e) {}
-
+    // Now show the full widget and render from cache (no further network fetches).
+    setGated(false, '');
     rebuildItems();
     page = 0;
     render();
-    renderedKey = cacheKey();
 
-    // 2) Keep silently enriching as feeds finish (and as warm-cache pulls more).
-    const pollMs = 600;
-    const maxPollMs = 25000;
-    const t0 = Date.now();
-    const poll = setInterval(function () {
-      if (Date.now() - t0 > maxPollMs) {
-        clearInterval(poll);
-        return;
-      }
-      const k = cacheKey();
-      if (k !== renderedKey) {
-        rebuildItems();
-        render();
-        renderedKey = k;
-      }
-    }, pollMs);
-
-    // Start background warm-cache after initial render.
-    warmCacheToMax()
-      .then(function () {
-        const k = cacheKey();
-        if (k !== renderedKey) {
-          rebuildItems();
-          render();
-          renderedKey = k;
-        }
-      })
-      .catch(function () {});
-
-    settleAll
-      .then(function () {
-        // don't clear poll immediately; warm-cache may still be running.
-        // Let the poll finish naturally.
-        const k = cacheKey();
-        if (k !== renderedKey) {
-          rebuildItems();
-          render();
-          renderedKey = k;
-        }
-      })
-      .catch(function () {
-        // no messages
-      });
+    // Keep dropdown in sync if created
+    if (dropdownEl) dropdownEl.value = mode;
   }
 
   if (btnPrev)
@@ -537,6 +436,5 @@
     { passive: false }
   );
 
-  installDropdown();
   load();
 })();
