@@ -101,7 +101,8 @@
       return n >= CACHE_TARGET;
     }).length;
     const min = counts.length ? Math.min.apply(null, counts) : 0;
-    return 'Syncing videos… ' + ready + '/' + FEEDS.length + ' channels ready (min ' + min + '/' + CACHE_TARGET + ')';
+    console.log('Syncing videos… ' + ready + '/' + FEEDS.length + ' channels ready (min ' + min + '/' + CACHE_TARGET + ')');
+    return '';
   }
 
   function validItem(v) {
