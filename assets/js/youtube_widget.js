@@ -14,7 +14,7 @@
   const CH_MAX = 14;
 
   // Cache policy
-  const CACHE_TARGET = 50;           // stop fetching for a channel once it reaches this
+  const CACHE_TARGET = 15;           // stop fetching for a channel once it reaches this
   const RETRY_EVERY_MS = 20000;      // 20 seconds
   const RETRY_MAX = 60;             // up to 60 attempts
   const STORAGE_PREFIX = 'vtt_yt_cache_v1::';
