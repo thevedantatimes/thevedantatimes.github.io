@@ -8,7 +8,7 @@
   const listEl = root.querySelector('[data-vw-list]');
   const gateEl = root.querySelector('[data-vw-gate]');
 
-  const PAGE_SIZE = 2;
+  const PAGE_SIZE = 4;
   const MAX_ITEMS_GLOBAL = 200;
   const TITLE_MAX = 30;
   const CH_MAX = 14;
