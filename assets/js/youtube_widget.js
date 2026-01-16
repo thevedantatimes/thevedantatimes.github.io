@@ -9,8 +9,13 @@
 
   const PAGE_SIZE = 2;
   const MAX_ITEMS = 200;
-  const TITLE_MAX = 20;
-  const CH_MAX = 8;
+  const TITLE_MAX = 30;
+  const CH_MAX = 14;
+
+  // UX: render whatever is ready within ~2s, then silently enrich.
+  const INITIAL_RENDER_BUDGET_MS = 2000;
+  // Start fetching more when user is within the last 3 pages (incl current).
+  const PREFETCH_THRESHOLD_REMAINING = 2; // last-3 pages => remaining pages <= 2
 
   // Default (All): only 2 per channel initially; when user pages past, expand by +10 per channel (total 12).
   const ALL_INITIAL_PER_FEED = 2;
@@ -88,6 +93,30 @@
     return Math.max(1, Math.ceil(items.length / PAGE_SIZE));
   }
 
+  function cacheKey() {
+    try {
+      return FEEDS.map(function (f) {
+        const c = feedCache[f.name];
+        const n = c && Array.isArray(c.items) ? c.items.length : 0;
+        const top = c && c.items && c.items[0] ? (c.items[0].videoId || '') : '';
+        return f.name + ':' + n + ':' + top;
+      }).join('|');
+    } catch (e) {
+      return String(Date.now());
+    }
+  }
+
+  function maybePrefetchMore() {
+    if (!items.length) return;
+    if (isFetchingMore) return;
+    const totalPages = pagesCount();
+    const remaining = (totalPages - 1) - page;
+    if (remaining <= PREFETCH_THRESHOLD_REMAINING) {
+      // Silent background prefetch (no loading text / no button flicker).
+      ensureMore(true);
+    }
+  }
+
   function render() {
     if (!listEl) return;
 
@@ -130,6 +159,7 @@
     if (statusEl) statusEl.textContent = (page + 1) + ' / ' + totalPages;
     if (btnPrev) btnPrev.disabled = page <= 0;
     if (btnNext) btnNext.disabled = page >= totalPages - 1;
+    maybePrefetchMore();
   }
 
   function mergeAndSort(limitPerFeedMap) {
@@ -271,19 +301,21 @@
     await fetchFeedToCache(f, total);
   }
 
-  async function ensureMore() {
-    if (isFetchingMore) return;
-    isFetchingMore = true;
-    if (btnNext) btnNext.disabled = true;
+  async function ensureMore(silent) {
+    if (isFetchingMore) return false;
 
+    // Nothing to expand in All-mode after first expansion.
+    if (mode === 'all' && allPerFeedShown >= ALL_EXPANDED_TOTAL_PER_FEED) return false;
+
+    isFetchingMore = true;
     try {
+      if (!silent && btnNext) btnNext.disabled = true;
+
       if (mode === 'all') {
-        if (allPerFeedShown < ALL_EXPANDED_TOTAL_PER_FEED) {
-          // No loading message; keep UI steady while fetching.
-          await ensureAll(ALL_EXPANDED_TOTAL_PER_FEED);
-          allPerFeedShown = ALL_EXPANDED_TOTAL_PER_FEED;
-          rebuildItems();
-        }
+        // Expand from 2 -> 12 per feed (2 + 10).
+        await ensureAll(ALL_EXPANDED_TOTAL_PER_FEED);
+        allPerFeedShown = ALL_EXPANDED_TOTAL_PER_FEED;
+        rebuildItems();
       } else {
         const cur = channelShown[mode] || CH_INITIAL;
         const next = cur + CH_STEP;
@@ -291,11 +323,16 @@
         channelShown[mode] = next;
         rebuildItems();
       }
+
+      // Update UI silently; no loading messages.
+      render();
+      return true;
     } catch (e) {
-      // Silently ignore; keep current items visible.
+      // Keep current items visible.
+      return false;
     } finally {
       isFetchingMore = false;
-      if (btnNext) btnNext.disabled = page >= pagesCount() - 1;
+      if (!silent && btnNext) btnNext.disabled = page >= pagesCount() - 1;
     }
   }
 
@@ -303,10 +340,15 @@
     if (!delta) return;
 
     if (delta > 0) {
-      const nextPage = page + delta;
       const totalPages = pagesCount();
-      if (nextPage > totalPages - 1) {
-        await ensureMore();
+      const remaining = (totalPages - 1) - page;
+
+      // Kick prefetch early (last-3 pages).
+      if (remaining <= PREFETCH_THRESHOLD_REMAINING) ensureMore(true);
+
+      // If user tries to move beyond the last page, expand first (await).
+      if (page + delta > totalPages - 1) {
+        await ensureMore(false);
       }
     }
 
@@ -337,25 +379,41 @@
 
     head.insertAdjacentElement('afterend', sel);
 
-    sel.addEventListener('change', async function () {
+    sel.addEventListener('change', function () {
       const v = sel.value || 'all';
       mode = v;
       page = 0;
 
-      try {
-        if (mode === 'all') {
-          allPerFeedShown = ALL_INITIAL_PER_FEED;
-          await ensureAll(ALL_INITIAL_PER_FEED);
-        } else {
-          channelShown[mode] = CH_INITIAL;
-          await ensureChannel(mode, CH_INITIAL);
-        }
+      // Instant UI: render from whatever is already in cache (0-lag).
+      if (mode === 'all') {
+        allPerFeedShown = ALL_INITIAL_PER_FEED;
         rebuildItems();
         render();
-      } catch (e) {
-        if (listEl) listEl.innerHTML = '<div class="vw-empty">Videos unavailable right now. Please refresh.</div>';
-        if (statusEl) statusEl.textContent = '';
+
+        // Background refresh (no UI blocking).
+        ensureAll(ALL_INITIAL_PER_FEED)
+          .then(function () {
+            rebuildItems();
+            render();
+          })
+          .catch(function () {});
+        return;
       }
+
+      const cachedLen = feedCache[mode] && Array.isArray(feedCache[mode].items) ? feedCache[mode].items.length : 0;
+      // Use the already-fetched 2 items (from All-mode load) so the dropdown feels instant.
+      channelShown[mode] = Math.max(2, Math.min(CH_INITIAL, cachedLen || 2));
+      rebuildItems();
+      render();
+
+      // Then silently expand to 10 in the background.
+      ensureChannel(mode, CH_INITIAL)
+        .then(function () {
+          channelShown[mode] = CH_INITIAL;
+          rebuildItems();
+          render();
+        })
+        .catch(function () {});
     });
   }
 
@@ -364,17 +422,54 @@
     if (btnPrev) btnPrev.disabled = true;
     if (btnNext) btnNext.disabled = true;
 
+    const tasks = FEEDS.map(function (f) {
+      return fetchFeedToCache(f, ALL_INITIAL_PER_FEED);
+    });
+
+    const settleAll = Promise.allSettled(tasks);
+    let renderedKey = '';
+
+    // 1) Render whatever is ready within ~2s.
     try {
-      await ensureAll(ALL_INITIAL_PER_FEED);
-      rebuildItems();
-      page = 0;
-      render();
-    } catch (e) {
-      if (listEl) listEl.innerHTML = '<div class="vw-empty">Videos unavailable right now. Please refresh.</div>';
-      if (statusEl) statusEl.textContent = '';
-      if (btnPrev) btnPrev.disabled = true;
-      if (btnNext) btnNext.disabled = true;
-    }
+      await Promise.race([settleAll, sleep(INITIAL_RENDER_BUDGET_MS)]);
+    } catch (e) {}
+
+    rebuildItems();
+    page = 0;
+    render();
+    renderedKey = cacheKey();
+
+    // 2) After the first render, keep silently enriching as feeds finish.
+    //    (No loading messages; users just see the list refine/expand.)
+    const pollMs = 700;
+    const maxPollMs = 8000;
+    const t0 = Date.now();
+    const poll = setInterval(function () {
+      if (Date.now() - t0 > maxPollMs) {
+        clearInterval(poll);
+        return;
+      }
+      const k = cacheKey();
+      if (k !== renderedKey) {
+        rebuildItems();
+        render();
+        renderedKey = k;
+      }
+    }, pollMs);
+
+    settleAll
+      .then(function () {
+        clearInterval(poll);
+        const k = cacheKey();
+        if (k !== renderedKey) {
+          rebuildItems();
+          render();
+          renderedKey = k;
+        }
+      })
+      .catch(function () {
+        clearInterval(poll);
+      });
   }
 
   if (btnPrev)
