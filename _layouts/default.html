@@ -27,16 +27,37 @@
       </div>
 
       <nav class="nav" aria-label="Primary">
-        <a href="#" class="nav-item">U.S.</a>
-        <a href="#" class="nav-item">World</a>
-        <a href="#" class="nav-item">Business</a>
-        <a href="#" class="nav-item">Arts</a>
-        <a href="#" class="nav-item">Lifestyle</a>
-        <a href="#" class="nav-item">Opinion</a>
-        <a href="#" class="nav-item">Video</a>
-        <a href="#" class="nav-item">Audio</a>
-        <a href="#" class="nav-item">Games</a>
-        <a href="#" class="nav-item">Cooking</a>
+        <a href="{{ '/' | relative_url }}" class="nav-item">Home</a>
+
+        <div class="nav-dd">
+          <button class="nav-item nav-dd-btn" type="button" aria-haspopup="true">
+            Categories <span class="nav-caret" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-dd-menu" role="menu" aria-label="Categories">
+            <a role="menuitem" href="{{ '/category/' | relative_url }}">All categories</a>
+            <div class="nav-dd-rule" aria-hidden="true"></div>
+            {% assign cats = site.categories | sort %}
+            {% for c in cats %}
+              {% assign name = c[0] %}
+              <a role="menuitem" href="{{ '/category/' | relative_url }}?c={{ name | url_encode }}">{{ name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+
+        <a href="{{ '/category/' | relative_url }}" class="nav-item">Browse</a>
+        <a href="#ytWidget" class="nav-item">Videos</a>
+
+        <div class="nav-dd">
+          <button class="nav-item nav-dd-btn" type="button" aria-haspopup="true">
+            More <span class="nav-caret" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-dd-menu" role="menu" aria-label="More">
+            <a role="menuitem" href="#">About</a>
+            <a role="menuitem" href="#">Submit a story</a>
+            <a role="menuitem" href="#">Newsletter</a>
+            <a role="menuitem" href="#">Contact</a>
+          </div>
+        </div>
       </nav>
 
       <div class="mast-rules" aria-hidden="true"></div>
@@ -53,5 +74,34 @@
       </div>
     </footer>
     <script defer src="{{ '/assets/js/youtube_widget.js' | relative_url }}"></script>
+    <script>
+    (() => {
+      const dds = Array.from(document.querySelectorAll('.nav-dd'));
+      if (!dds.length) return;
+
+      function closeAll(except){
+        dds.forEach(dd => { if (dd !== except) dd.classList.remove('open'); });
+      }
+
+      dds.forEach(dd => {
+        const btn = dd.querySelector('.nav-dd-btn');
+        if (!btn) return;
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const willOpen = !dd.classList.contains('open');
+          closeAll(dd);
+          dd.classList.toggle('open', willOpen);
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!dds.some(dd => dd.contains(e.target))) closeAll(null);
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeAll(null);
+      });
+    })();
+    </script>
+
   </body>
 </html>

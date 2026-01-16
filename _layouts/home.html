@@ -2,30 +2,53 @@
 layout: default
 ---
 
-{% assign posts = site.posts %}
-{% assign hero = posts.first %}
-{% assign right = posts[1] %}
+{% assign featured_posts = site.posts | where_exp:"p","p.featured == true" %}
+{% assign hero = featured_posts.first | default: site.posts.first %}
+{% assign others = site.posts | where_exp:"p","p.url != hero.url" %}
+
+{% assign left_top = others[0] %}
+{% assign right = others[1] | default: others[0] %}
 
 <section class="front">
   <div class="front-grid">
 
     <!-- Left rail -->
     <aside class="rail">
-      <div class="rail-block">
-        <a class="kicker" href="{{ hero.url | relative_url }}">Top Story</a>
-        <h2 class="rail-title"><a href="{{ hero.url | relative_url }}">{{ hero.title }}</a></h2>
-        {% if hero.excerpt %}
-          <p class="rail-dek">{{ hero.excerpt | strip_html | truncate: 180 }}</p>
-        {% endif %}
-        <div class="rail-meta">{{ hero.date | date: '%b %-d' }} · {{ hero.content | number_of_words | divided_by: 220 | plus: 1 }} min read</div>
-      </div>
 
-      {% for p in posts offset: 1 limit: 3 %}
+      {% if left_top %}
+      <div class="rail-block">
+        <a class="kicker" href="{{ left_top.url | relative_url }}">Top Story</a>
+        <h2 class="rail-title"><a href="{{ left_top.url | relative_url }}">{{ left_top.title }}</a></h2>
+        {% assign dek = left_top.snippet | default: left_top.excerpt %}
+        {% if dek %}
+          <p class="rail-dek">{{ dek | strip_html | strip_newlines | truncate: 180 }}</p>
+        {% endif %}
+        <div class="rail-meta">{{ left_top.date | date: '%b %-d' }} · {{ left_top.content | number_of_words | divided_by: 220 | plus: 1 }} min read</div>
+      </div>
+      {% else %}
+      <div class="rail-block">
+        <div class="rail-kicker">More stories soon</div>
+        <h2 class="rail-title">New posts will appear here</h2>
+        <p class="rail-dek">Add more posts under <code>_posts</code> to populate the left rail.</p>
+      </div>
+      {% endif %}
+
+      {% for p in others offset: 2 limit: 3 %}
       <div class="rail-block small">
-        <div class="rail-kicker">{{ p.categories | join: ' · ' | default: 'Update' }}</div>
+        {% if p.categories and p.categories.size > 0 %}
+          <div class="rail-kicker">
+            {% for c in p.categories %}
+              <a class="cat" href="{{ '/category/' | relative_url }}?c={{ c | url_encode }}">{{ c }}</a>{% unless forloop.last %}<span class="sep"> · </span>{% endunless %}
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="rail-kicker">Update</div>
+        {% endif %}
+
         <h3 class="rail-title small"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
-        {% if p.excerpt %}
-          <p class="rail-dek">{{ p.excerpt | strip_html | truncate: 120 }}</p>
+        {% assign dek = p.snippet | default: p.excerpt %}
+        {% if dek %}
+          <p class="rail-dek">{{ dek | strip_html | strip_newlines | truncate: 120 }}</p>
         {% endif %}
         <div class="rail-meta">{{ p.date | date: '%b %-d' }} · {{ p.content | number_of_words | divided_by: 220 | plus: 1 }} min read</div>
       </div>
@@ -41,16 +64,25 @@ layout: default
     <!-- Center hero -->
     <article class="hero">
       <div class="hero-topline">
-        <span class="live">LIVE</span>
+        {% if hero.featured %}<span class="live">FEATURED</span>{% else %}<span class="live">LIVE</span>{% endif %}
         <span class="hero-line">Vedanta Desk</span>
         <span class="dot">·</span>
         <span class="hero-line">{{ hero.date | date: '%b %-d' }}</span>
+        {% if hero.categories and hero.categories.size > 0 %}
+          <span class="dot">·</span>
+          <span class="hero-line">
+            {% for c in hero.categories limit: 2 %}
+              <a class="cat" href="{{ '/category/' | relative_url }}?c={{ c | url_encode }}">{{ c }}</a>{% unless forloop.last %}<span class="sep"> · </span>{% endunless %}
+            {% endfor %}
+          </span>
+        {% endif %}
       </div>
 
       <h1 class="hero-title"><a href="{{ hero.url | relative_url }}">{{ hero.title }}</a></h1>
 
-      {% if hero.excerpt %}
-        <p class="hero-dek">{{ hero.excerpt | strip_html | truncate: 220 }}</p>
+      {% assign dek = hero.snippet | default: hero.excerpt %}
+      {% if dek %}
+        <p class="hero-dek">{{ dek | strip_html | strip_newlines | truncate: 220 }}</p>
       {% endif %}
 
       {% assign hero_img = hero.image | default: '/assets/img/hero.svg' %}
@@ -65,9 +97,15 @@ layout: default
     <aside class="feature">
       <div class="feature-media">
         <div class="mosaic">
-          <a class="mosaic-big" href="{{ right.url | relative_url }}" aria-label="Open: {{ right.title }}">
-            <img src="{{ (right.image | default: '/assets/img/feature_main.svg') | relative_url }}" alt="" loading="lazy" />
-          </a>
+          {% if right %}
+            <a class="mosaic-big" href="{{ right.url | relative_url }}" aria-label="Open: {{ right.title }}">
+              <img src="{{ (right.image | default: '/assets/img/feature_main.svg') | relative_url }}" alt="" loading="lazy" />
+            </a>
+          {% else %}
+            <a class="mosaic-big" href="#" aria-label="Gallery">
+              <img src="{{ '/assets/img/feature_main.svg' | relative_url }}" alt="" loading="lazy" />
+            </a>
+          {% endif %}
           <a class="mosaic-small" href="#" aria-label="Gallery">
             <img src="{{ '/assets/img/feature_1.svg' | relative_url }}" alt="" loading="lazy" />
           </a>
@@ -79,8 +117,9 @@ layout: default
 
       {% if right %}
         <h2 class="feature-title"><a href="{{ right.url | relative_url }}">{{ right.title }}</a></h2>
-        {% if right.excerpt %}
-          <p class="feature-dek">{{ right.excerpt | strip_html | truncate: 170 }}</p>
+        {% assign dek = right.snippet | default: right.excerpt %}
+        {% if dek %}
+          <p class="feature-dek">{{ dek | strip_html | strip_newlines | truncate: 170 }}</p>
         {% endif %}
         <div class="feature-meta">{{ right.date | date: '%b %-d' }} · {{ right.content | number_of_words | divided_by: 220 | plus: 1 }} min read</div>
       {% else %}

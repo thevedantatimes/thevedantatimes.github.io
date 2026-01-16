@@ -311,7 +311,11 @@
     const head = root.querySelector('.vw-head');
     if (!head) return;
 
+    const wrap = document.createElement('div');
+    wrap.className = 'vw-filter';
+
     const sel = document.createElement('select');
+    sel.className = 'vw-select';
     sel.setAttribute('aria-label', 'Filter video channel');
 
     const optAll = document.createElement('option');
@@ -326,7 +330,8 @@
       sel.appendChild(o);
     });
 
-    head.insertAdjacentElement('afterend', sel);
+    wrap.appendChild(sel);
+    head.insertAdjacentElement('afterend', wrap);
     dropdownEl = sel;
 
     sel.addEventListener('change', function () {

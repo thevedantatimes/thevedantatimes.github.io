@@ -1,0 +1,16 @@
+---
+layout: null
+---
+[
+{% for post in site.posts %}
+  {
+    "title": {{ post.title | jsonify }},
+    "url": {{ post.url | relative_url | jsonify }},
+    "date": {{ post.date | date_to_xmlschema | jsonify }},
+    "dateHuman": {{ post.date | date: '%b %-d, %Y' | jsonify }},
+    "categories": {{ post.categories | jsonify }},
+    "snippet": {{ post.snippet | default: post.excerpt | strip_html | strip_newlines | truncate: 240 | jsonify }},
+    "featured": {{ post.featured | default: false | jsonify }}
+  }{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]

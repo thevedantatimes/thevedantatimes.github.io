@@ -5,7 +5,20 @@ layout: default
 <article class="post">
   <header class="post-head">
     <h1 class="post-title">{{ page.title }}</h1>
-    <div class="post-meta">{{ page.date | date: '%A, %B %-d, %Y' }}</div>
+    <div class="post-meta">
+      <span>{{ page.date | date: '%A, %B %-d, %Y' }}</span>
+      {% if page.categories and page.categories.size > 0 %}
+        <span class="post-sep">·</span>
+        <span class="post-cats">
+          {% for c in page.categories %}
+            <a class="cat" href="{{ '/category/' | relative_url }}?c={{ c | url_encode }}">{{ c }}</a>{% unless forloop.last %}<span class="sep"> · </span>{% endunless %}
+          {% endfor %}
+        </span>
+      {% endif %}
+    </div>
+    {% if page.snippet %}
+      <p class="post-snippet">{{ page.snippet | strip_html | strip_newlines }}</p>
+    {% endif %}
   </header>
 
   {% assign img = page.image %}
