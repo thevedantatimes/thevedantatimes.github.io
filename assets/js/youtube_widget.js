@@ -1,227 +1,129 @@
-/* Latest Videos sidebar widget (multi-channel RSS) */
-(function(){
-  const FEEDS = [
-    { name: '@ChicagoVedanta', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC64nHa3IWptZ-KPlQxdfsbw' },
-    { name: '@VedantaNY', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCZOKv_xnTzyLD9RJmbBUV9Q' },
-    { name: '@VedantaOrg', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCoeQClkDRaj9uABKHfHJUdw' },
-    { name: '@vedantasocietyofwesternwa', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCHNlxSbZiXS6oBJuJEiiIPA' },
-    { name: '@VedantaDC', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC4zi_tfjGdO4Gjulz-GSAvg' },
-    { name: '@belurmathofficial', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCuv4AUvgAgut3zdiPmvG5Pw' },
-  ];
+(function () {
+  const root = document.getElementById('ytWidget');
+  if (!root) return;
 
-  const PROXIES = [
-    'https://api.allorigins.win/raw?url=',
-    'https://api.codetabs.com/v1/proxy?quest=' // fallback
-  ];
+  const btnPrev = root.querySelector('[data-vw-prev]');
+  const btnNext = root.querySelector('[data-vw-next]');
+  const statusEl = root.querySelector('[data-vw-status]');
+  const listEl = root.querySelector('[data-vw-list]');
 
-  function esc(s){
-    return String(s||'').replace(/[&<>\"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const PAGE_SIZE = 2;
+  let items = [];
+  let page = 0;
+  let lastErrors = [];
+
+  function clamp(n, min, max) {
+    return Math.min(max, Math.max(min, n));
   }
 
-  function ytThumb(videoId){
-    return 'https://i.ytimg.com/vi/' + encodeURIComponent(videoId) + '/hqdefault.jpg';
+  function esc(s) {
+    return String(s || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
   }
 
-  function fmtDate(iso){
-    try{
-      const d = new Date(iso);
-      return d.toLocaleString(undefined, { year:'numeric', month:'short', day:'2-digit' });
-    }catch(e){ return iso || ''; }
+  function fmtDate(iso) {
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
   }
 
-  async function fetchTextWithRetry(url, attempts){
-    const maxAttempts = Math.max(1, attempts || 3);
-    let lastErr;
-
-    for (let pi=0; pi<PROXIES.length; pi++){
-      const proxy = PROXIES[pi];
-      const proxied = proxy + encodeURIComponent(url);
-
-      for (let i=0; i<maxAttempts; i++){
-        try{
-          const ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
-          const t = ctrl ? setTimeout(() => ctrl.abort(), 9000) : null;
-          const res = await fetch(proxied, ctrl ? { signal: ctrl.signal } : undefined);
-          if (t) clearTimeout(t);
-          if (!res.ok) throw new Error('HTTP ' + res.status);
-          return await res.text();
-        }catch(e){
-          lastErr = e;
-          // small backoff; W3 sometimes needed a second run
-          await new Promise(r => setTimeout(r, 450 + i*350));
-        }
-      }
-    }
-    throw lastErr || new Error('Fetch failed');
+  function pagesCount() {
+    return Math.max(1, Math.ceil(items.length / PAGE_SIZE));
   }
 
-  function parseFeed(xmlText, sourceName){
-    const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
-    const entries = Array.from(doc.getElementsByTagName('entry'));
+  function render() {
+    if (!listEl) return;
 
-    return entries.map(e => {
-      const title = e.getElementsByTagName('title')[0]?.textContent?.trim() || 'Untitled';
-      const link  = e.getElementsByTagName('link')[0]?.getAttribute('href') || '';
-      const vid   = e.getElementsByTagName('yt:videoId')[0]?.textContent?.trim() || '';
-      const pub   = e.getElementsByTagName('published')[0]?.textContent?.trim() || '';
-      return {
-        source: sourceName || '',
-        title,
-        link,
-        videoId: vid,
-        thumb: vid ? ytThumb(vid) : '',
-        published: pub,
-        publishedText: pub ? fmtDate(pub) : ''
-      };
-    }).filter(v => v.videoId && v.link);
-  }
+    const totalPages = pagesCount();
+    page = clamp(page, 0, totalPages - 1);
 
-  function uniqByVideoId(arr){
-    const seen = new Set();
-    const out = [];
-    for (const v of arr){
-      if (!v.videoId) continue;
-      if (seen.has(v.videoId)) continue;
-      seen.add(v.videoId);
-      out.push(v);
-    }
-    return out;
-  }
+    const start = page * PAGE_SIZE;
+    const slice = items.slice(start, start + PAGE_SIZE);
 
-  function getCacheKey(){ return 'vtt_youtube_v1'; }
-
-  function loadCache(){
-    try{
-      const raw = sessionStorage.getItem(getCacheKey());
-      if (!raw) return null;
-      const obj = JSON.parse(raw);
-      if (!obj || !Array.isArray(obj.items) || !obj.ts) return null;
-      // 10 min cache
-      if ((Date.now() - obj.ts) > 10*60*1000) return null;
-      return obj.items;
-    }catch(e){ return null; }
-  }
-
-  function saveCache(items){
-    try{
-      sessionStorage.setItem(getCacheKey(), JSON.stringify({ ts: Date.now(), items }));
-    }catch(e){}
-  }
-
-  function initWidget(root){
-    const pageSize = Math.max(1, parseInt(root.getAttribute('data-yt-page-size') || '2', 10) || 2);
-    const listEl   = root.querySelector('[data-yt-list]');
-    const statusEl = root.querySelector('[data-yt-status]');
-    const prevBtn  = root.querySelector('[data-yt-prev]');
-    const nextBtn  = root.querySelector('[data-yt-next]');
-    const pagerEl  = root.querySelector('[data-yt-pager]');
-
-    let items = [];
-    let page = 0;
-
-    function render(){
-      const total = items.length;
-      const pages = Math.max(1, Math.ceil(total / pageSize));
-      page = Math.max(0, Math.min(page, pages - 1));
-
-      if (pagerEl) pagerEl.textContent = total ? ((page + 1) + '/' + pages) : '0/0';
-
-      if (prevBtn) prevBtn.disabled = (total === 0);
-      if (nextBtn) nextBtn.disabled = (total === 0);
-
-      if (listEl) listEl.innerHTML = '';
-
-      if (!total){
-        if (statusEl) statusEl.innerHTML = '<span class="ytErr">No videos yet (or feed fetch blocked).</span>';
-        return;
-      }
-
-      const start = page * pageSize;
-      const slice = items.slice(start, start + pageSize);
-
-      for (const v of slice){
-        const div = document.createElement('div');
-        div.className = 'ytItem';
-        div.innerHTML = `
-          <a href="${esc(v.link)}" target="_blank" rel="noopener">
-            <img class="ytThumb" src="${esc(v.thumb)}" alt="${esc(v.title)}">
-          </a>
-          <div class="ytTxt">
-            <a href="${esc(v.link)}" target="_blank" rel="noopener">${esc(v.title)}</a>
-            <div class="ytDate">${esc(v.publishedText)} · ${esc(v.source)}</div>
-          </div>
-        `;
-        listEl.appendChild(div);
-      }
-
+    if (!slice.length) {
+      const hasErr = Array.isArray(lastErrors) && lastErrors.length;
+      const hint = hasErr
+        ? 'Feed fetch had errors during the last site build.'
+        : 'If you are previewing locally, run scripts/fetch_youtube.py once.';
+      listEl.innerHTML = '<div class="vw-empty">No videos yet.<div class="vw-hint">' + esc(hint) + '</div></div>';
       if (statusEl) statusEl.textContent = '';
+      if (btnPrev) btnPrev.disabled = true;
+      if (btnNext) btnNext.disabled = true;
+      return;
     }
 
-    if (prevBtn){
-      prevBtn.addEventListener('click', () => { page = Math.max(0, page - 1); render(); });
+    const html = slice
+      .map(function (it) {
+        const t = esc(it.title);
+        const ch = esc(it.channel);
+        const dt = fmtDate(it.published);
+        const href = esc(it.url);
+        const thumb = esc(it.thumbnail);
+
+        return (
+          '<a class="vw-item" href="' + href + '" target="_blank" rel="noopener noreferrer">' +
+          '  <span class="vw-thumb"><img src="' + thumb + '" alt="" loading="lazy"></span>' +
+          '  <span class="vw-info">' +
+          '    <span class="vw-title">' + t + '</span>' +
+          '    <span class="vw-meta">' + (ch ? ch + ' · ' : '') + dt + '</span>' +
+          '  </span>' +
+          '</a>'
+        );
+      })
+      .join('');
+
+    listEl.innerHTML = html;
+
+    if (statusEl) {
+      statusEl.textContent = (page + 1) + ' / ' + totalPages;
     }
-    if (nextBtn){
-      nextBtn.addEventListener('click', () => {
-        const pages = Math.max(1, Math.ceil(items.length / pageSize));
-        page = Math.min(pages - 1, page + 1);
-        render();
-      });
-    }
 
-    async function load(){
-      if (statusEl) statusEl.textContent = 'Loading…';
+    if (btnPrev) btnPrev.disabled = page <= 0;
+    if (btnNext) btnNext.disabled = page >= totalPages - 1;
+  }
 
-      const cached = loadCache();
-      if (cached && cached.length){
-        items = cached;
-        page = 0;
-        render();
-        return;
-      }
+  function go(delta) {
+    page += delta;
+    render();
+  }
 
-      const all = [];
-      const results = await Promise.allSettled(
-        FEEDS.map(async f => {
-          const xml = await fetchTextWithRetry(f.url, 3);
-          return parseFeed(xml, f.name);
-        })
-      );
-
-      for (const r of results){
-        if (r.status === 'fulfilled') all.push(...(r.value || []));
-      }
-
-      items = uniqByVideoId(all).sort((a,b) => new Date(b.published) - new Date(a.published));
-      if (items.length > 120) items = items.slice(0, 120);
-      saveCache(items);
-
-      page = 0;
+  async function load() {
+    try {
+      const url = root.getAttribute('data-json') || '/assets/data/youtube_videos.json';
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      items = Array.isArray(data.items) ? data.items : [];
+      lastErrors = Array.isArray(data.errors) ? data.errors : [];
       render();
-
-      // If everything failed (sometimes proxies flake), auto-try once more.
-      if (!items.length){
-        if (statusEl) statusEl.textContent = 'Retrying…';
-        await new Promise(r => setTimeout(r, 900));
-        sessionStorage.removeItem(getCacheKey());
-        return load();
+    } catch (e) {
+      if (listEl) {
+        listEl.innerHTML = '<div class="vw-empty">Videos unavailable right now.</div>';
       }
+      if (statusEl) statusEl.textContent = '';
+      if (btnPrev) btnPrev.disabled = true;
+      if (btnNext) btnNext.disabled = true;
     }
-
-    load().catch(err => {
-      console.error('[ytWidget] load failed', err);
-      if (statusEl) statusEl.innerHTML = '<span class="ytErr">Could not load videos right now.</span>';
-    });
   }
 
-  function boot(){
-    const root = document.getElementById('ytWidget');
-    if (!root) return;
-    initWidget(root);
-  }
+  if (btnPrev) btnPrev.addEventListener('click', function () { go(-1); });
+  if (btnNext) btnNext.addEventListener('click', function () { go(1); });
 
-  if (document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', boot);
-  } else {
-    boot();
-  }
+  // Optional: mouse wheel scroll through pages
+  root.addEventListener(
+    'wheel',
+    function (ev) {
+      if (!items.length) return;
+      if (Math.abs(ev.deltaY) < 5) return;
+      ev.preventDefault();
+      go(ev.deltaY > 0 ? 1 : -1);
+    },
+    { passive: false }
+  );
+
+  load();
 })();

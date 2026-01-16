@@ -2,88 +2,105 @@
 layout: default
 ---
 
-<div class="grid">
-  <!-- Left rail -->
-  <section class="col left">
-    {% assign hero = site.posts.first %}
-    {% if hero %}
-      <article class="railCard">
-        <div class="kicker">{{ hero.categories[0] | default: "Top Story" }}</div>
-        <h2 class="railTitle"><a href="{{ hero.url | relative_url }}">{{ hero.title }}</a></h2>
-        {% if hero.excerpt %}<p class="railDek">{{ hero.excerpt | strip_html | truncate: 160 }}</p>{% endif %}
-        <div class="railMeta">{{ hero.date | date: "%b %-d" }} · 1 min read</div>
-      </article>
-      <div class="railSep"></div>
-    {% endif %}
+{% assign posts = site.posts %}
+{% assign hero = posts.first %}
+{% assign right = posts[1] %}
 
-    {% for post in site.posts offset:1 limit:3 %}
-      <article class="railCard small">
-        <div class="kicker">{{ post.categories[0] | default: "Update" }}</div>
-        <h3 class="railTitle small"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-        <div class="railMeta">{{ post.date | date: "%b %-d" }} · 1 min read</div>
-      </article>
-      {% unless forloop.last %}<div class="railSep"></div>{% endunless %}
-    {% endfor %}
-  </section>
+<section class="front">
+  <div class="front-grid">
 
-  <!-- Center hero -->
-  <section class="col center">
-    {% assign hero = site.posts.first %}
-    {% if hero %}
-      <article class="hero">
-        <a class="heroImg" href="{{ hero.url | relative_url }}" aria-label="{{ hero.title }}">
-          {% if hero.image %}
-            <img src="{{ hero.image | relative_url }}" alt="" />
-          {% else %}
-            <img src="{{ '/assets/img/hero.svg' | relative_url }}" alt="" />
-          {% endif %}
-        </a>
-        <h1 class="heroTitle"><a href="{{ hero.url | relative_url }}">{{ hero.title }}</a></h1>
-        {% if hero.excerpt %}<p class="heroDek">{{ hero.excerpt | strip_html | truncate: 200 }}</p>{% endif %}
-        <div class="heroMeta">{{ hero.date | date: "%b %-d" }} · 1 min read</div>
-      </article>
-    {% else %}
-      <div class="heroEmpty">No posts yet.</div>
-    {% endif %}
-  </section>
-
-  <!-- Right feature + videos -->
-  <aside class="col right">
-    {% assign feat = site.posts[1] %}
-    <section class="rightCard">
-      <div class="mosaic">
-        <a class="mMain" href="{{ feat.url | relative_url }}" aria-label="Feature">
-          {% if feat and feat.image %}
-            <img src="{{ feat.image | relative_url }}" alt="" />
-          {% else %}
-            <img src="{{ '/assets/img/feature_main.svg' | relative_url }}" alt="" />
-          {% endif %}
-        </a>
-        <div class="mStack">
-          <img src="{{ '/assets/img/feature_1.svg' | relative_url }}" alt="" />
-          <img src="{{ '/assets/img/feature_2.svg' | relative_url }}" alt="" />
-        </div>
+    <!-- Left rail -->
+    <aside class="rail">
+      <div class="rail-block">
+        <a class="kicker" href="{{ hero.url | relative_url }}">Top Story</a>
+        <h2 class="rail-title"><a href="{{ hero.url | relative_url }}">{{ hero.title }}</a></h2>
+        {% if hero.excerpt %}
+          <p class="rail-dek">{{ hero.excerpt | strip_html | truncate: 180 }}</p>
+        {% endif %}
+        <div class="rail-meta">{{ hero.date | date: '%b %-d' }} · {{ hero.content | number_of_words | divided_by: 220 | plus: 1 }} min read</div>
       </div>
-      {% if feat %}
-        <h2 class="rightTitle"><a href="{{ feat.url | relative_url }}">{{ feat.title }}</a></h2>
-        {% if feat.excerpt %}<p class="rightDek">{{ feat.excerpt | strip_html | truncate: 150 }}</p>{% endif %}
-      {% else %}
-        <h2 class="rightTitle">Waterfalls and Wildflowers</h2>
-        <p class="rightDek">Add another post and it will show here.</p>
+
+      {% for p in posts offset: 1 limit: 3 %}
+      <div class="rail-block small">
+        <div class="rail-kicker">{{ p.categories | join: ' · ' | default: 'Update' }}</div>
+        <h3 class="rail-title small"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+        {% if p.excerpt %}
+          <p class="rail-dek">{{ p.excerpt | strip_html | truncate: 120 }}</p>
+        {% endif %}
+        <div class="rail-meta">{{ p.date | date: '%b %-d' }} · {{ p.content | number_of_words | divided_by: 220 | plus: 1 }} min read</div>
+      </div>
+      {% endfor %}
+
+      <div class="rail-block small muted-block">
+        <div class="rail-kicker">Analysis</div>
+        <h3 class="rail-title small"><a href="#">Why the next decade will belong to depth, not noise</a></h3>
+        <p class="rail-dek">A calm, curious approach to news, culture, and long-form thinking.</p>
+      </div>
+    </aside>
+
+    <!-- Center hero -->
+    <article class="hero">
+      <div class="hero-topline">
+        <span class="live">LIVE</span>
+        <span class="hero-line">Vedanta Desk</span>
+        <span class="dot">·</span>
+        <span class="hero-line">{{ hero.date | date: '%b %-d' }}</span>
+      </div>
+
+      <h1 class="hero-title"><a href="{{ hero.url | relative_url }}">{{ hero.title }}</a></h1>
+
+      {% if hero.excerpt %}
+        <p class="hero-dek">{{ hero.excerpt | strip_html | truncate: 220 }}</p>
       {% endif %}
-    </section>
 
-    <section class="rightCard" id="ytWidget" data-yt-page-size="2">
-      <div class="ytHdr">
-        <div class="ytTitle">Latest Videos</div>
-        <div class="ytNav">
-          <button class="ytBtn" type="button" data-yt-prev aria-label="Previous">‹</button>
-          <button class="ytBtn" type="button" data-yt-next aria-label="Next">›</button>
-          <div class="ytPager" data-yt-pager>0/0</div>
+      {% assign hero_img = hero.image | default: '/assets/img/hero.svg' %}
+      <a class="hero-media" href="{{ hero.url | relative_url }}" aria-label="Open: {{ hero.title }}">
+        <img src="{{ hero_img | relative_url }}" alt="" loading="eager" />
+      </a>
+
+      <div class="hero-credit">Photo illustration</div>
+    </article>
+
+    <!-- Right feature -->
+    <aside class="feature">
+      <div class="feature-media">
+        <div class="mosaic">
+          <a class="mosaic-big" href="{{ right.url | relative_url }}" aria-label="Open: {{ right.title }}">
+            <img src="{{ (right.image | default: '/assets/img/feature_main.svg') | relative_url }}" alt="" loading="lazy" />
+          </a>
+          <a class="mosaic-small" href="#" aria-label="Gallery">
+            <img src="{{ '/assets/img/feature_1.svg' | relative_url }}" alt="" loading="lazy" />
+          </a>
+          <a class="mosaic-small" href="#" aria-label="Gallery">
+            <img src="{{ '/assets/img/feature_2.svg' | relative_url }}" alt="" loading="lazy" />
+          </a>
         </div>
       </div>
-      <div class="ytList" data-yt-list></div>
-      <div class="ytStatus" data-yt-status>Loading…</div>
-    </section>
-  </aside>
-</div>
+
+      {% if right %}
+        <h2 class="feature-title"><a href="{{ right.url | relative_url }}">{{ right.title }}</a></h2>
+        {% if right.excerpt %}
+          <p class="feature-dek">{{ right.excerpt | strip_html | truncate: 170 }}</p>
+        {% endif %}
+        <div class="feature-meta">{{ right.date | date: '%b %-d' }} · {{ right.content | number_of_words | divided_by: 220 | plus: 1 }} min read</div>
+      {% else %}
+        <h2 class="feature-title"><a href="#">A second feature story will appear here</a></h2>
+        <p class="feature-dek">Add more posts under <code>_posts</code> to populate this area automatically.</p>
+      {% endif %}
+
+      <div class="video-widget" id="ytWidget" data-json="{{ '/assets/data/youtube_videos.json' | relative_url }}">
+        <div class="vw-head">
+          <div class="vw-h">Latest Videos</div>
+          <div class="vw-controls">
+            <button class="vw-btn" type="button" aria-label="Previous videos" data-vw-prev>&#8249;</button>
+            <button class="vw-btn" type="button" aria-label="Next videos" data-vw-next>&#8250;</button>
+          </div>
+        </div>
+        <div class="vw-sub"><span data-vw-status></span></div>
+        <div class="vw-list" data-vw-list></div>
+      </div>
+
+    </aside>
+
+  </div>
+</section>
