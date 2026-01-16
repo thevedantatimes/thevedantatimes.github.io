@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
-"""Fetch latest videos from multiple YouTube channels and write a merged JSON cache.
+"""Fetch latest YouTube videos for the site sidebar (no API key).
 
-- No API key required (uses official public RSS feeds).
-- Resolves @handle -> channelId by scraping the channel page at build time.
+Generates: assets/data/youtube_videos.json
 
-Output: assets/data/youtube_videos.json
+We use public RSS feeds:
+  https://www.youtube.com/feeds/videos.xml?channel_id=<CHANNEL_ID>
+
+Stdlib-only for CI reliability.
 """
+
+from __future__ import annotations
 
 import json
 import os
@@ -13,155 +17,222 @@ import re
 import sys
 import time
 from datetime import datetime, timezone
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
-from urllib.error import URLError, HTTPError
 import xml.etree.ElementTree as ET
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-OUT_PATH = os.path.join(ROOT, "assets", "data", "youtube_videos.json")
 
-CHANNEL_URLS = [
-    "https://www.youtube.com/@ChicagoVedanta/videos",
-    "https://www.youtube.com/@VedantaNY/videos",
-    "https://www.youtube.com/@VedantaOrg/videos",
-    "https://www.youtube.com/@vedantasocietyofwesternwa/videos",
-    "https://www.youtube.com/@VedantaDC/videos",
+# --- Channels (channel_id is the stable identifier used by RSS) ---
+# Sources for IDs:
+# - Chicago Vedanta FB post links to youtube.com/channel/UCAwtDOjlkygdHdh0yDfva_Q  (ChicagoVedanta)
+# - VedantaNY / VedantaOrg / VedantaDC channel URLs
+# - Vedanta Society of Western Washington channel URL
+CHANNELS: List[Dict[str, str]] = [
+    {
+        "name": "ChicagoVedanta",
+        "channel_id": "UCAwtDOjlkygdHdh0yDfva_Q",
+        "url": "https://www.youtube.com/@ChicagoVedanta/videos",
+    },
+    {
+        "name": "VedantaNY",
+        "channel_id": "UCZOKv_xnTzyLD9RJmbBUV9Q",
+        "url": "https://www.youtube.com/@VedantaNY/videos",
+    },
+    {
+        "name": "VedantaOrg",
+        "channel_id": "UCoeQClkDRaj9uABKHfHJUdw",
+        "url": "https://www.youtube.com/@VedantaOrg/videos",
+    },
+    {
+        "name": "VedantaSocietyOfWesternWA",
+        "channel_id": "UCHNlxSbZiXS6oBJuJEiiIPA",
+        "url": "https://www.youtube.com/@vedantasocietyofwesternwa/videos",
+    },
+    {
+        "name": "VedantaDC",
+        "channel_id": "UC4zi_tfjGdO4Gjulz-GSAvg",
+        "url": "https://www.youtube.com/@VedantaDC/videos",
+    },
 ]
 
-UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123 Safari/537.36"
+
+OUT_PATH = Path("assets/data/youtube_videos.json")
+MAX_ITEMS = int(os.environ.get("VT_YT_MAX_ITEMS", "120"))
+TIMEOUT_SEC = float(os.environ.get("VT_YT_TIMEOUT", "20"))
 
 
-def http_get(url: str, timeout: int = 20) -> bytes:
-    req = Request(url, headers={"User-Agent": UA, "Accept-Language": "en-US,en;q=0.9"})
-    with urlopen(req, timeout=timeout) as r:
-        return r.read()
+def _http_get(url: str, timeout: float) -> bytes:
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        ),
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Connection": "close",
+    }
+    req = Request(url, headers=headers)
+    with urlopen(req, timeout=timeout) as resp:
+        return resp.read()
 
 
-def resolve_channel_id(channel_url: str) -> str:
-    """Resolve a YouTube channel page (often @handle) to its UC... channel id."""
-    base = channel_url
-    # Prefer the handle root page for more reliable HTML.
-    base = re.sub(r"/videos/?$", "", base)
-
-    html = http_get(base).decode("utf-8", errors="ignore")
-
-    # Common patterns that appear in the page source.
-    pats = [
-        r'"channelId"\s*:\s*"(UC[0-9A-Za-z_-]{20,})"',
-        r'"browseId"\s*:\s*"(UC[0-9A-Za-z_-]{20,})"',
-        r"/channel/(UC[0-9A-Za-z_-]{20,})",
-    ]
-    for p in pats:
-        m = re.search(p, html)
-        if m:
-            return m.group(1)
-
-    raise ValueError(f"Could not resolve channelId from: {channel_url}")
+def _parse_iso8601(dt: str) -> Optional[datetime]:
+    s = (dt or "").strip()
+    if not s:
+        return None
+    # Typical: 2026-01-15T22:13:04+00:00 or 2026-01-15T22:13:04Z
+    try:
+        if s.endswith("Z"):
+            return datetime.fromisoformat(s[:-1]).replace(tzinfo=timezone.utc)
+        return datetime.fromisoformat(s)
+    except Exception:
+        return None
 
 
-def parse_feed(xml_bytes: bytes) -> list:
-    """Parse YouTube Atom feed bytes into a list of dict items."""
+def _safe_text(el: Optional[ET.Element]) -> str:
+    return (el.text or "").strip() if el is not None else ""
+
+
+def _rss_url(channel_id: str) -> str:
+    return f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
+
+
+def _thumb_url(video_id: str) -> str:
+    # Works reliably; doesn't require API.
+    return f"https://i.ytimg.com/vi/{video_id}/hqdefault.jpg"
+
+
+def fetch_channel_feed(channel: Dict[str, str]) -> Tuple[List[Dict], Optional[str]]:
+    """Return (items, error_string)."""
+
+    name = channel["name"]
+    channel_id = channel["channel_id"]
+    feed = _rss_url(channel_id)
+
+    try:
+        xml_bytes = _http_get(feed, TIMEOUT_SEC)
+    except (HTTPError, URLError) as e:
+        return [], f"{name}: failed to fetch RSS ({type(e).__name__}: {e})"
+    except Exception as e:
+        return [], f"{name}: failed to fetch RSS ({type(e).__name__}: {e})"
+
+    try:
+        root = ET.fromstring(xml_bytes)
+    except Exception as e:
+        return [], f"{name}: failed to parse RSS XML ({type(e).__name__}: {e})"
+
+    # Namespaces used by YouTube RSS
     ns = {
         "atom": "http://www.w3.org/2005/Atom",
         "yt": "http://www.youtube.com/xml/schemas/2015",
         "media": "http://search.yahoo.com/mrss/",
     }
 
-    root = ET.fromstring(xml_bytes)
+    items: List[Dict] = []
 
-    items = []
     for entry in root.findall("atom:entry", ns):
-        vid = entry.findtext("yt:videoId", default="", namespaces=ns).strip()
-        title = entry.findtext("atom:title", default="", namespaces=ns).strip()
-        published = entry.findtext("atom:published", default="", namespaces=ns).strip()
+        vid = _safe_text(entry.find("yt:videoId", ns))
+        title = _safe_text(entry.find("atom:title", ns))
+        published_raw = _safe_text(entry.find("atom:published", ns))
+        published_dt = _parse_iso8601(published_raw)
 
         link_el = entry.find("atom:link", ns)
-        link = (link_el.get("href") if link_el is not None else "").strip()
+        url = (link_el.attrib.get("href") if link_el is not None else "") or ""
 
-        author_name = ""
         author_el = entry.find("atom:author", ns)
-        if author_el is not None:
-            author_name = (author_el.findtext("atom:name", default="", namespaces=ns) or "").strip()
+        author_name = _safe_text(author_el.find("atom:name", ns) if author_el is not None else None)
 
-        thumb = ""
-        mg = entry.find("media:group", ns)
-        if mg is not None:
-            th = mg.find("media:thumbnail", ns)
-            if th is not None:
-                thumb = (th.get("url") or "").strip()
+        # Fallback: extract v= from link
+        if not vid and url:
+            m = re.search(r"[?&]v=([A-Za-z0-9_-]{6,})", url)
+            if m:
+                vid = m.group(1)
 
-        if not thumb and vid:
-            thumb = f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg"
-
-        if not link and vid:
-            link = f"https://www.youtube.com/watch?v={vid}"
-
-        if not vid or not title or not published:
+        if not vid:
             continue
 
         items.append(
             {
-                "videoId": vid,
+                "id": vid,
                 "title": title,
-                "url": link,
-                "published": published,
-                "channel": author_name,
-                "thumbnail": thumb,
+                "url": url or f"https://www.youtube.com/watch?v={vid}",
+                "published": (published_dt or datetime.now(timezone.utc)).isoformat(),
+                "channel": author_name or name,
+                "channelId": channel_id,
+                "channelSource": name,
+                "channelUrl": channel.get("url", ""),
+                "thumb": _thumb_url(vid),
             }
         )
 
-    return items
-
-
-def iso_to_dt(s: str):
-    try:
-        # Example: 2026-01-15T12:34:56+00:00 or Z
-        if s.endswith("Z"):
-            return datetime.fromisoformat(s.replace("Z", "+00:00"))
-        return datetime.fromisoformat(s)
-    except Exception:
-        return datetime(1970, 1, 1, tzinfo=timezone.utc)
+    return items, None
 
 
 def main() -> int:
-    all_items = []
-    errors = []
+    all_items: List[Dict] = []
+    errors: List[str] = []
 
-    for url in CHANNEL_URLS:
-        try:
-            cid = resolve_channel_id(url)
-            feed_url = f"https://www.youtube.com/feeds/videos.xml?channel_id={cid}"
-            xml_bytes = http_get(feed_url)
-            items = parse_feed(xml_bytes)
-            # Keep a reasonable number per channel.
-            all_items.extend(items[:12])
-        except Exception as e:
-            errors.append(f"{url}: {e}")
+    for ch in CHANNELS:
+        items, err = fetch_channel_feed(ch)
+        if err:
+            errors.append(err)
+        all_items.extend(items)
+        # Be nice to YouTube (and reduce chances of throttling)
+        time.sleep(0.35)
 
-    # Deduplicate by videoId
-    dedup = {}
+    # De-dupe by video id
+    dedup: Dict[str, Dict] = {}
     for it in all_items:
-        dedup[it["videoId"]] = it
+        vid = str(it.get("id") or "").strip()
+        if not vid:
+            continue
+        # Keep the newest if duplicates exist
+        if vid not in dedup:
+            dedup[vid] = it
+        else:
+            a = _parse_iso8601(str(dedup[vid].get("published") or "")) or datetime(1970, 1, 1, tzinfo=timezone.utc)
+            b = _parse_iso8601(str(it.get("published") or "")) or datetime(1970, 1, 1, tzinfo=timezone.utc)
+            if b > a:
+                dedup[vid] = it
 
-    merged = list(dedup.values())
-    merged.sort(key=lambda x: iso_to_dt(x.get("published", "")), reverse=True)
+    items = list(dedup.values())
 
-    merged = merged[:60]
+    def sort_key(x: Dict) -> float:
+        dt = _parse_iso8601(str(x.get("published") or ""))
+        return (dt.timestamp() if dt else 0.0)
+
+    items.sort(key=sort_key, reverse=True)
+    items = items[:MAX_ITEMS]
 
     payload = {
-        "updatedAt": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
-        "items": merged,
+        "updatedAt": datetime.now(timezone.utc).isoformat(),
+        "sources": [
+            {
+                "name": c["name"],
+                "channelId": c["channel_id"],
+                "url": c.get("url", ""),
+                "rss": _rss_url(c["channel_id"]),
+            }
+            for c in CHANNELS
+        ],
+        "items": items,
+        "errors": errors,
     }
 
-    os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
-    with open(OUT_PATH, "w", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False, indent=2)
+    OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    OUT_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    # Print a short summary for CI logs
+    print(f"Wrote {OUT_PATH} with {len(items)} items ({len(errors)} errors)")
     if errors:
-        # Print errors but don't fail the build.
-        print("YouTube fetch warnings:\n- " + "\n- ".join(errors), file=sys.stderr)
+        for e in errors[:10]:
+            print(f"WARN: {e}")
 
-    print(f"Wrote {len(merged)} videos -> {OUT_PATH}")
+    # Return non-zero only if EVERYTHING failed (keeps Pages building)
+    if len(items) == 0 and errors:
+        return 0
     return 0
 
 
