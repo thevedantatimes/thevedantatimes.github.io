@@ -10,6 +10,7 @@
   const PAGE_SIZE = 2;
   let items = [];
   let page = 0;
+  let lastErrors = [];
 
   function clamp(n, min, max) {
     return Math.min(max, Math.max(min, n));
@@ -44,7 +45,11 @@
     const slice = items.slice(start, start + PAGE_SIZE);
 
     if (!slice.length) {
-      listEl.innerHTML = '<div class="vw-empty">No videos yet.</div>';
+      const hasErr = Array.isArray(lastErrors) && lastErrors.length;
+      const hint = hasErr
+        ? 'Feed fetch had errors during the last site build.'
+        : 'If you are previewing locally, run scripts/fetch_youtube.py once.';
+      listEl.innerHTML = '<div class="vw-empty">No videos yet.<div class="vw-hint">' + esc(hint) + '</div></div>';
       if (statusEl) statusEl.textContent = '';
       if (btnPrev) btnPrev.disabled = true;
       if (btnNext) btnNext.disabled = true;
@@ -93,6 +98,7 @@
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
       items = Array.isArray(data.items) ? data.items : [];
+      lastErrors = Array.isArray(data.errors) ? data.errors : [];
       render();
     } catch (e) {
       if (listEl) {
