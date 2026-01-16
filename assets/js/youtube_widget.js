@@ -131,7 +131,7 @@
 
   async function fetchTextWithProxy(url) {
     // Try each proxy, and retry (a couple times) because proxies can be flaky.
-    const maxAttemptsPerProxy = 2;
+    const maxAttemptsPerProxy = 3;
     for (let p = 0; p < PROXIES.length; p++) {
       for (let a = 0; a < maxAttemptsPerProxy; a++) {
         try {
