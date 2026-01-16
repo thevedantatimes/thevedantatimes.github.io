@@ -32,7 +32,7 @@ import xml.etree.ElementTree as ET
 CHANNELS: List[Dict[str, str]] = [
     {
         "name": "ChicagoVedanta",
-        "channel_id": "UCAwtDOjlkygdHdh0yDfva_Q",
+        "channel_id": "UC64nHa3IWptZ-KPlQxdfsbw",
         "url": "https://www.youtube.com/@ChicagoVedanta/videos",
     },
     {
