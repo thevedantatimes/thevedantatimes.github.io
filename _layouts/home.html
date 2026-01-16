@@ -87,6 +87,19 @@ layout: default
         <h2 class="feature-title"><a href="#">A second feature story will appear here</a></h2>
         <p class="feature-dek">Add more posts under <code>_posts</code> to populate this area automatically.</p>
       {% endif %}
+
+      <div class="video-widget" id="ytWidget" data-json="{{ '/assets/data/youtube_videos.json' | relative_url }}">
+        <div class="vw-head">
+          <div class="vw-h">Latest Videos</div>
+          <div class="vw-controls">
+            <button class="vw-btn" type="button" aria-label="Previous videos" data-vw-prev>&#8249;</button>
+            <button class="vw-btn" type="button" aria-label="Next videos" data-vw-next>&#8250;</button>
+          </div>
+        </div>
+        <div class="vw-sub"><span data-vw-status></span></div>
+        <div class="vw-list" data-vw-list></div>
+      </div>
+
     </aside>
 
   </div>
