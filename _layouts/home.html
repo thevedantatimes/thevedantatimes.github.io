@@ -1,0 +1,93 @@
+---
+layout: default
+---
+
+{% assign posts = site.posts %}
+{% assign hero = posts.first %}
+{% assign right = posts[1] %}
+
+<section class="front">
+  <div class="front-grid">
+
+    <!-- Left rail -->
+    <aside class="rail">
+      <div class="rail-block">
+        <a class="kicker" href="{{ hero.url | relative_url }}">Top Story</a>
+        <h2 class="rail-title"><a href="{{ hero.url | relative_url }}">{{ hero.title }}</a></h2>
+        {% if hero.excerpt %}
+          <p class="rail-dek">{{ hero.excerpt | strip_html | truncate: 180 }}</p>
+        {% endif %}
+        <div class="rail-meta">{{ hero.date | date: '%b %-d' }} · {{ hero.content | number_of_words | divided_by: 220 | plus: 1 }} min read</div>
+      </div>
+
+      {% for p in posts offset: 1 limit: 3 %}
+      <div class="rail-block small">
+        <div class="rail-kicker">{{ p.categories | join: ' · ' | default: 'Update' }}</div>
+        <h3 class="rail-title small"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+        {% if p.excerpt %}
+          <p class="rail-dek">{{ p.excerpt | strip_html | truncate: 120 }}</p>
+        {% endif %}
+        <div class="rail-meta">{{ p.date | date: '%b %-d' }} · {{ p.content | number_of_words | divided_by: 220 | plus: 1 }} min read</div>
+      </div>
+      {% endfor %}
+
+      <div class="rail-block small muted-block">
+        <div class="rail-kicker">Analysis</div>
+        <h3 class="rail-title small"><a href="#">Why the next decade will belong to depth, not noise</a></h3>
+        <p class="rail-dek">A calm, curious approach to news, culture, and long-form thinking.</p>
+      </div>
+    </aside>
+
+    <!-- Center hero -->
+    <article class="hero">
+      <div class="hero-topline">
+        <span class="live">LIVE</span>
+        <span class="hero-line">Vedanta Desk</span>
+        <span class="dot">·</span>
+        <span class="hero-line">{{ hero.date | date: '%b %-d' }}</span>
+      </div>
+
+      <h1 class="hero-title"><a href="{{ hero.url | relative_url }}">{{ hero.title }}</a></h1>
+
+      {% if hero.excerpt %}
+        <p class="hero-dek">{{ hero.excerpt | strip_html | truncate: 220 }}</p>
+      {% endif %}
+
+      {% assign hero_img = hero.image | default: '/assets/img/hero.svg' %}
+      <a class="hero-media" href="{{ hero.url | relative_url }}" aria-label="Open: {{ hero.title }}">
+        <img src="{{ hero_img | relative_url }}" alt="" loading="eager" />
+      </a>
+
+      <div class="hero-credit">Photo illustration</div>
+    </article>
+
+    <!-- Right feature -->
+    <aside class="feature">
+      <div class="feature-media">
+        <div class="mosaic">
+          <a class="mosaic-big" href="{{ right.url | relative_url }}" aria-label="Open: {{ right.title }}">
+            <img src="{{ (right.image | default: '/assets/img/feature_main.svg') | relative_url }}" alt="" loading="lazy" />
+          </a>
+          <a class="mosaic-small" href="#" aria-label="Gallery">
+            <img src="{{ '/assets/img/feature_1.svg' | relative_url }}" alt="" loading="lazy" />
+          </a>
+          <a class="mosaic-small" href="#" aria-label="Gallery">
+            <img src="{{ '/assets/img/feature_2.svg' | relative_url }}" alt="" loading="lazy" />
+          </a>
+        </div>
+      </div>
+
+      {% if right %}
+        <h2 class="feature-title"><a href="{{ right.url | relative_url }}">{{ right.title }}</a></h2>
+        {% if right.excerpt %}
+          <p class="feature-dek">{{ right.excerpt | strip_html | truncate: 170 }}</p>
+        {% endif %}
+        <div class="feature-meta">{{ right.date | date: '%b %-d' }} · {{ right.content | number_of_words | divided_by: 220 | plus: 1 }} min read</div>
+      {% else %}
+        <h2 class="feature-title"><a href="#">A second feature story will appear here</a></h2>
+        <p class="feature-dek">Add more posts under <code>_posts</code> to populate this area automatically.</p>
+      {% endif %}
+    </aside>
+
+  </div>
+</section>

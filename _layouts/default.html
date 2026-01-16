@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}" />
+  </head>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+
+    <header class="masthead">
+      <div class="mast-top">
+        <div class="mast-left">
+          <div class="mast-date">{{ site.time | date: '%A, %B %-d, %Y' }}</div>
+          <div class="mast-sub">Today's Paper</div>
+        </div>
+
+        <div class="mast-logo" aria-label="{{ site.title }}">
+          <a href="{{ '/' | relative_url }}" class="logo">{{ site.title }}</a>
+        </div>
+
+        <div class="mast-right">
+          <div class="mast-market"><span class="muted">Market</span> <span class="pos">+0.6%</span> <span class="arrow">↑</span></div>
+          <div class="mast-mini">Dow</div>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Primary">
+        <a href="#" class="nav-item">U.S.</a>
+        <a href="#" class="nav-item">World</a>
+        <a href="#" class="nav-item">Business</a>
+        <a href="#" class="nav-item">Arts</a>
+        <a href="#" class="nav-item">Lifestyle</a>
+        <a href="#" class="nav-item">Opinion</a>
+        <a href="#" class="nav-item">Video</a>
+        <a href="#" class="nav-item">Audio</a>
+        <a href="#" class="nav-item">Games</a>
+        <a href="#" class="nav-item">Cooking</a>
+      </nav>
+
+      <div class="mast-rules" aria-hidden="true"></div>
+    </header>
+
+    <main id="content" class="page">
+      {{ content }}
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-title">{{ site.title }}</div>
+        <div class="footer-meta">© {{ site.time | date: '%Y' }}. Built with Jekyll.</div>
+      </div>
+    </footer>
+  </body>
+</html>
