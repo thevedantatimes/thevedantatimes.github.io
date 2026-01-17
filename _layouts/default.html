@@ -39,7 +39,7 @@
             {% assign cats = site.categories | sort %}
             {% for c in cats %}
               {% assign name = c[0] %}
-              <a role="menuitem" href="{{ '/category/' | relative_url }}?c={{ name | url_encode }}">{{ name }}</a>
+              <a role="menuitem" href="{{ '/category/' | relative_url }}?c={{ name | url_encode }}">                <span class="nav-dd-label">{{ name }}</span>                <span class="nav-dd-count">({{ c[1] | size }})</span>              </a>
             {% endfor %}
           </div>
         </div>
