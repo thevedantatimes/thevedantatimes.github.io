@@ -17,6 +17,14 @@ a{color:var(--link);text-decoration:none}
 a:hover{text-decoration:underline}
 code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size:.95em}
 
+/* Home page hover rules */
+body.is-home a:hover{text-decoration:none}
+body.is-home .nav a.nav-item:hover,
+body.is-home .nav button.nav-item:hover{ text-decoration:underline }
+body.is-home a.cat:hover{ text-decoration:underline }
+body.is-home .hero-title a:hover,
+body.is-home .rail-title a:hover,
+
 .skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
 .skip:focus{left:10px;top:10px;width:auto;height:auto;padding:10px;background:#fff;border:1px solid var(--rule);z-index:999}
 
