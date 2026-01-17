@@ -6,7 +6,7 @@ image: /assets/img/birthday.webp
 featured: true
 categories:
   - New York
-  - Sarvapriyananda
+  - Swami Sarvapriyananda
   - Yoga
 snippet: "Swami explains Advaita: you’re already Brahman; ignorance causes bondage; insight frees, supported by other yogas."
 ---
