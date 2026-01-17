@@ -6,7 +6,7 @@ image: /assets/img/birthday.webp
 featured: true
 categories:
   - Chicago
-  - Vivekananda
+  - Swami Vivekananda
 snippet: "Youth voices renew Vivekananda’s message: strength, harmony, service, and inner divinity for all."
 ---
 
