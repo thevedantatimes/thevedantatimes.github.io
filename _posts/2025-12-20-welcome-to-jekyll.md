@@ -4,6 +4,7 @@ title: "Welcome to Jekyll!"
 date: 2025-12-20 00:34:00 -0600
 categories:
   - Updates
+image: /assets/img/IMG_0832.webp
 snippet: "A quick welcome and a starting point for publishing posts on The Vedanta Times."
 ---
 
