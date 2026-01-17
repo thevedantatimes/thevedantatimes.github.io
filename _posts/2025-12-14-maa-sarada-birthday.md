@@ -7,8 +7,8 @@ featured: true
 categories:
   - Chicago
   - Vivekananda
-  - MaaSarada
-  - Ishatmananda
+  - Maa Sarada
+  - Swami Ishatmananda
 snippet: "Maa Sarada Jayanti honored her patience, forbearance, self-control, and compassion through talks, songs, prayer."
 ---
 Chicago in mid-December can feel like a test of endurance. The air bites, the wind sharpens every step, and even a short walk outside can feel like a challenge. Yet on this cold day, devotees still gathered at the Vivekananda Vedanta Society of Chicago to celebrate **Maa Sarada Devi’s birthday puja**. Swami Ishatmananda began by noticing something simple and deeply meaningful: the weather may be harsh, but the pull of the Holy Mother is stronger. Her spirituality, purity, and love attract people even through discomfort and distance. That, he suggested, is itself a sign of her living presence in the hearts of devotees.
