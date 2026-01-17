@@ -6,7 +6,7 @@ image: /assets/img/birthday.webp
 featured: true
 categories:
   - New York
-  - Sarvapriyananda
+  - Swami Sarvapriyananda
   - Meditation
 snippet: "Swami’s New York talk: improve meditation through repetition and dispassion, plus practical habits."
 ---
