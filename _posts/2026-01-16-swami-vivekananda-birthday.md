@@ -1,14 +1,13 @@
 ---
 layout: post
-title: "Celebrating Swami Vivekananda: Youth Voices, Vedanta, and a Living Message in Chicago"
+title: "Swami Vivekananda’s Living Message Through Youth Voices"
 date: 2026-01-16 00:34:00 -0600
 image: /assets/img/feature_main.svg
 featured: true
 categories:
   - Chicago
   - Vivekananda
-  - Youth
-snippet: "A Chicago celebration shows how Vivekananda’s message becomes lived practice through youth voices, devotion, and practical strength."
+snippet: "Youth voices renew Vivekananda’s message: strength, harmony, service, and inner divinity for all."
 ---
 
 Some gatherings feel like a program. Others feel like a current, something you step into and it quietly carries you. The celebration at Vivekananda Vedanta Society of Chicago, had that second quality. The day unfolded as a tribute to Swami Vivekananda, but what made it memorable was not only the reverence. It was the way multiple generations, especially the young, spoke with clarity and ownership of Swamiji’s message, as if they were not repeating history but extending it.
