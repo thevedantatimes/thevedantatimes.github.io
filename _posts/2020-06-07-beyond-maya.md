@@ -6,7 +6,7 @@ image: /assets/img/birthday.webp
 featured: true
 categories:
   - Chicago
-  - Ishatmananda
+  - Swami Ishatmananda
   - Maya
 snippet: "Swami urges transcend Maya through Mother’s grace, sattva growth, surrender, and God-centered inner joy."
 ---
