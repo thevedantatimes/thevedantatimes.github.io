@@ -5,6 +5,7 @@ date: 2026-01-14 10:00:00 -0600
 categories:
   - Vedanta
   - Teachings
+image: /assets/img/IMG_0834.webp
 snippet: "A short introduction: what to expect here—clear writing, rooted sources, and practice-forward Vedanta."
 ---
 
