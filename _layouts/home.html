@@ -106,12 +106,8 @@ layout: default
               <img src="{{ '/assets/img/feature_main.svg' | relative_url }}" alt="" loading="lazy" />
             </a>
           {% endif %}
-          <a class="mosaic-small" href="#" aria-label="Gallery">
-            <img src="{{ '/assets/img/feature_1.svg' | relative_url }}" alt="" loading="lazy" />
-          </a>
-          <a class="mosaic-small" href="#" aria-label="Gallery">
-            <img src="{{ '/assets/img/feature_2.svg' | relative_url }}" alt="" loading="lazy" />
-          </a>
+          <div class="mosaic-tile mosaic-small mosaic-yt" data-yt-channel="{{ site.home_youtube_channels[0] | default: '' }}" data-yt-cachekey="home_yt_0" aria-label="Latest video from channel 1"></div>
+          <div class="mosaic-tile mosaic-small mosaic-yt" data-yt-channel="{{ site.home_youtube_channels[1] | default: '' }}" data-yt-cachekey="home_yt_1" aria-label="Latest video from channel 2"></div>
         </div>
       </div>
 

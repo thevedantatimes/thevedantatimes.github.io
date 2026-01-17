@@ -442,5 +442,94 @@
     { passive: false }
   );
 
+  // ==========================
+  // Home page mosaic video tiles
+  // Replaces feature_1/feature_2 SVGs with 2 autoplay-muted latest videos.
+  // Channel IDs can be configured in _config.yml -> home_youtube_channels.
+  // Cached in localStorage (same prefix as widget).
+  // ==========================
+  function extractChannelIdFromFeedUrl(u) {
+    const m = String(u || '').match(/channel_id=([^&]+)/i);
+    return m ? decodeURIComponent(m[1]) : '';
+  }
+
+  function mkEmbed(videoId) {
+    const vid = String(videoId || '').trim();
+    if (!vid) return '';
+    // loop requires playlist=<videoId>
+    return (
+      'https://www.youtube.com/embed/' +
+      encodeURIComponent(vid) +
+      '?autoplay=1&mute=1&playsinline=1&controls=0&rel=0&modestbranding=1&loop=1&playlist=' +
+      encodeURIComponent(vid)
+    );
+  }
+
+  function renderTile(el, item) {
+    if (!el) return;
+    const src = item && item.videoId ? mkEmbed(item.videoId) : '';
+    if (!src) {
+      el.innerHTML = '<div class="mosaic-yt-empty">Set 2 channel IDs in <code>_config.yml</code> → <code>home_youtube_channels</code></div>';
+      return;
+    }
+    el.innerHTML = '';
+    const ifr = document.createElement('iframe');
+    ifr.src = src;
+    ifr.loading = 'lazy';
+    ifr.allow = 'autoplay; encrypted-media; picture-in-picture';
+    ifr.setAttribute('allowfullscreen', '');
+    ifr.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+    el.appendChild(ifr);
+  }
+
+  async function getLatestForChannel(channelId) {
+    const cid = String(channelId || '').trim();
+    if (!cid) return null;
+
+    const cacheKey = 'tile::' + cid;
+    const cached = readCache(cacheKey);
+    if (cached && cached.length) return cached[0];
+
+    // Fetch once (do not fill to target; just get newest and cache)
+    const feedUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + encodeURIComponent(cid);
+    try {
+      const xml = await fetchTextWithProxy(feedUrl);
+      const parsed = parseRss(xml, cid);
+      if (parsed && parsed.length) {
+        writeCache(cacheKey, parsed);
+        return parsed[0];
+      }
+    } catch (e) {
+      // ignore
+    }
+    return null;
+  }
+
+  function initHomeMosaicTiles() {
+    const tiles = Array.from(document.querySelectorAll('.mosaic-yt[data-yt-channel]'));
+    if (!tiles.length) return;
+
+    tiles.forEach(function (el, idx) {
+      let cid = String(el.getAttribute('data-yt-channel') || '').trim();
+      if (!cid) {
+        // fallback: use FEEDS[0], FEEDS[1]
+        const f = FEEDS[idx] || FEEDS[0];
+        cid = extractChannelIdFromFeedUrl(f && f.url);
+      }
+
+      const cacheKey = 'tile::' + cid;
+      const cached = cid ? readCache(cacheKey) : [];
+      if (cached && cached.length) renderTile(el, cached[0]);
+
+      // Refresh in background (keeps it "latest"; cache persists across visits)
+      getLatestForChannel(cid).then(function (item) {
+        if (!item) return;
+        renderTile(el, item);
+      });
+    });
+  }
+
+  initHomeMosaicTiles();
+
   load();
 })();

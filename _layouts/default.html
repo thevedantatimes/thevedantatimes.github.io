@@ -6,7 +6,7 @@
     <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
     <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}" />
   </head>
-  <body>
+  <body class="{% if page.url == '/' %}is-home{% endif %}">
     <a class="skip" href="#content">Skip to content</a>
 
     <header class="masthead">

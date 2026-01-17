@@ -4,3 +4,9 @@ baseurl: ""
 url: "https://thevedantatimes.github.io"
 
 excerpt_separator: "<!--more-->"
+
+# Home page video tiles (right mosaic)
+# Add 2 YouTube Channel IDs (they start with "UC...")
+home_youtube_channels:
+  - ""
+  - ""
