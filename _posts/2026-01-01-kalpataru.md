@@ -6,9 +6,9 @@ image: /assets/img/birthday.webp
 featured: true
 categories:
   - Chicago
-  - Vivekananda
+  - Swami Vivekananda
   - Kalpataru
-  - Ishatmananda
+  - Swami Ishatmananda
 snippet: "Kalpataru Day recalls Ramakrishna’s grace, urging prayer, discrimination, love, and God-realization now."
 ---
 The first day of the year carries a special mood for many of us. It feels like a clean page, a new start, a fresh promise. But in the spiritual tradition of Sri Ramakrishna, **January 1** is not only a calendar milestone. It is remembered as **Kalpataru Day**: the day Sri Ramakrishna revealed an extraordinary outpouring of compassion, blessing devotees with fearlessness and divine shelter. In the Vivekananda Vedanta Society of Chicago, Swami Ishatmananda’s talk invites everyone to enter this sacred remembrance not as a distant story, but as a living opportunity: a day to pray deeply, to renew aspiration, and to turn the mind toward God-realization, the true goal of human life.
