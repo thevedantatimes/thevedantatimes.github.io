@@ -3,7 +3,6 @@ layout: post
 title: "Celebrating Swami Vivekananda: Youth Voices, Vedanta, and a Living Message in Chicago"
 date: 2026-01-16 00:34:00 -0600
 image: /assets/img/feature_main.svg
-featured: true
 categories:
   - Chicago
   - Vivekananda
