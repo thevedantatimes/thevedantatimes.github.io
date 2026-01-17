@@ -7,9 +7,9 @@ featured: true
 categories:
   - Chicago
   - Vivekananda
-  - Ishatmananda
+  - Swami Ishatmananda
   - Kathamrita
-  - SriRamakrishna
+  - Sri Ramakrishna
 snippet: "Reflections on a Bengali Kathamrita session by Swami Ishatmananda at Vivekananda Vedanta Society, Chicago."
 ---
 On a quiet Sunday in Chicago, the Vivekananda Vedanta Society gathers for something beautifully old-fashioned and surprisingly modern at the same time: listening together to **Sri Ramakrishna Kathamrita** in Bengali. Swami Ishatmananda begins in a warm, practical way, explaining the rhythm of the monthly reading: usually the first Sunday, though this time it has shifted to the second. The tone is familial, as if reminding everyone, “Yes, we’re continuing; yes, we’re together.” And then he offers a simple conviction that sets the mood for the entire session: the more people hear and understand this text, the more auspicious it becomes for their lives.
