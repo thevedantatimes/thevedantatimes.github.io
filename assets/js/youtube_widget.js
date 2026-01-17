@@ -48,6 +48,235 @@
   let items = [];
   let dropdownEl = null;
 
+
+  // -------------------------
+  // In-tab video overlay player
+  // -------------------------
+  let _vttOverlayReady = false;
+
+  function _vttEnsureOverlay() {
+    if (_vttOverlayReady) return;
+    _vttOverlayReady = true;
+
+    const el = document.createElement('div');
+    el.id = 'vttVideoOverlay';
+    el.className = 'vtt-vo';
+    el.setAttribute('aria-hidden', 'true');
+    el.innerHTML =
+      '<div class="vtt-vo-backdrop" data-vo-close></div>' +
+      '<div class="vtt-vo-panel" role="dialog" aria-modal="true" aria-label="Video player">' +
+      '  <button class="vtt-vo-close" type="button" aria-label="Close" data-vo-close>×</button>' +
+      '  <div class="vtt-vo-frame" data-vo-frame></div>' +
+      '</div>';
+
+    document.body.appendChild(el);
+
+    el.addEventListener('click', function (ev) {
+      const c = ev.target && ev.target.closest ? ev.target.closest('[data-vo-close]') : null;
+      if (c) _vttCloseOverlay();
+    });
+
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape') _vttCloseOverlay();
+    });
+  }
+
+  function _vttOpenOverlay(videoId) {
+    videoId = String(videoId || '').trim();
+    if (!videoId) return;
+    _vttEnsureOverlay();
+
+    const el = document.getElementById('vttVideoOverlay');
+    if (!el) return;
+
+    const frame = el.querySelector('[data-vo-frame]');
+    if (frame) {
+      // Use nocookie embed for privacy + keep viewer inside the site.
+      const src =
+        'https://www.youtube-nocookie.com/embed/' +
+        encodeURIComponent(videoId) +
+        '?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1';
+
+      frame.innerHTML =
+        '<iframe class="vtt-vo-iframe" ' +
+        'src="' +
+        src +
+        '" title="YouTube video player" frameborder="0" ' +
+        'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+        'allowfullscreen></iframe>';
+    }
+
+    el.classList.add('open');
+    el.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('vtt-vo-open');
+  }
+
+  function _vttCloseOverlay() {
+    const el = document.getElementById('vttVideoOverlay');
+    if (!el) return;
+    const frame = el.querySelector('[data-vo-frame]');
+    if (frame) frame.innerHTML = '';
+    el.classList.remove('open');
+    el.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('vtt-vo-open');
+  }
+
+  function _vttExtractVideoIdFromUrl(href) {
+    try {
+      const u = new URL(href, window.location.href);
+      const host = (u.hostname || '').toLowerCase();
+      if (host.endsWith('youtu.be')) {
+        const id = (u.pathname || '').replace(/^\/+/, '').split('/')[0];
+        return id || '';
+      }
+      const v = u.searchParams.get('v');
+      if (v) return v;
+      const parts = (u.pathname || '').split('/').filter(Boolean);
+      // /shorts/<id>
+      const i = parts.indexOf('shorts');
+      if (i >= 0 && parts[i + 1]) return parts[i + 1];
+      // /embed/<id>
+      const j = parts.indexOf('embed');
+      if (j >= 0 && parts[j + 1]) return parts[j + 1];
+      return '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  // -------------------------
+  // Home page autoplay tiles (2 channels)
+  // -------------------------
+  const HOME_TILE_PREFIX = 'vtt_home_tile_v1::';
+  const HOME_TILE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
+
+  function _vttChannelIdFromFeedUrl(feedUrl) {
+    try {
+      const u = new URL(feedUrl);
+      return u.searchParams.get('channel_id') || '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function _vttGetHomeChannelIds() {
+    const cfg = Array.isArray(window.VTT_HOME_YT_CHANNELS) ? window.VTT_HOME_YT_CHANNELS : [];
+    const cleaned = cfg
+      .map(function (s) {
+        return String(s || '').trim();
+      })
+      .filter(function (s) {
+        return /^UC[\w-]{10,}$/.test(s);
+      });
+
+    if (cleaned.length >= 2) return cleaned.slice(0, 2);
+
+    // fallback: first 2 FEEDS
+    const fb = FEEDS.map(function (f) {
+      return _vttChannelIdFromFeedUrl(f.url);
+    }).filter(Boolean);
+
+    return fb.slice(0, 2);
+  }
+
+  function _vttReadHomeTileCache(channelId) {
+    try {
+      const raw = localStorage.getItem(HOME_TILE_PREFIX + channelId);
+      if (!raw) return null;
+      const obj = JSON.parse(raw);
+      if (!obj || !obj.videoId) return null;
+      const ts = new Date(obj.updatedAt || 0).getTime();
+      if (!ts || Date.now() - ts > HOME_TILE_TTL_MS) return null;
+      return obj;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function _vttWriteHomeTileCache(channelId, videoId, published) {
+    try {
+      localStorage.setItem(
+        HOME_TILE_PREFIX + channelId,
+        JSON.stringify({ updatedAt: new Date().toISOString(), videoId: videoId, published: published || '' })
+      );
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  function _vttRenderTeaserInto(el, videoId) {
+    if (!el) return;
+    videoId = String(videoId || '').trim();
+    el.setAttribute('data-video-id', videoId);
+
+    if (!videoId) {
+      el.innerHTML = '<div class="vb-yt-ph">Video</div>';
+      return;
+    }
+
+    const src =
+      'https://www.youtube-nocookie.com/embed/' +
+      encodeURIComponent(videoId) +
+      '?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=' +
+      encodeURIComponent(videoId);
+
+    el.innerHTML =
+      '<div class="vb-yt-teaser" aria-hidden="true">' +
+      '  <iframe class="vb-yt-teaser-iframe" src="' +
+      src +
+      '" title="" frameborder="0" ' +
+      'allow="autoplay; encrypted-media; picture-in-picture" ' +
+      'allowfullscreen></iframe>' +
+      '  <div class="vb-yt-teaser-shade"></div>' +
+      '  <div class="vb-yt-teaser-play">▶</div>' +
+      '</div>';
+  }
+
+  async function _vttInstallHomeTiles() {
+    const slots = Array.from(document.querySelectorAll('[data-home-yt-slot]'));
+    if (!slots.length) return;
+
+    const channelIds = _vttGetHomeChannelIds();
+
+    slots.forEach(function (el) {
+      el.classList.add('vb-yt-tile');
+      _vttRenderTeaserInto(el, '');
+
+      el.addEventListener('click', function (ev) {
+        const vid = el.getAttribute('data-video-id') || '';
+        if (!vid) return;
+        ev.preventDefault();
+        _vttOpenOverlay(vid);
+      });
+    });
+
+    for (let i = 0; i < slots.length; i++) {
+      const el = slots[i];
+      const idx = parseInt(el.getAttribute('data-home-yt-slot') || String(i), 10) || 0;
+      const channelId = channelIds[idx] || channelIds[i] || '';
+      if (!channelId) continue;
+
+      const cached = _vttReadHomeTileCache(channelId);
+      if (cached && cached.videoId) {
+        _vttRenderTeaserInto(el, cached.videoId);
+        continue;
+      }
+
+      try {
+        const feedUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + encodeURIComponent(channelId);
+        const txt = await fetchTextWithProxy(feedUrl);
+        const parsed = parseRss(txt, '@' + channelId);
+        const first = (parsed || [])[0];
+        if (first && first.videoId) {
+          _vttWriteHomeTileCache(channelId, first.videoId, first.published);
+          _vttRenderTeaserInto(el, first.videoId);
+        }
+      } catch (e) {
+        // ignore
+      }
+    }
+  }
+
   function clamp(n, min, max) {
     return Math.min(max, Math.max(min, n));
   }
@@ -273,10 +502,14 @@
         const href = esc(it.url);
         const thumb = esc(it.thumbnail);
 
+        const vid = esc(it.videoId);
+
         return (
           '<a class="vw-item" href="' +
           href +
-          '" target="_blank" rel="noopener noreferrer">' +
+          '" data-video-id="' +
+          vid +
+          '">' +
           '  <span class="vw-thumb"><img src="' +
           thumb +
           '" alt="" loading="lazy"></span>' +
@@ -397,6 +630,9 @@
   }
 
   async function load() {
+    // Home page autoplay tiles (non-blocking)
+    _vttInstallHomeTiles().catch(function(){ });
+
     // Start gated: nothing in the widget chrome should show until caches are filled.
     setGated(true, 'Loading videos…');
     if (listEl) listEl.innerHTML = '';
@@ -430,6 +666,18 @@
       go(1);
     });
 
+
+  if (listEl) {
+    listEl.addEventListener('click', function (ev) {
+      const a = ev.target && ev.target.closest ? ev.target.closest('a.vw-item') : null;
+      if (!a) return;
+      const vid = a.getAttribute('data-video-id') || _vttExtractVideoIdFromUrl(a.getAttribute('href') || '');
+      if (!vid) return;
+      ev.preventDefault();
+      _vttOpenOverlay(vid);
+    });
+  }
+
   // Optional: mouse wheel scroll through pages
   root.addEventListener(
     'wheel',
@@ -441,95 +689,6 @@
     },
     { passive: false }
   );
-
-  // ==========================
-  // Home page mosaic video tiles
-  // Replaces feature_1/feature_2 SVGs with 2 autoplay-muted latest videos.
-  // Channel IDs can be configured in _config.yml -> home_youtube_channels.
-  // Cached in localStorage (same prefix as widget).
-  // ==========================
-  function extractChannelIdFromFeedUrl(u) {
-    const m = String(u || '').match(/channel_id=([^&]+)/i);
-    return m ? decodeURIComponent(m[1]) : '';
-  }
-
-  function mkEmbed(videoId) {
-    const vid = String(videoId || '').trim();
-    if (!vid) return '';
-    // loop requires playlist=<videoId>
-    return (
-      'https://www.youtube.com/embed/' +
-      encodeURIComponent(vid) +
-      '?autoplay=1&mute=1&playsinline=1&controls=0&rel=0&modestbranding=1&loop=1&playlist=' +
-      encodeURIComponent(vid)
-    );
-  }
-
-  function renderTile(el, item) {
-    if (!el) return;
-    const src = item && item.videoId ? mkEmbed(item.videoId) : '';
-    if (!src) {
-      el.innerHTML = '<div class="mosaic-yt-empty">Set 2 channel IDs in <code>_config.yml</code> → <code>home_youtube_channels</code></div>';
-      return;
-    }
-    el.innerHTML = '';
-    const ifr = document.createElement('iframe');
-    ifr.src = src;
-    ifr.loading = 'lazy';
-    ifr.allow = 'autoplay; encrypted-media; picture-in-picture';
-    ifr.setAttribute('allowfullscreen', '');
-    ifr.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-    el.appendChild(ifr);
-  }
-
-  async function getLatestForChannel(channelId) {
-    const cid = String(channelId || '').trim();
-    if (!cid) return null;
-
-    const cacheKey = 'tile::' + cid;
-    const cached = readCache(cacheKey);
-    if (cached && cached.length) return cached[0];
-
-    // Fetch once (do not fill to target; just get newest and cache)
-    const feedUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + encodeURIComponent(cid);
-    try {
-      const xml = await fetchTextWithProxy(feedUrl);
-      const parsed = parseRss(xml, cid);
-      if (parsed && parsed.length) {
-        writeCache(cacheKey, parsed);
-        return parsed[0];
-      }
-    } catch (e) {
-      // ignore
-    }
-    return null;
-  }
-
-  function initHomeMosaicTiles() {
-    const tiles = Array.from(document.querySelectorAll('.mosaic-yt[data-yt-channel]'));
-    if (!tiles.length) return;
-
-    tiles.forEach(function (el, idx) {
-      let cid = String(el.getAttribute('data-yt-channel') || '').trim();
-      if (!cid) {
-        // fallback: use FEEDS[0], FEEDS[1]
-        const f = FEEDS[idx] || FEEDS[0];
-        cid = extractChannelIdFromFeedUrl(f && f.url);
-      }
-
-      const cacheKey = 'tile::' + cid;
-      const cached = cid ? readCache(cacheKey) : [];
-      if (cached && cached.length) renderTile(el, cached[0]);
-
-      // Refresh in background (keeps it "latest"; cache persists across visits)
-      getLatestForChannel(cid).then(function (item) {
-        if (!item) return;
-        renderTile(el, item);
-      });
-    });
-  }
-
-  initHomeMosaicTiles();
 
   load();
 })();

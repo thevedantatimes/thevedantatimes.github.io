@@ -106,8 +106,8 @@ layout: default
               <img src="{{ '/assets/img/feature_main.svg' | relative_url }}" alt="" loading="lazy" />
             </a>
           {% endif %}
-          <div class="mosaic-tile mosaic-small mosaic-yt" data-yt-channel="{{ site.home_youtube_channels[0] | default: '' }}" data-yt-cachekey="home_yt_0" aria-label="Latest video from channel 1"></div>
-          <div class="mosaic-tile mosaic-small mosaic-yt" data-yt-channel="{{ site.home_youtube_channels[1] | default: '' }}" data-yt-cachekey="home_yt_1" aria-label="Latest video from channel 2"></div>
+          <button class="mosaic-small mosaic-yt" type="button" data-home-yt-slot="0" aria-label="Play latest video"></button>
+          <button class="mosaic-small mosaic-yt" type="button" data-home-yt-slot="1" aria-label="Play latest video"></button>
         </div>
       </div>
 
