@@ -12,6 +12,16 @@ snippet: "Youth voices renew Vivekananda’s message: strength, harmony, service
 
 Some gatherings feel like a program. Others feel like a current, something you step into and it quietly carries you. The celebration at Vivekananda Vedanta Society of Chicago, had that second quality. The day unfolded as a tribute to Swami Vivekananda, but what made it memorable was not only the reverence. It was the way multiple generations, especially the young, spoke with clarity and ownership of Swamiji’s message, as if they were not repeating history but extending it.
 
+<iframe
+  width="100%"
+  height="500"
+  src="https://www.youtube.com/watch?v=8J4fwDklHwM"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
+
 From the opening moments, there was a sense of purpose: to begin by offering pranam and to anchor the entire day in remembrance. The atmosphere was devotional and simple, with chanting and meditation setting the tone. A special focus was placed on Swami Vivekananda’s tithi puja, a way of remembering him that is not limited to admiration but asks for inner alignment. Swamiji was described as youthfulness itself: joy, energy, and fearless truth. The message was implicit but unmistakable: if we celebrate Vivekananda, we should do it by becoming a little more courageous, a little more sincere, and a little more useful to others.
 
 ## A Beginning in Mantra and Meditation
