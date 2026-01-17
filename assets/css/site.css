@@ -23,7 +23,7 @@ body.is-home .nav button.nav-item:hover{ text-decoration:underline }
 body.is-home a.cat:hover{ text-decoration:underline }
 body.is-home .hero-title a:hover,
 body.is-home .rail-title a:hover,
-body.is-home .feature-title a:hover{ color:#8F8F8F }
+body.is-home .feature-title a:hover{ color:#707070 }
 code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size:.95em}
 
 .skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
