@@ -6,7 +6,7 @@ image: /assets/img/birthday.webp
 featured: true
 categories:
   - Chicago
-  - Vivekananda
+  - Swami Vivekananda
   - Swami Ishatmananda
   - Kathamrita
   - Sri Ramakrishna
