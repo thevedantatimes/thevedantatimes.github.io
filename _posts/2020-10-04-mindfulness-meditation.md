@@ -6,7 +6,7 @@ image: /assets/img/birthday.webp
 featured: true
 categories:
   - New York
-  - Sarvapriyananda
+  - Swami Sarvapriyananda
   - Meditation
 snippet: "Swami teaches Buddhist mindfulness: breath-focused attention, four stages, counting, joyfully returning from distraction toward awakening."
 ---
