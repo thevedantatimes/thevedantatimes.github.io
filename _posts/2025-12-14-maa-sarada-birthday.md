@@ -6,7 +6,7 @@ image: /assets/img/birthday.webp
 featured: true
 categories:
   - Chicago
-  - Vivekananda
+  - Swami Vivekananda
   - Maa Sarada
   - Swami Ishatmananda
 snippet: "Maa Sarada Jayanti honored her patience, forbearance, self-control, and compassion through talks, songs, prayer."
