@@ -244,7 +244,7 @@
     window.clearTimeout(showToast._hideTimer);
     showToast._hideTimer = window.setTimeout(function () {
       toast.classList.remove('show');
-    }, 5000);
+    }, 15000);
   }
 
   function initRecommendations(postArticle) {
@@ -263,11 +263,11 @@
           if (rec) showToast(rec);
         }
 
-        // Every minute, show for 5 seconds.
+        // Show the first recommendation soon, then every minute.
         window.setTimeout(function () {
           tick();
           window.setInterval(tick, 60000);
-        }, 60000);
+        }, 15000);
       })
       .catch(function () {
         // ignore
