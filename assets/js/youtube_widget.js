@@ -515,13 +515,13 @@
           vid +
           '">' +
           '  <span class="vw-thumb">' +
-          '    <span class="vb-yt-teaser" aria-hidden="true">' +
+          '    <div class="vb-yt-teaser" aria-hidden="true">' +
           '      <iframe class="vb-yt-teaser-iframe" src="' +
           teaserSrc +
-          '" title="" frameborder="0" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>' +
+          '" title="" frameborder="0" loading="eager" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>' +
           '      <span class="vb-yt-teaser-shade"></span>' +
           '      <span class="vb-yt-teaser-play">▶</span>' +
-          '    </span>' +
+          '    </div>' +
           '  </span>' +
           '  <span class="vw-info">' +
           '    <span class="vw-title">' +
