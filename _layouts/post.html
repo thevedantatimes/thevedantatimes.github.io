@@ -13,21 +13,27 @@ layout: default
     {% endif %}
   </header>
 
-  {% assign img = page.image %}
-  {% assign body = content %}
-  {% if img %}
-    {% capture hero_figure %}
-    <figure class="post-hero">
-      <img src="{{ img | relative_url }}" alt="" loading="lazy" />
-    </figure>
-    {% endcapture %}
+  {%- capture img_raw -%}{% include youtube_thumbnail.html content=content %}{%- endcapture -%}
+  {%- assign img_raw = img_raw | strip -%}
+  {%- if img_raw contains '://' -%}
+    {%- assign img_url = img_raw -%}
+  {%- else -%}
+    {%- assign img_url = img_raw | relative_url -%}
+  {%- endif -%}
 
-    {% capture hero_insert %}</p>{{ hero_figure }}{% endcapture %}
-    {% if body contains '</p>' %}
-      {% assign body = body | replace_first: '</p>', hero_insert %}
-    {% else %}
-      {% assign body = hero_figure | append: body %}
-    {% endif %}
+  {% assign body = content %}
+
+  {% capture hero_figure %}
+  <figure class="post-hero">
+    <img src="{{ img_url }}" alt="" loading="lazy" />
+  </figure>
+  {% endcapture %}
+
+  {% capture hero_insert %}</p>{{ hero_figure }}{% endcapture %}
+  {% if body contains '</p>' %}
+    {% assign body = body | replace_first: '</p>', hero_insert %}
+  {% else %}
+    {% assign body = hero_figure | append: body %}
   {% endif %}
 
   <div class="post-body">

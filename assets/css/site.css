@@ -106,7 +106,7 @@ body.is-home .feature-title a:hover{ color:#707070 }
 .hero-title{margin:0 0 10px;font-size:38px;line-height:1.08;letter-spacing:-0.2px}
 .hero-dek{margin:0 0 12px;color:var(--muted);font-size:15px;line-height:1.4;max-width:65ch}
 .hero-media{display:block;border:1px solid var(--rule);background:#f6f6f6}
-.hero-media img{display:block;width:100%;height:auto}
+.hero-media img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
 .hero-credit{margin-top:8px;font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;font-size:11px;color:var(--muted);text-align:right}
 
 .feature{padding-left:12px;border-left:1px solid var(--rule)}
@@ -193,7 +193,7 @@ body.is-home .feature-title a:hover{ color:#707070 }
 .post-title{margin:0 0 6px;font-size:42px;line-height:1.08;letter-spacing:-0.2px}
 .post-meta{font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;font-size:12px;color:var(--muted)}
 .post-hero{margin:0 0 18px}
-.post-hero img{width:100%;height:auto;border:1px solid var(--rule)}
+.post-hero img{width:100%;height:auto;border:1px solid var(--rule);aspect-ratio:16/9;object-fit:cover}
 .post-body{font-size:18px;line-height:1.7}
 .post-body p{margin:0 0 1em}
 .post-rule{border:0;border-top:1px solid var(--rule);margin:24px 0}
