@@ -95,6 +95,20 @@ layout: default
 
     <!-- Right feature -->
     <aside class="feature">
+
+      <div class="feature-videos" aria-label="Latest videos">
+        <div class="fv-item">
+          <button class="fv-teaser" type="button" data-home-yt-slot="0" aria-label="Play latest video"></button>
+          <div class="fv-title" data-home-yt-title></div>
+          <div class="fv-meta"><span data-home-yt-channel></span><span class="fv-sep"> · </span><span data-home-yt-date></span></div>
+        </div>
+        <div class="fv-item">
+          <button class="fv-teaser" type="button" data-home-yt-slot="1" aria-label="Play latest video"></button>
+          <div class="fv-title" data-home-yt-title></div>
+          <div class="fv-meta"><span data-home-yt-channel></span><span class="fv-sep"> · </span><span data-home-yt-date></span></div>
+        </div>
+      </div>
+      
       <div class="feature-media">
         <div class="mosaic mosaic--single">
           {% if right %}
@@ -119,18 +133,6 @@ layout: default
         <h2 class="feature-title"><a href="#">A second feature story will appear here</a></h2>
         <p class="feature-dek">Add more posts under <code>_posts</code> to populate this area automatically.</p>
       {% endif %}
-      <div class="feature-videos" aria-label="Latest videos">
-        <div class="fv-item">
-          <button class="fv-teaser" type="button" data-home-yt-slot="0" aria-label="Play latest video"></button>
-          <div class="fv-title" data-home-yt-title></div>
-          <div class="fv-meta"><span data-home-yt-channel></span><span class="fv-sep"> · </span><span data-home-yt-date></span></div>
-        </div>
-        <div class="fv-item">
-          <button class="fv-teaser" type="button" data-home-yt-slot="1" aria-label="Play latest video"></button>
-          <div class="fv-title" data-home-yt-title></div>
-          <div class="fv-meta"><span data-home-yt-channel></span><span class="fv-sep"> · </span><span data-home-yt-date></span></div>
-        </div>
-      </div>
 
       {% if right %}
         <div class="feature-meta">{{ right.date | date: '%b %-d' }} · {{ right.content | number_of_words | divided_by: 220 | plus: 1 }} min read</div>
