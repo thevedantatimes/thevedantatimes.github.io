@@ -1,0 +1,364 @@
+---
+layout: default
+title: "Upcoming Events"
+permalink: /events/
+---
+
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --panel: rgba(255,255,255,.85);
+    --stroke: rgba(10,15,25,.10);
+    --text: rgba(10,15,25,.92);
+    --muted: rgba(10,15,25,.62);
+    --shadow: 0 10px 30px rgba(10,15,25,.10);
+    --radius: 16px;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  }
+  *{ box-sizing:border-box; }
+  .events-page{
+    font-family:var(--sans);
+    color:var(--text);
+    background:
+      radial-gradient(1000px 600px at 15% 10%, rgba(80,120,255,.14), transparent 60%),
+      radial-gradient(900px 520px at 85% 20%, rgba(255,170,60,.12), transparent 55%),
+      linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.86));
+    border:1px solid var(--stroke);
+    border-radius: 18px;
+    padding:18px 14px 34px;
+  }
+  .wrap{ max-width:1050px; margin:0 auto; }
+
+  .bar{
+    position:sticky; top:0; z-index:5;
+    background: rgba(255,255,255,.82);
+    border:1px solid var(--stroke);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding:12px;
+  }
+  .barTop{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    margin-bottom:10px;
+  }
+  .barTop h1{
+    font-size:16px; margin:0;
+    letter-spacing:.2px;
+  }
+  .count{
+    font-size:12px; color:var(--muted);
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.75);
+    padding:6px 10px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+
+  .filters{
+    display:grid;
+    grid-template-columns: 1.1fr 1.4fr auto auto;
+    gap:10px;
+    align-items:end;
+  }
+  label{ display:block; font-size:12px; color:var(--muted); margin:0 0 6px; }
+  select, input[type="text"]{
+    width:100%;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.90);
+    color:var(--text);
+    padding:10px 10px;
+    border-radius: 12px;
+    outline:none;
+    font-size:13px;
+  }
+  select:focus, input:focus{
+    border-color: rgba(80,120,255,.35);
+    box-shadow: 0 0 0 3px rgba(80,120,255,.16);
+  }
+  button{
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.88);
+    color: var(--text);
+    padding:10px 12px;
+    border-radius: 12px;
+    font-size:13px;
+    cursor:pointer;
+    height:40px;
+  }
+  button:hover{ background: rgba(255,255,255,.98); }
+  button:active{ transform: translateY(1px); }
+
+  .tableWrap{
+    margin-top:12px;
+    border:1px solid var(--stroke);
+    border-radius: var(--radius);
+    overflow:hidden;
+    box-shadow: var(--shadow);
+    background: rgba(255,255,255,.80);
+  }
+
+  table{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0;
+    font-size:13px;
+  }
+  thead th{
+    text-align:left;
+    font-size:12px;
+    color: var(--muted);
+    font-weight:700;
+    letter-spacing:.2px;
+    padding:12px 12px;
+    background: rgba(10,15,25,.03);
+    border-bottom:1px solid rgba(10,15,25,.08);
+  }
+  tbody td{
+    padding:11px 12px;
+    border-bottom:1px solid rgba(10,15,25,.08);
+    vertical-align:top;
+  }
+  tbody tr:hover td{
+    background: rgba(80,120,255,.06);
+  }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  .venue{ font-weight:700; color: rgba(10,15,25,.92); }
+  .dt{
+    font-family: var(--mono);
+    color: rgba(10,15,25,.80);
+    white-space:nowrap;
+  }
+  .name{ color: rgba(10,15,25,.90); }
+
+  .empty{
+    padding:14px 12px;
+    color: var(--muted);
+    line-height:1.45;
+    display:none;
+  }
+
+  @media (max-width: 860px){
+    .filters{ grid-template-columns: 1fr 1fr; }
+    button{ width:100%; }
+    .dt{ white-space:normal; }
+  }
+</style>
+
+<div class="events-page">
+  <div class="wrap">
+
+    <div class="bar">
+      <div class="barTop">
+        <h1>Upcoming Events</h1>
+        <div class="count" id="countPill">0 events</div>
+      </div>
+
+      <div class="filters">
+        <div>
+          <label for="venueFilter">Venue</label>
+          <select id="venueFilter"></select>
+        </div>
+
+        <div>
+          <label for="nameFilter">Event name</label>
+          <input id="nameFilter" type="text" placeholder="Search event name..." />
+        </div>
+
+        <button id="resetBtn" type="button">Reset</button>
+        <button id="copyMdBtn" type="button">Copy MD</button>
+      </div>
+    </div>
+
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:32%;">Venue</th>
+            <th style="width:18%;">Date</th>
+            <th style="width:14%;">Time</th>
+            <th>Event name</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty" id="empty">No events match your filters.</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Venues only (no "Latest videos"). You can add/remove anytime.
+  const VENUES = [
+    "Chicago Vedanta",
+    "Vedanta NY",
+    "Vedanta Org",
+    "Vedanta Society of Western WA",
+    "Vedanta DC",
+    "Belur Math Official",
+    "Chicago Kali Bari"
+  ];
+
+  // Dummy events spanning next ~2 months from 2026-01-18
+  const EVENTS = [
+    // Chicago Vedanta
+    e("Chicago Vedanta", "2026-01-19", "18:00", "Evening Arati and Short Talk"),
+    e("Chicago Vedanta", "2026-01-25", "10:30", "Sunday Lecture: Raja Yoga Foundations"),
+    e("Chicago Vedanta", "2026-02-08", "10:30", "Sunday Lecture: Maya and Freedom"),
+    e("Chicago Vedanta", "2026-02-22", "10:30", "Sunday Lecture: Bhakti as Daily Practice"),
+    e("Chicago Vedanta", "2026-03-15", "10:30", "Sunday Lecture: Upanishads in One Hour"),
+
+    // Vedanta NY
+    e("Vedanta NY", "2026-01-21", "19:00", "Evening Class: Meditation Basics"),
+    e("Vedanta NY", "2026-02-04", "19:00", "Talk: Vedanta and Modern Life"),
+    e("Vedanta NY", "2026-02-14", "17:30", "Special Program: Devotional Music Hour"),
+    e("Vedanta NY", "2026-03-01", "11:00", "Sunday Talk: Sri Ramakrishna Stories"),
+    e("Vedanta NY", "2026-03-16", "19:00", "Q&A: Ask a Monk"),
+
+    // Vedanta Org
+    e("Vedanta Org", "2026-01-23", "12:00", "Global Digest: Weekly Highlights"),
+    e("Vedanta Org", "2026-02-06", "12:00", "Global Digest: Study Resources"),
+    e("Vedanta Org", "2026-02-20", "12:00", "Global Digest: Karma Yoga Focus"),
+    e("Vedanta Org", "2026-03-06", "12:00", "Global Digest: Vedanta for Students"),
+    e("Vedanta Org", "2026-03-17", "12:00", "Global Digest: Two Month Recap"),
+
+    // Western WA
+    e("Vedanta Society of Western WA", "2026-01-24", "18:00", "Evening Satsang: Intro to Vedanta"),
+    e("Vedanta Society of Western WA", "2026-02-07", "18:00", "Talk: The Mind and Its Training"),
+    e("Vedanta Society of Western WA", "2026-02-21", "18:00", "Reading Circle: Vivekananda Letters"),
+    e("Vedanta Society of Western WA", "2026-03-07", "18:00", "Talk: The Ideal of Renunciation"),
+    e("Vedanta Society of Western WA", "2026-03-14", "10:00", "Weekend Workshop: Meditation Routine"),
+
+    // Vedanta DC
+    e("Vedanta DC", "2026-01-22", "19:00", "Evening Talk: Gita for Busy People"),
+    e("Vedanta DC", "2026-02-12", "19:00", "Talk: What is Real Peace?"),
+    e("Vedanta DC", "2026-02-26", "19:00", "Class: Advaita Essentials"),
+    e("Vedanta DC", "2026-03-12", "19:00", "Talk: Service and Spiritual Growth"),
+    e("Vedanta DC", "2026-03-18", "19:00", "Community Q&A"),
+
+    // Belur Math Official
+    e("Belur Math Official", "2026-01-28", "07:30", "Morning Chanting and Arati"),
+    e("Belur Math Official", "2026-02-11", "07:30", "Special Worship Day (Streaming)"),
+    e("Belur Math Official", "2026-02-25", "07:30", "Talk: Message of Sri Ramakrishna"),
+    e("Belur Math Official", "2026-03-04", "07:30", "Morning Chanting and Arati"),
+    e("Belur Math Official", "2026-03-17", "07:30", "Festival Reflections (Streaming)"),
+
+    // Chicago Kali Bari
+    e("Chicago Kali Bari", "2026-01-31", "18:30", "Evening Puja and Bhajans"),
+    e("Chicago Kali Bari", "2026-02-09", "19:00", "Devi Mahatmya Reading (Session 1)"),
+    e("Chicago Kali Bari", "2026-02-16", "19:00", "Devi Mahatmya Reading (Session 2)"),
+    e("Chicago Kali Bari", "2026-03-02", "19:00", "Devi Mahatmya Reading (Session 3)"),
+    e("Chicago Kali Bari", "2026-03-08", "11:00", "Sunday Cultural Program")
+  ].sort((a,b) => (a.date + " " + a.time).localeCompare(b.date + " " + b.time));
+
+  function e(venue, date, time, name){ return { venue, date, time, name }; }
+
+  const venueFilter = document.getElementById("venueFilter");
+  const nameFilter  = document.getElementById("nameFilter");
+  const tbody       = document.getElementById("tbody");
+  const empty       = document.getElementById("empty");
+  const countPill   = document.getElementById("countPill");
+
+  // Fill venue dropdown
+  const optAll = document.createElement("option");
+  optAll.value = "ALL";
+  optAll.textContent = "All venues";
+  venueFilter.appendChild(optAll);
+
+  VENUES.forEach(v => {
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    venueFilter.appendChild(opt);
+  });
+
+  venueFilter.addEventListener("change", render);
+  nameFilter.addEventListener("input", render);
+
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    venueFilter.value = "ALL";
+    nameFilter.value = "";
+    render();
+  });
+
+  document.getElementById("copyMdBtn").addEventListener("click", () => {
+    const rows = getFiltered();
+    copyText(toMarkdown(rows));
+  });
+
+  render();
+
+  function getFiltered(){
+    const v = venueFilter.value;
+    const q = (nameFilter.value || "").trim().toLowerCase();
+
+    return EVENTS.filter(ev => {
+      if (v !== "ALL" && ev.venue !== v) return false;
+      if (q && !ev.name.toLowerCase().includes(q)) return false;
+      return true;
+    });
+  }
+
+  function render(){
+    const rows = getFiltered();
+    countPill.textContent = rows.length + (rows.length === 1 ? " event" : " events");
+
+    tbody.innerHTML = "";
+    if (!rows.length){
+      empty.style.display = "block";
+      return;
+    }
+    empty.style.display = "none";
+
+    rows.forEach(ev => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="venue">${escapeHtml(ev.venue)}</td>
+        <td class="dt">${escapeHtml(ev.date)}</td>
+        <td class="dt">${escapeHtml(ev.time)}</td>
+        <td class="name">${escapeHtml(ev.name)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function toMarkdown(rows){
+    let out = "";
+    out += "# Upcoming Events\n\n";
+    out += "| Venue | Date | Time | Event |\n";
+    out += "|---|---:|:---:|---|\n";
+    rows.forEach(ev => {
+      out += `| ${mdSafe(ev.venue)} | ${mdSafe(ev.date)} | ${mdSafe(ev.time)} | ${mdSafe(ev.name)} |\n`;
+    });
+    return out;
+  }
+
+  function copyText(text){
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    ta.style.top = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+  }
+
+  function escapeHtml(s){
+    return String(s || "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function mdSafe(s){
+    return String(s || "").replaceAll("|","\\|").replaceAll("\n"," ").trim();
+  }
+</script>
