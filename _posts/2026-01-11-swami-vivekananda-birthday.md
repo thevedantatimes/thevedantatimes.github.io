@@ -14,7 +14,6 @@ Some gatherings feel like a program. Others feel like a current, something you s
 
 <iframe
   width="100%"
-  height="500"
   src="https://www.youtube.com/embed/8J4fwDklHwM"
   title="YouTube video player"
   frameborder="0"
