@@ -130,7 +130,20 @@ permalink: /events/
   }
 
   @media (max-width: 860px){
-    .filters{ grid-template-columns: 1fr; }
+    .filters{
+      display:flex;
+      flex-wrap:nowrap;
+      gap:8px;
+      overflow-x:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filters select{
+      flex:1 1 0;
+      min-width:0;
+      height:38px;
+      font-size:12px;
+      padding:9px 8px;
+    }
     .dt{ white-space:normal; }
   }
 </style>
