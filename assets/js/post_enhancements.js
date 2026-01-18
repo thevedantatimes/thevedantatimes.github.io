@@ -256,7 +256,9 @@
     var catsRaw = postArticle.getAttribute('data-post-cats') || '';
     var currentCatsLower = uniqLower(catsRaw.split('||'));
 
-    fetch('/assets/data/posts_index.json', { cache: 'no-store' })
+    var indexUrl = (window.VTT_POSTS_INDEX_URL || '/assets/data/posts_index.json');
+
+    fetch(indexUrl, { cache: 'no-store' })
       .then(function (r) {
         if (!r.ok) throw new Error('HTTP ' + r.status);
         return r.json();
@@ -267,14 +269,16 @@
           if (rec) showToast(rec);
         }
 
-        // Every minute, show for 5 seconds.
+        // Show the first recommendation soon, then every minute.
         window.setTimeout(function () {
           tick();
           window.setInterval(tick, 60000);
-        }, 60000);
+        }, 15000);
       })
-      .catch(function () {
-        // ignore
+      .catch(function (err) {
+        try {
+          console.warn('[VTT] Recommended-article popup disabled:', err);
+        } catch (e) {}
       });
   }
 
