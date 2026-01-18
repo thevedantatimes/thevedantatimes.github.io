@@ -67,17 +67,8 @@
       var vid = parseVideoIdFromEmbedSrc(src);
       if (!vid) return;
 
-      // Prefer aspect-ratio based sizing (mobile-friendly) instead of fixed pixel height.
-      var w = parseInt(iframe.getAttribute('width') || '', 10);
-      var h = parseInt(iframe.getAttribute('height') || '', 10);
-
       var wrapper = document.createElement('div');
       wrapper.className = 'vb-yt-post vb-yt-tile';
-      if (w && h && w > 0 && h > 0) {
-        wrapper.style.aspectRatio = String(w) + ' / ' + String(h);
-      } else {
-        wrapper.style.aspectRatio = '16 / 9';
-      }
       wrapper.setAttribute('data-video-id', vid);
 
       var teaser = document.createElement('div');
@@ -192,7 +183,7 @@
 
     var kicker = document.createElement('div');
     kicker.className = 'vtt-rec-kicker';
-    kicker.textContent = 'Read more';
+    kicker.textContent = 'Recommended';
 
     var link = document.createElement('a');
     link.className = 'vtt-rec-link';
@@ -253,7 +244,7 @@
     window.clearTimeout(showToast._hideTimer);
     showToast._hideTimer = window.setTimeout(function () {
       toast.classList.remove('show');
-    }, 15000);
+    }, 5000);
   }
 
   function initRecommendations(postArticle) {
@@ -261,9 +252,7 @@
     var catsRaw = postArticle.getAttribute('data-post-cats') || '';
     var currentCatsLower = uniqLower(catsRaw.split('||'));
 
-    var indexUrl = (window.VTT_POSTS_INDEX_URL || '/assets/data/posts_index.json');
-
-    fetch(indexUrl, { cache: 'no-store' })
+    fetch('/assets/data/posts_index.json', { cache: 'no-store' })
       .then(function (r) {
         if (!r.ok) throw new Error('HTTP ' + r.status);
         return r.json();
@@ -274,16 +263,14 @@
           if (rec) showToast(rec);
         }
 
-        // Show the first recommendation soon, then every minute.
+        // Every minute, show for 5 seconds.
         window.setTimeout(function () {
           tick();
           window.setInterval(tick, 60000);
-        }, 15000);
+        }, 60000);
       })
-      .catch(function (err) {
-        try {
-          console.warn('[VTT] Recommended-article popup disabled:', err);
-        } catch (e) {}
+      .catch(function () {
+        // ignore
       });
   }
 
