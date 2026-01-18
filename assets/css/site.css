@@ -247,7 +247,6 @@ body.is-home .feature-title a:hover{ color:#707070 }
   }
   .video-widget .vw-thumb{
     width:100%;
-    height:auto;
     aspect-ratio:16/9;
   }
   .video-widget .vw-meta{
