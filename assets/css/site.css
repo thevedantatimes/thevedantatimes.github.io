@@ -62,6 +62,21 @@ body.is-home .feature-title a:hover{ color:#707070 }
 .nav-dd-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .nav-dd-count{flex:0 0 auto;color:var(--muted);font-size:12px}
 
+/* Keep nav items visually consistent across a/button and visited/unvisited states */
+.nav .nav-item{
+  display:inline-flex;
+  align-items:center;
+  line-height:1;
+  font:inherit;
+  color:var(--ink);
+}
+
+/* Prevent browser default visited color (purple) in the nav */
+.nav a.nav-item:link,
+.nav a.nav-item:visited{
+  color:var(--ink);
+}
+
 /* Category links used across the site */
 .cat{color:var(--ink)}
 .sep{color:var(--muted)}
