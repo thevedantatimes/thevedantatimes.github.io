@@ -6,8 +6,6 @@ permalink: /events/
 
 <style>
   :root{
-    --bg:#f6f7fb;
-    --panel: rgba(255,255,255,.85);
     --stroke: rgba(10,15,25,.10);
     --text: rgba(10,15,25,.92);
     --muted: rgba(10,15,25,.62);
@@ -17,6 +15,7 @@ permalink: /events/
     --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   }
   *{ box-sizing:border-box; }
+
   .events-page{
     font-family:var(--sans);
     color:var(--text);
@@ -59,13 +58,14 @@ permalink: /events/
 
   .filters{
     display:grid;
-    grid-template-columns: 1.1fr 1.4fr auto auto;
+    grid-template-columns: 1.3fr 1fr 1fr;
     gap:10px;
-    align-items:end;
+    align-items:center;
   }
-  label{ display:block; font-size:12px; color:var(--muted); margin:0 0 6px; }
-  select, input[type="text"]{
+
+  select{
     width:100%;
+    height:40px;
     border:1px solid var(--stroke);
     background: rgba(255,255,255,.90);
     color:var(--text);
@@ -74,22 +74,10 @@ permalink: /events/
     outline:none;
     font-size:13px;
   }
-  select:focus, input:focus{
+  select:focus{
     border-color: rgba(80,120,255,.35);
     box-shadow: 0 0 0 3px rgba(80,120,255,.16);
   }
-  button{
-    border:1px solid var(--stroke);
-    background: rgba(255,255,255,.88);
-    color: var(--text);
-    padding:10px 12px;
-    border-radius: 12px;
-    font-size:13px;
-    cursor:pointer;
-    height:40px;
-  }
-  button:hover{ background: rgba(255,255,255,.98); }
-  button:active{ transform: translateY(1px); }
 
   .tableWrap{
     margin-top:12px;
@@ -142,8 +130,7 @@ permalink: /events/
   }
 
   @media (max-width: 860px){
-    .filters{ grid-template-columns: 1fr 1fr; }
-    button{ width:100%; }
+    .filters{ grid-template-columns: 1fr; }
     .dt{ white-space:normal; }
   }
 </style>
@@ -158,18 +145,9 @@ permalink: /events/
       </div>
 
       <div class="filters">
-        <div>
-          <label for="venueFilter">Venue</label>
-          <select id="venueFilter"></select>
-        </div>
-
-        <div>
-          <label for="nameFilter">Event name</label>
-          <input id="nameFilter" type="text" placeholder="Search event name..." />
-        </div>
-
-        <button id="resetBtn" type="button">Reset</button>
-        <button id="copyMdBtn" type="button">Copy MD</button>
+        <select id="venueFilter" aria-label="Venue"></select>
+        <select id="monthFilter" aria-label="Month"></select>
+        <select id="categoryFilter" aria-label="Category"></select>
       </div>
     </div>
 
@@ -179,7 +157,7 @@ permalink: /events/
           <tr>
             <th style="width:32%;">Venue</th>
             <th style="width:18%;">Date</th>
-            <th style="width:14%;">Time</th>
+            <th style="width:16%;">Time (Central)</th>
             <th>Event name</th>
           </tr>
         </thead>
@@ -192,113 +170,90 @@ permalink: /events/
 </div>
 
 <script>
-  // Venues only (no "Latest videos"). You can add/remove anytime.
-  const VENUES = [
-    "Chicago Vedanta",
-    "Vedanta NY",
-    "Vedanta Org",
-    "Vedanta Society of Western WA",
-    "Vedanta DC",
-    "Belur Math Official",
-    "Chicago Kali Bari"
-  ];
-
   // Dummy events spanning next ~2 months from 2026-01-18
   const EVENTS = [
     // Chicago Vedanta
-    e("Chicago Vedanta", "2026-01-19", "18:00", "Evening Arati and Short Talk"),
-    e("Chicago Vedanta", "2026-01-25", "10:30", "Sunday Lecture: Raja Yoga Foundations"),
-    e("Chicago Vedanta", "2026-02-08", "10:30", "Sunday Lecture: Maya and Freedom"),
-    e("Chicago Vedanta", "2026-02-22", "10:30", "Sunday Lecture: Bhakti as Daily Practice"),
-    e("Chicago Vedanta", "2026-03-15", "10:30", "Sunday Lecture: Upanishads in One Hour"),
+    e("Chicago Vedanta", "2026-01-19", "18:00", "Evening Arati and Short Talk", "Talk"),
+    e("Chicago Vedanta", "2026-01-25", "10:30", "Sunday Lecture: Raja Yoga Foundations", "Weekly"),
+    e("Chicago Vedanta", "2026-02-08", "10:30", "Sunday Lecture: Maya and Freedom", "Weekly"),
+    e("Chicago Vedanta", "2026-02-22", "10:30", "Sunday Lecture: Bhakti as Daily Practice", "Weekly"),
+    e("Chicago Vedanta", "2026-03-15", "10:30", "Sunday Lecture: Upanishads in One Hour", "Weekly"),
 
     // Vedanta NY
-    e("Vedanta NY", "2026-01-21", "19:00", "Evening Class: Meditation Basics"),
-    e("Vedanta NY", "2026-02-04", "19:00", "Talk: Vedanta and Modern Life"),
-    e("Vedanta NY", "2026-02-14", "17:30", "Special Program: Devotional Music Hour"),
-    e("Vedanta NY", "2026-03-01", "11:00", "Sunday Talk: Sri Ramakrishna Stories"),
-    e("Vedanta NY", "2026-03-16", "19:00", "Q&A: Ask a Monk"),
+    e("Vedanta NY", "2026-01-21", "19:00", "Evening Class: Meditation Basics", "Weekly"),
+    e("Vedanta NY", "2026-02-04", "19:00", "Talk: Vedanta and Modern Life", "Talk"),
+    e("Vedanta NY", "2026-02-14", "17:30", "Special Program: Devotional Music Hour", "Special"),
+    e("Vedanta NY", "2026-03-01", "11:00", "Sunday Talk: Sri Ramakrishna Stories", "Weekly"),
+    e("Vedanta NY", "2026-03-16", "19:00", "Q&A: Ask a Monk", "Talk"),
 
     // Vedanta Org
-    e("Vedanta Org", "2026-01-23", "12:00", "Global Digest: Weekly Highlights"),
-    e("Vedanta Org", "2026-02-06", "12:00", "Global Digest: Study Resources"),
-    e("Vedanta Org", "2026-02-20", "12:00", "Global Digest: Karma Yoga Focus"),
-    e("Vedanta Org", "2026-03-06", "12:00", "Global Digest: Vedanta for Students"),
-    e("Vedanta Org", "2026-03-17", "12:00", "Global Digest: Two Month Recap"),
+    e("Vedanta Org", "2026-01-23", "12:00", "Global Digest: Weekly Highlights", "Weekly"),
+    e("Vedanta Org", "2026-02-06", "12:00", "Global Digest: Study Resources", "Weekly"),
+    e("Vedanta Org", "2026-02-20", "12:00", "Global Digest: Karma Yoga Focus", "Weekly"),
+    e("Vedanta Org", "2026-03-06", "12:00", "Global Digest: Vedanta for Students", "Weekly"),
+    e("Vedanta Org", "2026-03-17", "12:00", "Global Digest: Two Month Recap", "Weekly"),
 
     // Western WA
-    e("Vedanta Society of Western WA", "2026-01-24", "18:00", "Evening Satsang: Intro to Vedanta"),
-    e("Vedanta Society of Western WA", "2026-02-07", "18:00", "Talk: The Mind and Its Training"),
-    e("Vedanta Society of Western WA", "2026-02-21", "18:00", "Reading Circle: Vivekananda Letters"),
-    e("Vedanta Society of Western WA", "2026-03-07", "18:00", "Talk: The Ideal of Renunciation"),
-    e("Vedanta Society of Western WA", "2026-03-14", "10:00", "Weekend Workshop: Meditation Routine"),
+    e("Vedanta Society of Western WA", "2026-01-24", "18:00", "Evening Satsang: Intro to Vedanta", "Talk"),
+    e("Vedanta Society of Western WA", "2026-02-07", "18:00", "Talk: The Mind and Its Training", "Talk"),
+    e("Vedanta Society of Western WA", "2026-02-21", "18:00", "Reading Circle: Vivekananda Letters", "Weekly"),
+    e("Vedanta Society of Western WA", "2026-03-07", "18:00", "Talk: The Ideal of Renunciation", "Talk"),
+    e("Vedanta Society of Western WA", "2026-03-14", "10:00", "Weekend Workshop: Meditation Routine", "Workshop"),
 
     // Vedanta DC
-    e("Vedanta DC", "2026-01-22", "19:00", "Evening Talk: Gita for Busy People"),
-    e("Vedanta DC", "2026-02-12", "19:00", "Talk: What is Real Peace?"),
-    e("Vedanta DC", "2026-02-26", "19:00", "Class: Advaita Essentials"),
-    e("Vedanta DC", "2026-03-12", "19:00", "Talk: Service and Spiritual Growth"),
-    e("Vedanta DC", "2026-03-18", "19:00", "Community Q&A"),
+    e("Vedanta DC", "2026-01-22", "19:00", "Evening Talk: Gita for Busy People", "Talk"),
+    e("Vedanta DC", "2026-02-12", "19:00", "Talk: What is Real Peace?", "Talk"),
+    e("Vedanta DC", "2026-02-26", "19:00", "Class: Advaita Essentials", "Weekly"),
+    e("Vedanta DC", "2026-03-12", "19:00", "Talk: Service and Spiritual Growth", "Talk"),
+    e("Vedanta DC", "2026-03-18", "19:00", "Community Q&A", "Talk"),
 
     // Belur Math Official
-    e("Belur Math Official", "2026-01-28", "07:30", "Morning Chanting and Arati"),
-    e("Belur Math Official", "2026-02-11", "07:30", "Special Worship Day (Streaming)"),
-    e("Belur Math Official", "2026-02-25", "07:30", "Talk: Message of Sri Ramakrishna"),
-    e("Belur Math Official", "2026-03-04", "07:30", "Morning Chanting and Arati"),
-    e("Belur Math Official", "2026-03-17", "07:30", "Festival Reflections (Streaming)"),
+    e("Belur Math Official", "2026-01-28", "07:30", "Morning Chanting and Arati", "Daily"),
+    e("Belur Math Official", "2026-02-11", "07:30", "Special Worship Day (Streaming)", "Puja"),
+    e("Belur Math Official", "2026-02-25", "07:30", "Talk: Message of Sri Ramakrishna", "Talk"),
+    e("Belur Math Official", "2026-03-04", "07:30", "Morning Chanting and Arati", "Daily"),
+    e("Belur Math Official", "2026-03-17", "07:30", "Festival Reflections (Streaming)", "Talk"),
 
     // Chicago Kali Bari
-    e("Chicago Kali Bari", "2026-01-31", "18:30", "Evening Puja and Bhajans"),
-    e("Chicago Kali Bari", "2026-02-09", "19:00", "Devi Mahatmya Reading (Session 1)"),
-    e("Chicago Kali Bari", "2026-02-16", "19:00", "Devi Mahatmya Reading (Session 2)"),
-    e("Chicago Kali Bari", "2026-03-02", "19:00", "Devi Mahatmya Reading (Session 3)"),
-    e("Chicago Kali Bari", "2026-03-08", "11:00", "Sunday Cultural Program")
-  ].sort((a,b) => (a.date + " " + a.time).localeCompare(b.date + " " + b.time));
+    e("Chicago Kali Bari", "2026-01-31", "18:30", "Evening Puja and Bhajans", "Puja"),
+    e("Chicago Kali Bari", "2026-02-09", "19:00", "Devi Mahatmya Reading (Session 1)", "Puja"),
+    e("Chicago Kali Bari", "2026-02-16", "19:00", "Devi Mahatmya Reading (Session 2)", "Puja"),
+    e("Chicago Kali Bari", "2026-03-02", "19:00", "Devi Mahatmya Reading (Session 3)", "Puja"),
+    e("Chicago Kali Bari", "2026-03-08", "11:00", "Sunday Cultural Program", "Weekly")
+  ]
+  .sort((a,b) => (a.date + " " + a.time).localeCompare(b.date + " " + b.time));
 
-  function e(venue, date, time, name){ return { venue, date, time, name }; }
+  function e(venue, date, time, name, category){
+    return { venue, date, time, name, category: category || "Other" };
+  }
 
-  const venueFilter = document.getElementById("venueFilter");
-  const nameFilter  = document.getElementById("nameFilter");
-  const tbody       = document.getElementById("tbody");
-  const empty       = document.getElementById("empty");
-  const countPill   = document.getElementById("countPill");
+  const venueFilter    = document.getElementById("venueFilter");
+  const monthFilter    = document.getElementById("monthFilter");
+  const categoryFilter = document.getElementById("categoryFilter");
+  const tbody          = document.getElementById("tbody");
+  const empty          = document.getElementById("empty");
+  const countPill      = document.getElementById("countPill");
 
-  // Fill venue dropdown
-  const optAll = document.createElement("option");
-  optAll.value = "ALL";
-  optAll.textContent = "All venues";
-  venueFilter.appendChild(optAll);
-
-  VENUES.forEach(v => {
-    const opt = document.createElement("option");
-    opt.value = v;
-    opt.textContent = v;
-    venueFilter.appendChild(opt);
-  });
+  // Populate dropdowns (derived from the data so you only maintain EVENTS)
+  fillSelect(venueFilter, "ALL", "All venues", uniqueInOrder(EVENTS.map(x => x.venue)));
+  fillSelect(monthFilter, "ALL", "All months", uniqueInOrder(EVENTS.map(x => monthKey(x.date))).map(k => ({ value:k, label: monthLabel(k) })));
+  fillSelect(categoryFilter, "ALL", "All categories", uniqueInOrder(EVENTS.map(x => x.category)));
 
   venueFilter.addEventListener("change", render);
-  nameFilter.addEventListener("input", render);
-
-  document.getElementById("resetBtn").addEventListener("click", () => {
-    venueFilter.value = "ALL";
-    nameFilter.value = "";
-    render();
-  });
-
-  document.getElementById("copyMdBtn").addEventListener("click", () => {
-    const rows = getFiltered();
-    copyText(toMarkdown(rows));
-  });
+  monthFilter.addEventListener("change", render);
+  categoryFilter.addEventListener("change", render);
 
   render();
 
   function getFiltered(){
     const v = venueFilter.value;
-    const q = (nameFilter.value || "").trim().toLowerCase();
+    const m = monthFilter.value;
+    const c = categoryFilter.value;
 
     return EVENTS.filter(ev => {
       if (v !== "ALL" && ev.venue !== v) return false;
-      if (q && !ev.name.toLowerCase().includes(q)) return false;
+      if (m !== "ALL" && monthKey(ev.date) !== m) return false;
+      if (c !== "ALL" && ev.category !== c) return false;
       return true;
     });
   }
@@ -316,37 +271,82 @@ permalink: /events/
 
     rows.forEach(ev => {
       const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td class="venue">${escapeHtml(ev.venue)}</td>
-        <td class="dt">${escapeHtml(ev.date)}</td>
-        <td class="dt">${escapeHtml(ev.time)}</td>
-        <td class="name">${escapeHtml(ev.name)}</td>
-      `;
+      tr.innerHTML = "" +
+        '<td class="venue">' + escapeHtml(ev.venue) + '</td>' +
+        '<td class="dt">' + escapeHtml(ev.date) + '</td>' +
+        '<td class="dt">' + escapeHtml(formatTime(ev.time)) + '</td>' +
+        '<td class="name">' + escapeHtml(ev.name) + '</td>';
       tbody.appendChild(tr);
     });
   }
 
-  function toMarkdown(rows){
-    let out = "";
-    out += "# Upcoming Events\n\n";
-    out += "| Venue | Date | Time | Event |\n";
-    out += "|---|---:|:---:|---|\n";
-    rows.forEach(ev => {
-      out += `| ${mdSafe(ev.venue)} | ${mdSafe(ev.date)} | ${mdSafe(ev.time)} | ${mdSafe(ev.name)} |\n`;
+  function fillSelect(sel, allValue, allLabel, items){
+    sel.innerHTML = "";
+
+    const optAll = document.createElement("option");
+    optAll.value = allValue;
+    optAll.textContent = allLabel;
+    sel.appendChild(optAll);
+
+    items.forEach(item => {
+      const opt = document.createElement("option");
+      if (typeof item === "string"){
+        opt.value = item;
+        opt.textContent = item;
+      } else {
+        opt.value = item.value;
+        opt.textContent = item.label;
+      }
+      sel.appendChild(opt);
+    });
+  }
+
+  function uniqueInOrder(arr){
+    const seen = new Set();
+    const out = [];
+    arr.forEach(v => {
+      const s = String(v || "").trim();
+      if (!s) return;
+      if (!seen.has(s)){
+        seen.add(s);
+        out.push(s);
+      }
     });
     return out;
   }
 
-  function copyText(text){
-    const ta = document.createElement("textarea");
-    ta.value = text;
-    ta.style.position = "fixed";
-    ta.style.left = "-9999px";
-    ta.style.top = "0";
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    document.body.removeChild(ta);
+  function monthKey(isoDate){
+    const s = String(isoDate || "");
+    return s.length >= 7 ? s.slice(0,7) : "";
+  }
+
+  function monthLabel(ym){
+    const parts = String(ym || "").split("-");
+    if (parts.length !== 2) return ym;
+    const y = parts[0];
+    const m = parseInt(parts[1], 10);
+    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const mm = (m >= 1 && m <= 12) ? months[m-1] : parts[1];
+    return mm + "-" + y;
+  }
+
+  function formatTime(hhmm){
+    const s = String(hhmm || "").trim();
+    if (!s) return "";
+
+    const parts = s.split(":");
+    const hh = parseInt(parts[0] || "0", 10);
+    const mm = parseInt(parts[1] || "0", 10);
+
+    const isPM = hh >= 12;
+    let h12 = hh % 12;
+    if (h12 === 0) h12 = 12;
+
+    const ampm = isPM ? "PM" : "AM";
+    if (mm === 0) return String(h12) + " " + ampm;
+
+    const mm2 = String(mm).padStart(2, "0");
+    return String(h12) + ":" + mm2 + " " + ampm;
   }
 
   function escapeHtml(s){
@@ -356,9 +356,5 @@ permalink: /events/
       .replaceAll(">","&gt;")
       .replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
-  }
-
-  function mdSafe(s){
-    return String(s || "").replaceAll("|","\\|").replaceAll("\n"," ").trim();
   }
 </script>
