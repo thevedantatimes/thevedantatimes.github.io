@@ -69,15 +69,9 @@ layout: default
         <p class="hero-dek">{{ dek | strip_html | strip_newlines | truncate: 220 }}</p>
       {% endif %}
 
-      {%- capture hero_img_raw -%}{% include youtube_thumbnail.html content=hero.content %}{%- endcapture -%}
-      {%- assign hero_img_raw = hero_img_raw | strip -%}
-      {%- if hero_img_raw contains '://' -%}
-        {%- assign hero_img = hero_img_raw -%}
-      {%- else -%}
-        {%- assign hero_img = hero_img_raw | relative_url -%}
-      {%- endif -%}
+      {% assign hero_img = hero.image | default: '/assets/img/hero.svg' %}
       <a class="hero-media" href="{{ hero.url | relative_url }}" aria-label="Open: {{ hero.title }}">
-        <img src="{{ hero_img }}" alt="" loading="eager" />
+        <img src="{{ hero_img | relative_url }}" alt="" loading="eager" />
       </a>
 
       <div class="hero-credit">Photo illustration</div>
@@ -102,19 +96,12 @@ layout: default
       <div class="feature-media">
         <div class="mosaic mosaic--single">
           {% if right %}
-            {%- capture right_img_raw -%}{% include youtube_thumbnail.html content=right.content %}{%- endcapture -%}
-            {%- assign right_img_raw = right_img_raw | strip -%}
-            {%- if right_img_raw contains '://' -%}
-              {%- assign right_img = right_img_raw -%}
-            {%- else -%}
-              {%- assign right_img = right_img_raw | relative_url -%}
-            {%- endif -%}
             <a class="mosaic-big" href="{{ right.url | relative_url }}" aria-label="Open: {{ right.title }}">
-              <img src="{{ right_img }}" alt="" loading="lazy" />
+              <img src="{{ (right.image | default: '/assets/img/feature_main.svg') | relative_url }}" alt="" loading="lazy" />
             </a>
           {% else %}
             <a class="mosaic-big" href="#" aria-label="Gallery">
-              <img src="{{ '/assets/img/default.webp' | relative_url }}" alt="" loading="lazy" />
+              <img src="{{ '/assets/img/feature_main.svg' | relative_url }}" alt="" loading="lazy" />
             </a>
           {% endif %}
         </div>
