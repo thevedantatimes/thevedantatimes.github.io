@@ -2,19 +2,11 @@
 layout: default
 ---
 
-<article class="post">
+<article class="post" data-post-url="{{ page.url | relative_url }}" data-post-cats="{{ page.categories | join: '||' | escape }}" data-post-title="{{ page.title | escape }}">
   <header class="post-head">
     <h1 class="post-title">{{ page.title }}</h1>
     <div class="post-meta">
       <span>{{ page.date | date: '%A, %B %-d, %Y' }}</span>
-      {% if page.categories and page.categories.size > 0 %}
-        <span class="post-sep">·</span>
-        <span class="post-cats">
-          {% for c in page.categories %}
-            <a class="cat" href="{{ '/category/' | relative_url }}?c={{ c | url_encode }}">{{ c }}</a>{% unless forloop.last %}<span class="sep"> · </span>{% endunless %}
-          {% endfor %}
-        </span>
-      {% endif %}
     </div>
     {% if page.snippet %}
       <p class="post-snippet">{{ page.snippet | strip_html | strip_newlines }}</p>
@@ -22,14 +14,24 @@ layout: default
   </header>
 
   {% assign img = page.image %}
+  {% assign body = content %}
   {% if img %}
+    {% capture hero_figure %}
     <figure class="post-hero">
       <img src="{{ img | relative_url }}" alt="" loading="lazy" />
     </figure>
+    {% endcapture %}
+
+    {% capture hero_insert %}</p>{{ hero_figure }}{% endcapture %}
+    {% if body contains '</p>' %}
+      {% assign body = body | replace_first: '</p>', hero_insert %}
+    {% else %}
+      {% assign body = hero_figure | append: body %}
+    {% endif %}
   {% endif %}
 
   <div class="post-body">
-    {{ content }}
+    {{ body }}
   </div>
 
   <hr class="post-rule" />

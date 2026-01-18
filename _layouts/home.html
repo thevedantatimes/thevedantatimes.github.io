@@ -35,15 +35,7 @@ layout: default
 
       {% for p in others offset: 2 limit: 3 %}
       <div class="rail-block small">
-        {% if p.categories and p.categories.size > 0 %}
-          <div class="rail-kicker">
-            {% for c in p.categories %}
-              <a class="cat" href="{{ '/category/' | relative_url }}?c={{ c | url_encode }}">{{ c }}</a>{% unless forloop.last %}<span class="sep"> · </span>{% endunless %}
-            {% endfor %}
-          </div>
-        {% else %}
-          <div class="rail-kicker">Update</div>
-        {% endif %}
+        <div class="rail-kicker">Update</div>
 
         <h3 class="rail-title small"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
         {% assign dek = p.snippet | default: p.excerpt %}
@@ -68,14 +60,6 @@ layout: default
         <span class="hero-line">Vedanta Desk</span>
         <span class="dot">·</span>
         <span class="hero-line">{{ hero.date | date: '%b %-d' }}</span>
-        {% if hero.categories and hero.categories.size > 0 %}
-          <span class="dot">·</span>
-          <span class="hero-line">
-            {% for c in hero.categories limit: 2 %}
-              <a class="cat" href="{{ '/category/' | relative_url }}?c={{ c | url_encode }}">{{ c }}</a>{% unless forloop.last %}<span class="sep"> · </span>{% endunless %}
-            {% endfor %}
-          </span>
-        {% endif %}
       </div>
 
       <h1 class="hero-title"><a href="{{ hero.url | relative_url }}">{{ hero.title }}</a></h1>
