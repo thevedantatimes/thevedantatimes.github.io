@@ -67,12 +67,17 @@
       var vid = parseVideoIdFromEmbedSrc(src);
       if (!vid) return;
 
+      // Prefer aspect-ratio based sizing (mobile-friendly) instead of fixed pixel height.
+      var w = parseInt(iframe.getAttribute('width') || '', 10);
       var h = parseInt(iframe.getAttribute('height') || '', 10);
-      if (!h || h < 200) h = 500;
 
       var wrapper = document.createElement('div');
       wrapper.className = 'vb-yt-post vb-yt-tile';
-      wrapper.style.height = String(h) + 'px';
+      if (w && h && w > 0 && h > 0) {
+        wrapper.style.aspectRatio = String(w) + ' / ' + String(h);
+      } else {
+        wrapper.style.aspectRatio = '16 / 9';
+      }
       wrapper.setAttribute('data-video-id', vid);
 
       var teaser = document.createElement('div');

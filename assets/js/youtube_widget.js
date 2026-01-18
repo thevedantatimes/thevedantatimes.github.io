@@ -272,6 +272,30 @@
     const slots = Array.from(document.querySelectorAll('[data-home-yt-slot]'));
     if (!slots.length) return;
 
+    // Keep the home sidebar tiles fully hidden (no gap) until BOTH videos are ready.
+    const fvWrap = document.querySelector('.feature-videos');
+    if (fvWrap) fvWrap.classList.remove('is-ready');
+
+    function _vttMaybeRevealHomeTiles() {
+      if (!fvWrap) return;
+      if (fvWrap.classList.contains('is-ready')) return;
+      if (!slots.length) return;
+
+      const allReady = slots.every(function (el) {
+        const vid = (el.getAttribute('data-video-id') || '').trim();
+        return !!vid;
+      });
+
+      if (!allReady) return;
+
+      // Two RAFs so the browser has a chance to apply the hidden state before fading in.
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          fvWrap.classList.add('is-ready');
+        });
+      });
+    }
+
     const channelIds = _vttGetHomeChannelIds();
 
     slots.forEach(function (el) {
@@ -299,6 +323,8 @@
         _vttRenderTeaserInto(el, cached.videoId);
         _vttFillHomeInfo(el, cached.title || '', cached.channel || feedName, cached.published || '');
 
+        _vttMaybeRevealHomeTiles();
+
         // If older cache entries are missing title/date, refresh in the background.
         if (cached.title && cached.published) continue;
       }
@@ -312,11 +338,15 @@
           _vttWriteHomeTileCache(channelId, first.videoId, first.published, first.title, first.channel);
           _vttRenderTeaserInto(el, first.videoId);
           _vttFillHomeInfo(el, first.title, first.channel, first.published);
+
+          _vttMaybeRevealHomeTiles();
         }
       } catch (e) {
         // ignore
       }
     }
+
+    _vttMaybeRevealHomeTiles();
   }
 
   function clamp(n, min, max) {
