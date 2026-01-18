@@ -228,11 +228,32 @@ body.is-home .feature-title a:hover{ color:#707070 }
   .feature-dek{font-size:13px}
 
   .post{max-width:100%}
-  .post-title{font-size:32px}
-  .post-body{font-size:16px;line-height:1.65}
+  .post-title{font-size:20px}
+  .post-body{font-size:13px;line-height:1.25}
 
   .cat-page{max-width:100%}
   .cat-title{font-size:26px}
+
+  /* Latest videos: 2 tiles per row on mobile */
+  .video-widget .vw-list{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:10px;
+  }
+  .video-widget a.vw-item{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .video-widget .vw-thumb{
+    width:100%;
+    height:auto;
+    aspect-ratio:16/9;
+  }
+  .video-widget .vw-meta{
+    white-space:normal;
+  }
+  
 }
 
 
