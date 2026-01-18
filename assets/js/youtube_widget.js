@@ -500,9 +500,13 @@
         const ch = esc(trimTo(it.channel, CH_MAX));
         const dt = fmtDate(it.published);
         const href = esc(it.url);
-        const thumb = esc(it.thumbnail);
-
         const vid = esc(it.videoId);
+
+        const teaserSrc =
+          'https://www.youtube-nocookie.com/embed/' +
+          encodeURIComponent(it.videoId || '') +
+          '?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=' +
+          encodeURIComponent(it.videoId || '');
 
         return (
           '<a class="vw-item" href="' +
@@ -510,9 +514,15 @@
           '" data-video-id="' +
           vid +
           '">' +
-          '  <span class="vw-thumb"><img src="' +
-          thumb +
-          '" alt="" loading="lazy"></span>' +
+          '  <span class="vw-thumb">' +
+          '    <span class="vb-yt-teaser" aria-hidden="true">' +
+          '      <iframe class="vb-yt-teaser-iframe" src="' +
+          teaserSrc +
+          '" title="" frameborder="0" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>' +
+          '      <span class="vb-yt-teaser-shade"></span>' +
+          '      <span class="vb-yt-teaser-play">▶</span>' +
+          '    </span>' +
+          '  </span>' +
           '  <span class="vw-info">' +
           '    <span class="vw-title">' +
           t +
