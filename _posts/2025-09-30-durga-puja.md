@@ -2,7 +2,7 @@
 layout: post
 title: "Durga Puja: Swami Ishatmananda on the Mother, Maya, and Freedom"
 date: 2025-09-30 00:34:00 -0600
-image: /assets/img/birthday.webp
+image: /assets/img/durga_puja.webp
 featured: true
 categories:
   - Durga Puja
