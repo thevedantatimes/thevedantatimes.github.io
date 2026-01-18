@@ -183,7 +183,7 @@
 
     var kicker = document.createElement('div');
     kicker.className = 'vtt-rec-kicker';
-    kicker.textContent = 'Recommended';
+    kicker.textContent = 'Read more';
 
     var link = document.createElement('a');
     link.className = 'vtt-rec-link';
