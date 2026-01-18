@@ -301,6 +301,18 @@
     return 'https://i.ytimg.com/vi/' + encodeURIComponent(videoId || '') + '/hqdefault.jpg';
   }
 
+  function ytAutoplayEmbed(videoId) {
+    videoId = String(videoId || '').trim();
+    if (!videoId) return '';
+    // Muted autoplay is the most reliable across browsers; playsinline helps mobile.
+    return (
+      'https://www.youtube-nocookie.com/embed/' +
+      encodeURIComponent(videoId) +
+      '?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=' +
+      encodeURIComponent(videoId)
+    );
+  }
+
   function fmtDate(iso) {
     try {
       const d = new Date(iso);
@@ -500,9 +512,8 @@
         const ch = esc(trimTo(it.channel, CH_MAX));
         const dt = fmtDate(it.published);
         const href = esc(it.url);
-        const thumb = esc(it.thumbnail);
-
         const vid = esc(it.videoId);
+        const embed = esc(ytAutoplayEmbed(it.videoId));
 
         return (
           '<a class="vw-item" href="' +
@@ -510,9 +521,14 @@
           '" data-video-id="' +
           vid +
           '">' +
-          '  <span class="vw-thumb"><img src="' +
-          thumb +
-          '" alt="" loading="lazy"></span>' +
+          '  <span class="vw-thumb vw-thumb-video">' +
+          '    <iframe class="vw-thumb-iframe" src="' +
+          embed +
+          '" title="" frameborder="0" loading="lazy" ' +
+          'allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>' +
+          '    <span class="vw-thumb-shade"></span>' +
+          '    <span class="vw-thumb-play">▶</span>' +
+          '  </span>' +
           '  <span class="vw-info">' +
           '    <span class="vw-title">' +
           t +
