@@ -2,7 +2,7 @@
 layout: post
 title: "Kalpataru Day: A Living Promise of Grace"
 date: 2026-01-01 00:34:00 -0600
-image: /assets/img/birthday.webp
+image: /assets/img/kalpataru.webp
 featured: true
 categories:
   - Chicago
