@@ -2,7 +2,7 @@
 layout: post
 title: "Swami Vivekananda’s Living Message Through Youth Voices"
 date: 2026-01-11 00:34:00 -0600
-image: /assets/img/birthday.webp
+image: /assets/img/swami_ishatmananda.webp
 featured: true
 categories:
   - Chicago
