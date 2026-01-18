@@ -160,6 +160,35 @@
     }
   }
 
+  function _vttFeedNameForChannelId(channelId) {
+    for (let i = 0; i < FEEDS.length; i++) {
+      const cid = _vttChannelIdFromFeedUrl(FEEDS[i].url);
+      if (cid && cid === channelId) return FEEDS[i].name;
+    }
+    return '';
+  }
+
+  function _vttFillHomeInfo(slotEl, title, channel, published) {
+    if (!slotEl) return;
+    const wrap = slotEl.closest ? slotEl.closest('.fv-item') : null;
+    const rootEl = wrap || slotEl.parentElement;
+    if (!rootEl) return;
+
+    const tEl = rootEl.querySelector('[data-home-yt-title]');
+    const cEl = rootEl.querySelector('[data-home-yt-channel]');
+    const dEl = rootEl.querySelector('[data-home-yt-date]');
+    const sepEl = rootEl.querySelector('.fv-sep');
+
+    const dt = fmtDate(published);
+    const ch = String(channel || '').trim();
+    const tt = String(title || '').trim();
+
+    if (tEl) tEl.textContent = trimTo(tt, 56);
+    if (cEl) cEl.textContent = ch;
+    if (dEl) dEl.textContent = dt;
+    if (sepEl) sepEl.style.display = ch && dt ? '' : 'none';
+  }
+
   function _vttGetHomeChannelIds() {
     const cfg = Array.isArray(window.VTT_HOME_YT_CHANNELS) ? window.VTT_HOME_YT_CHANNELS : [];
     const cleaned = cfg
@@ -194,11 +223,17 @@
     }
   }
 
-  function _vttWriteHomeTileCache(channelId, videoId, published) {
+  function _vttWriteHomeTileCache(channelId, videoId, published, title, channel) {
     try {
       localStorage.setItem(
         HOME_TILE_PREFIX + channelId,
-        JSON.stringify({ updatedAt: new Date().toISOString(), videoId: videoId, published: published || '' })
+        JSON.stringify({
+          updatedAt: new Date().toISOString(),
+          videoId: videoId,
+          published: published || '',
+          title: title || '',
+          channel: channel || ''
+        })
       );
     } catch (e) {
       // ignore
@@ -257,20 +292,26 @@
       const channelId = channelIds[idx] || channelIds[i] || '';
       if (!channelId) continue;
 
+      const feedName = _vttFeedNameForChannelId(channelId) || ('@' + channelId);
+
       const cached = _vttReadHomeTileCache(channelId);
       if (cached && cached.videoId) {
         _vttRenderTeaserInto(el, cached.videoId);
-        continue;
+        _vttFillHomeInfo(el, cached.title || '', cached.channel || feedName, cached.published || '');
+
+        // If older cache entries are missing title/date, refresh in the background.
+        if (cached.title && cached.published) continue;
       }
 
       try {
         const feedUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + encodeURIComponent(channelId);
         const txt = await fetchTextWithProxy(feedUrl);
-        const parsed = parseRss(txt, '@' + channelId);
+        const parsed = parseRss(txt, feedName);
         const first = (parsed || [])[0];
         if (first && first.videoId) {
-          _vttWriteHomeTileCache(channelId, first.videoId, first.published);
+          _vttWriteHomeTileCache(channelId, first.videoId, first.published, first.title, first.channel);
           _vttRenderTeaserInto(el, first.videoId);
+          _vttFillHomeInfo(el, first.title, first.channel, first.published);
         }
       } catch (e) {
         // ignore
@@ -564,7 +605,7 @@
 
     const optAll = document.createElement('option');
     optAll.value = 'all';
-    optAll.textContent = 'All channels';
+    optAll.textContent = 'Latest videos';
     sel.appendChild(optAll);
 
     FEEDS.forEach(function (f) {
@@ -575,7 +616,9 @@
     });
 
     wrap.appendChild(sel);
-    head.insertAdjacentElement('afterend', wrap);
+    const controls = head.querySelector('.vw-controls');
+    if (controls) head.insertBefore(wrap, controls);
+    else head.appendChild(wrap);
     dropdownEl = sel;
 
     sel.addEventListener('change', function () {
