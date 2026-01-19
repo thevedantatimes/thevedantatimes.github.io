@@ -5,7 +5,7 @@ date: 2026-01-01 00:34:00 -0600
 image: /assets/img/kalpataru.webp
 categories:
   - Chicago
-  - Swami Vivekananda
+  - Sri Ramakrishna
   - Kalpataru
   - Swami Ishatmananda
 snippet: "Kalpataru Day recalls Ramakrishna’s grace, urging prayer, discrimination, love, and God-realization now."
