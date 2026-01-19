@@ -3,7 +3,6 @@ layout: post
 title: "Mindfulness Meditation: Training Attention for Awakening"
 date: 2020-10-04 00:34:00 -0600
 image: /assets/img/swami_sarvapriyananda.webp
-featured: true
 categories:
   - New York
   - Swami Sarvapriyananda
