@@ -2,7 +2,7 @@
 layout: post
 title: "Jnana Yoga: The Path of Knowledge and Its Practical Power"
 date: 2020-05-28 00:34:00 -0600
-image: /assets/img/birthday.webp
+image: /assets/img/swami_sarvapriyananda.webp
 featured: true
 categories:
   - New York
