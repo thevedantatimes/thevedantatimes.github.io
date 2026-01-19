@@ -2,7 +2,7 @@
 layout: post
 title: "Beyond Maya"
 date: 2020-06-07 00:34:00 -0600
-image: /assets/img/birthday.webp
+image: /assets/img/swami_ishatmananda.webp
 featured: true
 categories:
   - Chicago
