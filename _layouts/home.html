@@ -79,19 +79,6 @@ layout: default
 
     <!-- Right feature -->
     <aside class="feature">
-
-      <div class="feature-videos" aria-label="Latest videos">
-        <div class="fv-item">
-          <button class="fv-teaser" type="button" data-home-yt-slot="0" aria-label="Play latest video"></button>
-          <div class="fv-title" data-home-yt-title></div>
-          <div class="fv-meta"><span data-home-yt-channel></span><span class="fv-sep"> · </span><span data-home-yt-date></span></div>
-        </div>
-        <div class="fv-item">
-          <button class="fv-teaser" type="button" data-home-yt-slot="1" aria-label="Play latest video"></button>
-          <div class="fv-title" data-home-yt-title></div>
-          <div class="fv-meta"><span data-home-yt-channel></span><span class="fv-sep"> · </span><span data-home-yt-date></span></div>
-        </div>
-      </div>
       
       <div class="feature-media">
         <div class="mosaic mosaic--single">
@@ -121,6 +108,20 @@ layout: default
       {% if right %}
         <div class="feature-meta">{{ right.date | date: '%b %-d' }} · {{ right.content | number_of_words | divided_by: 220 | plus: 1 }} min read</div>
       {% endif %}
+
+
+      <div class="feature-videos" aria-label="Latest videos">
+        <div class="fv-item">
+          <button class="fv-teaser" type="button" data-home-yt-slot="0" aria-label="Play latest video"></button>
+          <div class="fv-title" data-home-yt-title></div>
+          <div class="fv-meta"><span data-home-yt-channel></span><span class="fv-sep"> · </span><span data-home-yt-date></span></div>
+        </div>
+        <div class="fv-item">
+          <button class="fv-teaser" type="button" data-home-yt-slot="1" aria-label="Play latest video"></button>
+          <div class="fv-title" data-home-yt-title></div>
+          <div class="fv-meta"><span data-home-yt-channel></span><span class="fv-sep"> · </span><span data-home-yt-date></span></div>
+        </div>
+      </div>
 
 
       <div class="video-widget" id="ytWidget" data-json="{{ '/assets/data/youtube_videos.json' | relative_url }}">
