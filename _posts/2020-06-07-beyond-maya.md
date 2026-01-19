@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Beyond Maya"
+title: "Sri Ramakrishna Kathamrita Go Beyond Maya"
 date: 2020-06-07 00:34:00 -0600
 image: /assets/img/swami_ishatmananda.webp
 featured: true
@@ -8,6 +8,7 @@ categories:
   - Chicago
   - Swami Ishatmananda
   - Maya
+  - Kathamrita
 snippet: "Swami urges transcend Maya through Mother’s grace, sattva growth, surrender, and God-centered inner joy."
 ---
 Swami Ishatmananda opens in the traditional way, chanting the familiar invocation that calls Sri Ramakrishna’s words **kathamrita**, nectar that cools the “heated life” and removes impurity. He then states the purpose in plain terms: these teachings are meant to free us from the cycle of **janma, mrityu, jara, vyadhi**, and the sorrow that comes with them. How does it free us? Not by mere information, but through **jnana**, a living clarity that wakes up inside the mind as we listen. The moment the mind truly catches the meaning, something shifts. The same life, the same circumstances, yet the inner grip begins to loosen.
