@@ -89,11 +89,20 @@
       window.VTT_UPCOMING_EVENTS = [
         { title: 'Saraswati Puja', when: '14 Feb 8 PM IST', iso: '2026-02-14T20:00:00+05:30' },
         { title: 'Shivaratri', when: '26 Feb 7 PM IST', iso: '2026-02-26T19:00:00+05:30' },
-        { title: 'Rama Navami', when: '29 Mar 8 PM IST', iso: '2026-03-29T20:00:00+05:30' }
+        { title: 'Sri Ramakrishna Jayanti', when: '19 Feb 8 PM IST', iso: '2026-02-19T20:00:00+05:30' },
+        { title: 'Ram Navami', when: '26 Mar 10 AM IST', iso: '2026-03-26T20:00:00+05:30' },
+        { title: 'Buddha Purnima', when: '1 May 7 PM IST', iso: '2026-05-01T19:00:00+05:30' },
+        { title: 'Ratha Yatra', when: '16 Jul 8 PM IST', iso: '2026-07-16T20:00:00+05:30' },
+        { title: 'Guru Purnima', when: '29 Jul 8 PM IST', iso: '2026-07-29T20:00:00+05:30' },
+        { title: 'Janmashtami', when: '4 Sep 7 PM IST', iso: '2026-09-04T19:00:00+05:30' },
+        { title: 'Mahalaya', when: '10 Oct 8 PM IST', iso: '2026-10-10T20:00:00+05:30' },
+        { title: 'Diwali', when: '8 Nov 8 PM IST', iso: '2026-11-08T20:00:00+05:30' },
+        { title: 'Kali Puja', when: '8 Nov 7 PM IST', iso: '2026-11-08T19:00:00+05:30' },
+        { title: 'Jagadhatri Puja', when: '19 Nov 8 PM IST', iso: '2026-11-19T20:00:00+05:30' }        
       ];
     </script>
     <script defer src="{{ '/assets/js/youtube_widget.js' | relative_url }}"></script>
-<script defer src="{{ '/assets/js/post_enhancements.js' | relative_url }}"></script>
+    <script defer src="{{ '/assets/js/post_enhancements.js' | relative_url }}"></script>
     <script>
     (() => {
       const dds = Array.from(document.querySelectorAll('.nav-dd'));
@@ -189,7 +198,7 @@
       refresh();
 
       window.setInterval(function(){
-        rot = getUpcoming().slice(0,2);
+        rot = getUpcoming().slice(0,6);
         if (!rot.length) {
           idx = 0;
           fadeTo(null);
