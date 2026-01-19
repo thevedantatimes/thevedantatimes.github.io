@@ -185,7 +185,7 @@
       }
 
       function refresh(){
-        rot = getUpcoming().slice(0,2);
+        rot = getUpcoming().slice(0,6);
         if (!rot.length) {
           idx = 0;
           setContent(null);
@@ -209,7 +209,7 @@
           fadeTo(rot[0]);
           return;
         }
-        idx = (idx + 1) % 2;
+        idx = (idx + 1) % rot.length;
         fadeTo(rot[idx]);
       }, 15000);
 
