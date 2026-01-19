@@ -22,8 +22,16 @@
         </div>
 
         <div class="mast-right">
-          <div class="mast-market"><span class="muted">Market</span> <span class="pos">+0.6%</span> <span class="arrow">↑</span></div>
-          <div class="mast-mini">Dow</div>
+          {% if page.url == '/' %}
+            <div class="mast-events" id="mastEvents" aria-label="Upcoming events">
+              <div class="mast-events-kicker">Upcoming</div>
+              <div class="mast-events-title" data-me-title>Upcoming event</div>
+              <div class="mast-events-when" data-me-when></div>
+            </div>
+          {% else %}
+            <div class="mast-market"><span class="muted">Market</span> <span class="pos">+0.6%</span> <span class="arrow">↑</span></div>
+            <div class="mast-mini">Dow</div>
+          {% endif %}
         </div>
       </div>
 
@@ -76,6 +84,13 @@
     <script>
       window.VTT_HOME_YT_CHANNELS = {{ site.home_youtube_channels | default: nil | jsonify }};
       window.VTT_POSTS_INDEX_URL = "{{ '/assets/data/posts_index.json' | relative_url }}";
+
+      // Home-only: Upcoming events ticker (edit this list to maintain your events)
+      window.VTT_UPCOMING_EVENTS = [
+        { title: 'Saraswati Puja', when: '14 Feb 8 PM IST', iso: '2026-02-14T20:00:00+05:30' },
+        { title: 'Shivaratri', when: '26 Feb 7 PM IST', iso: '2026-02-26T19:00:00+05:30' },
+        { title: 'Rama Navami', when: '29 Mar 8 PM IST', iso: '2026-03-29T20:00:00+05:30' }
+      ];
     </script>
     <script defer src="{{ '/assets/js/youtube_widget.js' | relative_url }}"></script>
 <script defer src="{{ '/assets/js/post_enhancements.js' | relative_url }}"></script>
@@ -105,6 +120,94 @@
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeAll(null);
       });
+    })();
+    </script>
+
+    <script>
+    (function(){
+      var box = document.getElementById('mastEvents');
+      if (!box) return;
+
+      var titleEl = box.querySelector('[data-me-title]');
+      var whenEl = box.querySelector('[data-me-when]');
+      var data = Array.isArray(window.VTT_UPCOMING_EVENTS) ? window.VTT_UPCOMING_EVENTS : [];
+
+      function parseIso(iso){
+        try {
+          var t = new Date(String(iso || '')).getTime();
+          return isNaN(t) ? 0 : t;
+        } catch (e) {
+          return 0;
+        }
+      }
+
+      function getUpcoming(){
+        var now = Date.now();
+        var up = data
+          .map(function(e){
+            return {
+              title: String((e && e.title) || ''),
+              when: String((e && e.when) || ''),
+              iso: String((e && e.iso) || ''),
+              _t: parseIso(e && e.iso)
+            };
+          })
+          .filter(function(e){ return e._t && e._t > now; });
+
+        up.sort(function(a,b){ return a._t - b._t; });
+        return up;
+      }
+
+      var rot = [];
+      var idx = 0;
+
+      function setContent(e){
+        if (!titleEl || !whenEl) return;
+        titleEl.textContent = e && e.title ? e.title : 'No upcoming events';
+        whenEl.textContent = e && e.when ? e.when : '';
+      }
+
+      function fadeTo(e){
+        box.classList.add('me-fade');
+        window.setTimeout(function(){
+          setContent(e);
+          box.classList.remove('me-fade');
+        }, 240);
+      }
+
+      function refresh(){
+        rot = getUpcoming().slice(0,2);
+        if (!rot.length) {
+          idx = 0;
+          setContent(null);
+          return;
+        }
+        idx = 0;
+        setContent(rot[0]);
+      }
+
+      refresh();
+
+      window.setInterval(function(){
+        rot = getUpcoming().slice(0,2);
+        if (!rot.length) {
+          idx = 0;
+          fadeTo(null);
+          return;
+        }
+        if (rot.length === 1) {
+          idx = 0;
+          fadeTo(rot[0]);
+          return;
+        }
+        idx = (idx + 1) % 2;
+        fadeTo(rot[idx]);
+      }, 15000);
+
+      // Re-evaluate the list periodically (in case an event just passed)
+      window.setInterval(function(){
+        refresh();
+      }, 60000);
     })();
     </script>
 

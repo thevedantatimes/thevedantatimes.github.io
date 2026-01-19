@@ -8,7 +8,7 @@
   const listEl = root.querySelector('[data-vw-list]');
   const gateEl = root.querySelector('[data-vw-gate]');
 
-  const PAGE_SIZE = 4;
+  const PAGE_SIZE = 5;
   const MAX_ITEMS_GLOBAL = 200;
   const TITLE_MAX = 30;
   const CH_MAX = 14;
@@ -168,7 +168,14 @@
     return '';
   }
 
-  function _vttFillHomeInfo(slotEl, title, channel, published) {
+  function _vttFmtMins(durationSec) {
+    var s = parseInt(durationSec || 0, 10) || 0;
+    if (!s) return '';
+    var m = Math.max(1, Math.round(s / 60));
+    return m + ' min';
+  }
+
+  function _vttFillHomeInfo(slotEl, title, channel, published, durationSec) {
     if (!slotEl) return;
     const wrap = slotEl.closest ? slotEl.closest('.fv-item') : null;
     const rootEl = wrap || slotEl.parentElement;
@@ -177,15 +184,18 @@
     const tEl = rootEl.querySelector('[data-home-yt-title]');
     const cEl = rootEl.querySelector('[data-home-yt-channel]');
     const dEl = rootEl.querySelector('[data-home-yt-date]');
+    const durEl = rootEl.querySelector('[data-home-yt-duration]');
     const sepEl = rootEl.querySelector('.fv-sep');
 
     const dt = fmtDate(published);
     const ch = String(channel || '').trim();
     const tt = String(title || '').trim();
+    const mm = _vttFmtMins(durationSec);
 
     if (tEl) tEl.textContent = trimTo(tt, 56);
     if (cEl) cEl.textContent = ch;
     if (dEl) dEl.textContent = dt;
+    if (durEl) durEl.textContent = mm;
     if (sepEl) sepEl.style.display = ch && dt ? '' : 'none';
   }
 
@@ -223,7 +233,7 @@
     }
   }
 
-  function _vttWriteHomeTileCache(channelId, videoId, published, title, channel) {
+  function _vttWriteHomeTileCache(channelId, videoId, published, title, channel, durationSec) {
     try {
       localStorage.setItem(
         HOME_TILE_PREFIX + channelId,
@@ -232,7 +242,8 @@
           videoId: videoId,
           published: published || '',
           title: title || '',
-          channel: channel || ''
+          channel: channel || '',
+          durationSec: parseInt(durationSec || 0, 10) || 0
         })
       );
     } catch (e) {
@@ -321,7 +332,7 @@
       const cached = _vttReadHomeTileCache(channelId);
       if (cached && cached.videoId) {
         _vttRenderTeaserInto(el, cached.videoId);
-        _vttFillHomeInfo(el, cached.title || '', cached.channel || feedName, cached.published || '');
+        _vttFillHomeInfo(el, cached.title || '', cached.channel || feedName, cached.published || '', cached.durationSec || 0);
 
         _vttMaybeRevealHomeTiles();
 
@@ -335,9 +346,9 @@
         const parsed = parseRss(txt, feedName);
         const first = (parsed || [])[0];
         if (first && first.videoId) {
-          _vttWriteHomeTileCache(channelId, first.videoId, first.published, first.title, first.channel);
+          _vttWriteHomeTileCache(channelId, first.videoId, first.published, first.title, first.channel, first.durationSec);
           _vttRenderTeaserInto(el, first.videoId);
-          _vttFillHomeInfo(el, first.title, first.channel, first.published);
+          _vttFillHomeInfo(el, first.title, first.channel, first.published, first.durationSec);
 
           _vttMaybeRevealHomeTiles();
         }
@@ -476,12 +487,33 @@
         const vid = (e.getElementsByTagName('yt:videoId')[0] || {}).textContent || '';
         const pub = (e.getElementsByTagName('published')[0] || {}).textContent || '';
 
+        // Duration (seconds) if present in the feed
+        let durSec = 0;
+        try {
+          const yd = e.getElementsByTagName('yt:duration')[0];
+          if (yd && yd.getAttribute) {
+            durSec = parseInt(yd.getAttribute('seconds') || '', 10) || 0;
+          }
+          if (!durSec) {
+            let mc = null;
+            const mg = e.getElementsByTagName('media:group')[0];
+            if (mg) mc = mg.getElementsByTagName('media:content')[0];
+            if (!mc) mc = e.getElementsByTagName('media:content')[0];
+            if (mc && mc.getAttribute) {
+              durSec = parseInt(mc.getAttribute('duration') || '', 10) || 0;
+            }
+          }
+        } catch (e) {
+          durSec = 0;
+        }
+
         return {
           title: (title || '').trim(),
           url: (link || '').trim(),
           videoId: (vid || '').trim(),
           published: (pub || '').trim(),
           channel: channelHandle || '',
+          durationSec: durSec || 0,
           thumbnail: vid ? ytThumb(String(vid).trim()) : ''
         };
       })
@@ -567,7 +599,7 @@
     }
 
     const html = slice
-      .map(function (it) {
+      .map(function (it, idx) {
         const t = esc(trimTo(it.title, TITLE_MAX));
         const ch = esc(trimTo(it.channel, CH_MAX));
         const dt = fmtDate(it.published);
@@ -579,6 +611,36 @@
           encodeURIComponent(it.videoId || '') +
           '?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=' +
           encodeURIComponent(it.videoId || '');
+
+        // The 5th tile is a full-width card with meta below the video.
+        if (idx === 4) {
+          return (
+            '<a class="vw-item vw-item--wide" href="' +
+            href +
+            '" data-video-id="' +
+            vid +
+            '">' +
+            '  <span class="vw-thumb vw-thumb--wide">' +
+            '    <div class="vb-yt-teaser" aria-hidden="true">' +
+            '      <iframe class="vb-yt-teaser-iframe" src="' +
+            teaserSrc +
+            '" title="" frameborder="0" loading="eager" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>' +
+            '      <span class="vb-yt-teaser-shade"></span>' +
+            '      <span class="vb-yt-teaser-play">▶</span>' +
+            '    </div>' +
+            '  </span>' +
+            '  <span class="vw-info vw-info--below">' +
+            '    <span class="vw-title">' +
+            t +
+            '</span>' +
+            '    <span class="vw-meta">' +
+            (ch ? ch + ' · ' : '') +
+            dt +
+            '</span>' +
+            '  </span>' +
+            '</a>'
+          );
+        }
 
         return (
           '<a class="vw-item" href="' +
