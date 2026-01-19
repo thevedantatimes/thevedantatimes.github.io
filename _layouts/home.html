@@ -75,6 +75,62 @@ layout: default
       </a>
 
       <div class="hero-credit">Photo illustration</div>
+
+      {% assign center_stack = others | slice: 5, 2 %}
+      {% assign center_pair = others | slice: 7, 2 %}
+      {% assign pair_first = center_pair[0] %}
+      {% assign pair_second = center_pair[1] %}
+
+      {% if center_stack.size > 0 or pair_first %}
+        <div class="center-more" aria-label="More posts">
+
+          {% if center_stack.size > 0 %}
+            <div class="center-stack">
+              {% for p in center_stack %}
+                <div class="cm-item">
+                  {% assign img = p.image | default: '/assets/img/feature_main.svg' %}
+                  <a class="cm-thumb" href="{{ p.url | relative_url }}" aria-label="Open: {{ p.title }}">
+                    <img src="{{ img | relative_url }}" alt="" loading="lazy" />
+                  </a>
+                  <div class="cm-body">
+                    <h3 class="cm-title"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+                    {% assign dek = p.snippet | default: p.excerpt %}
+                    {% if dek %}
+                      <p class="cm-dek">{{ dek | strip_html | strip_newlines | truncate: 150 }}</p>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% if pair_first and pair_second %}
+            <div class="center-duo">
+              <div class="cm-row">
+                <h3 class="cm-title"><a href="{{ pair_first.url | relative_url }}">{{ pair_first.title }}</a></h3>
+                {% assign dek = pair_first.snippet | default: pair_first.excerpt %}
+                {% if dek %}
+                  <p class="cm-dek">{{ dek | strip_html | strip_newlines | truncate: 140 }}</p>
+                {% endif %}
+              </div>
+
+              <div class="cm-row">
+                <h3 class="cm-title"><a href="{{ pair_second.url | relative_url }}">{{ pair_second.title }}</a></h3>
+                {% assign dek = pair_second.snippet | default: pair_second.excerpt %}
+                {% if dek %}
+                  <p class="cm-dek">{{ dek | strip_html | strip_newlines | truncate: 140 }}</p>
+                {% endif %}
+              </div>
+
+              {% assign img = pair_first.image | default: '/assets/img/feature_main.svg' %}
+              <a class="cm-duo-media" href="{{ pair_first.url | relative_url }}" aria-label="Open: {{ pair_first.title }}">
+                <img src="{{ img | relative_url }}" alt="" loading="lazy" />
+              </a>
+            </div>
+          {% endif %}
+
+        </div>
+      {% endif %}
     </article>
 
     <!-- Right feature -->
