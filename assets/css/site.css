@@ -93,7 +93,7 @@ body.is-home .feature-title a:hover{ color:#707070 }
 .rail-block:last-child{border-bottom:0;margin-bottom:0}
 .kicker{font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:#b50000}
 .rail-kicker{font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:#b50000}
-.rail-title{margin:8px 0 8px;font-size:20px;font-weight:600;line-height:1.1}
+.rail-title{margin:8px 0 8px;font-size:20px;font-weight:500;line-height:1.1}
 .rail-title.small{font-size:16px;font-weight:600}
 .rail-dek{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.35}
 .rail-meta{font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;font-size:11px;color:var(--muted)}
