@@ -3,7 +3,6 @@ layout: post
 title: "Maa Sarada Devi Jayanti: Quiet Strength, Living Compassion"
 date: 2025-12-14 00:34:00 -0600
 image: /assets/img/maa_sarada.webp
-featured: true
 categories:
   - Chicago
   - Swami Vivekananda
