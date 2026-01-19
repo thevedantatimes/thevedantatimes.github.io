@@ -185,14 +185,27 @@
       }
 
       function refresh(){
-        rot = getUpcoming().slice(0,6);
-        if (!rot.length) {
+        var next = getUpcoming().slice(0,6);
+      
+        if (!next.length) {
+          rot = [];
           idx = 0;
           setContent(null);
           return;
         }
-        idx = 0;
-        setContent(rot[0]);
+      
+        // Keep current item if still present
+        var curKey = (rot[idx] && rot[idx].iso) ? rot[idx].iso : null;
+        rot = next;
+      
+        var keepIndex = -1;
+        if (curKey) {
+          for (var i=0; i<rot.length; i++){
+            if (rot[i].iso === curKey) { keepIndex = i; break; }
+          }
+        }
+        idx = (keepIndex >= 0) ? keepIndex : 0;
+        setContent(rot[idx]);
       }
 
       refresh();
