@@ -93,8 +93,8 @@ body.is-home .feature-title a:hover{ color:#707070 }
 .rail-block:last-child{border-bottom:0;margin-bottom:0}
 .kicker{font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:#b50000}
 .rail-kicker{font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:#b50000}
-.rail-title{margin:8px 0 8px;font-size:20px;line-height:1.1}
-.rail-title.small{font-size:16px}
+.rail-title{margin:8px 0 8px;font-size:20px;font-weight:700;line-height:1.1}
+.rail-title.small{font-size:16px;font-weight:600}
 .rail-dek{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.35}
 .rail-meta{font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;font-size:11px;color:var(--muted)}
 .muted-block .rail-kicker{color:var(--muted)}
@@ -103,7 +103,7 @@ body.is-home .feature-title a:hover{ color:#707070 }
 .hero-topline{font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;font-size:12px;color:var(--muted);margin-bottom:10px}
 .live{display:inline-block;font-weight:700;color:#b50000;letter-spacing:.06em}
 .dot{margin:0 6px}
-.hero-title{margin:0 0 10px;font-size:28px;line-height:1.08;letter-spacing:-0.2px}
+.hero-title{margin:0 0 10px;font-size:28px;font-weight:800;line-height:1.08;letter-spacing:-0.2px}
 .hero-dek{margin:0 0 12px;color:var(--muted);font-size:15px;line-height:1.4;max-width:65ch}
 .hero-media{display:block;border:1px solid var(--rule);background:#f6f6f6}
 .hero-media img{display:block;width:100%;height:auto}
