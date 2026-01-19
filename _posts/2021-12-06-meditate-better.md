@@ -3,7 +3,6 @@ layout: post
 title: "Meditate Better: Swami Sarvapriyananda’s New York Guide to Making the Mind a Friend"
 date: 2021-12-06 00:34:00 -0600
 image: /assets/img/swami_sarvapriyananda.webp
-featured: true
 categories:
   - New York
   - Swami Sarvapriyananda
