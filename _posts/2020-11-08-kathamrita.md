@@ -2,7 +2,7 @@
 layout: post
 title: "The Freedom that Surrenders: Free Will, Grace, and the Joy of Living Unbound"
 date: 2020-11-08 00:34:00 -0600
-image: /assets/img/birthday.webp
+image: /assets/img/swami_ishatmananda.webp
 featured: true
 categories:
   - Chicago
