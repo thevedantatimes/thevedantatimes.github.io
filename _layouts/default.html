@@ -88,12 +88,29 @@
             Categories <span class="nav-caret" aria-hidden="true">▾</span>
           </button>
           <div class="nav-dd-menu" role="menu" aria-label="Categories">
-            <a role="menuitem" href="{{ '/category/' | relative_url }}">All categories</a>
+            <a role="menuitem" href="{{ '/category/' | relative_url }}">Browse</a>
             <div class="nav-dd-rule" aria-hidden="true"></div>
-            {% assign cats = site.categories | sort %}
-            {% for c in cats %}
-              {% assign name = c[0] %}
-              <a role="menuitem" href="{{ '/category/' | relative_url }}?c={{ name | url_encode }}">                <span class="nav-dd-label">{{ name }}</span>                <span class="nav-dd-count">({{ c[1] | size }})</span>              </a>
+
+            <div class="nav-dd-head">Venues</div>
+            <a role="menuitem" href="{{ '/category/' | relative_url }}?venue={{ 'Chicago' | url_encode }}"><span class="nav-dd-label">Chicago</span></a>
+            <a role="menuitem" href="{{ '/category/' | relative_url }}?venue={{ 'New York' | url_encode }}"><span class="nav-dd-label">New York</span></a>
+            <a role="menuitem" href="{{ '/category/' | relative_url }}?venue={{ 'Belur Math' | url_encode }}"><span class="nav-dd-label">Belur Math</span></a>
+
+            <div class="nav-dd-rule" aria-hidden="true"></div>
+            <div class="nav-dd-head">Events</div>
+            <a role="menuitem" href="{{ '/category/' | relative_url }}?event={{ 'Kalpataru Kathamrita' | url_encode }}"><span class="nav-dd-label">Kalpataru Kathamrita</span></a>
+
+            <div class="nav-dd-rule" aria-hidden="true"></div>
+            <div class="nav-dd-head">Speakers</div>
+            <a role="menuitem" href="{{ '/category/' | relative_url }}?speaker={{ 'Swami Sarvapriyananda' | url_encode }}"><span class="nav-dd-label">Swami Sarvapriyananda</span></a>
+            <a role="menuitem" href="{{ '/category/' | relative_url }}?speaker={{ 'Swami Ishatmananda' | url_encode }}"><span class="nav-dd-label">Swami Ishatmananda</span></a>
+            <a role="menuitem" href="{{ '/category/' | relative_url }}?speaker={{ 'Swami Vivekananda' | url_encode }}"><span class="nav-dd-label">Swami Vivekananda</span></a>
+
+            <div class="nav-dd-rule" aria-hidden="true"></div>
+            <div class="nav-dd-head">Years</div>
+            {% assign years = site.posts | group_by_exp:"post","post.date | date: '%Y'" | sort: "name" %}
+            {% for y in years reversed %}
+              <a role="menuitem" href="{{ '/category/' | relative_url }}?year={{ y.name }}"><span class="nav-dd-label">{{ y.name }}</span></a>
             {% endfor %}
           </div>
         </div>

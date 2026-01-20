@@ -5,6 +5,26 @@
     return Array.prototype.slice.call((root || document).querySelectorAll(sel));
   }
 
+  function initDuoPan() {
+    // Home: the center duo image pans slowly so readers can see more of the image
+    var els = $all('.cm-duo-media');
+    if (!els.length) return;
+
+    els.forEach(function (el) {
+      if (!el || el.classList.contains('is-pan')) return;
+      var img = el.querySelector('img');
+      if (!img) return;
+
+      var src = img.currentSrc || img.getAttribute('src') || '';
+      src = String(src || '').trim();
+      if (!src) return;
+
+      // Use a repeating background for a seamless loop
+      el.style.backgroundImage = 'url(\"' + src.replace(/\"/g, '\\\"') + '\")';
+      el.classList.add('is-pan');
+    });
+  }
+
   function parseVideoIdFromEmbedSrc(src) {
     try {
       var u = new URL(String(src || ''), window.location.href);
@@ -646,6 +666,8 @@
   }
 
   function init() {
+    initDuoPan();
+
     var postArticle = document.querySelector('article.post');
     if (!postArticle) return;
 
