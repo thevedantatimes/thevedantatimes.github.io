@@ -519,9 +519,21 @@ html.vtt-vo-open,html.vtt-vo-open body{overflow:hidden}
   align-items: center;
   justify-content: center;
   padding: 18px;
-  background: rgba(0, 0, 0, 0.12);
+  background: transparent;
 }
 
+
+
+.vtt-wiki-ico{
+  width: 14px;
+  height: 14px;
+  margin-left: 6px;
+  vertical-align: -2px;
+  opacity: 0.85;
+}
+a.vtt-wiki{
+  white-space: nowrap;
+}
 .vtt-wiki-modal{
   position: relative;
   width: min(720px, 100%);
