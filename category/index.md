@@ -24,7 +24,10 @@ title: Categories
       <span class="cat-filter-label">All events</span>
       <select id="fEvent" class="cat-select">
         <option value="">All events</option>
-        <option value="Kalpataru Kathamrita">Kalpataru Kathamrita</option>
+        <option value="Kalpataru">Kalpataru</option>
+        <option value="Kathamrita">Kathamrita</option>
+        <option value="Durga Puja">Durga Puja</option>
+        <option value="Kali Puja">Kali Puja</option>
       </select>
     </label>
 
@@ -35,6 +38,7 @@ title: Categories
         <option value="Swami Sarvapriyananda">Swami Sarvapriyananda</option>
         <option value="Swami Ishatmananda">Swami Ishatmananda</option>
         <option value="Swami Vivekananda">Swami Vivekananda</option>
+        <option value="Swami Purnananda">Swami Purnananda</option>
         <option value="Sri Ramakrishna">Sri Ramakrishna</option>
       </select>
     </label>
