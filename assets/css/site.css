@@ -302,8 +302,9 @@ body.is-home .cm-title a:hover{ color:#707070 }
   .cm-thumb{width:92px}
   .cm-title{font-size:17px}
   .cm-dek{font-size:12.5px}
-  .center-duo{grid-template-columns:1fr;grid-template-rows:auto auto auto}
-  .cm-duo-media{grid-column:1;grid-row:3;aspect-ratio:16/9}
+  /* Keep the "two posts + one shared image" layout consistent with desktop */
+  .center-duo{grid-template-columns:1fr 140px;grid-template-rows:auto auto;gap:12px}
+  .cm-duo-media{grid-column:2;grid-row:1 / span 2;min-height:150px}
 
   .post{max-width:100%}
   .post-title{font-size:24px}
