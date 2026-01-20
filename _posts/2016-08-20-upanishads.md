@@ -4,7 +4,7 @@ title: "The Secret of the Five Sheaths: A Journey From 'I Am the Body' to Pure A
 date: 2016-08-20 00:34:00 -0600
 image: /assets/img/swami_sarvapriyananda.webp
 categories:
-  - New York
+  - California
   - Swami Sarvapriyananda
   - Upanishads
 snippet: "Upanishad teaches self is witness beyond body, prana, mind, intellect, sleep—pure consciousness always present."
