@@ -402,6 +402,65 @@ function truncateWikiExtract(extract){
   return head + '…';
 }
 
+function _vttWordsCount(s){
+  s = String(s || '').trim();
+  if (!s) return 0;
+  return s.split(/\s+/).length;
+}
+
+function _vttLooksLikeDisambiguation(data, extract){
+  if (data && String(data.type || '').toLowerCase() === 'disambiguation') return true;
+  var t = String(extract || '');
+  if (/\bmay refer to\b\s*:?\s*$/i.test(t.trim())) return true;
+  if (/\bmay refer to\b/i.test(t) && _vttWordsCount(t) < 30) return true;
+  return false;
+}
+
+function _vttResolveDisambiguationTitle(term){
+  // Pick the first "mainspace" link from the disambiguation page (keeps on-page order).
+  var page = term.replace(/\s+/g, '_');
+  var api = 'https://en.wikipedia.org/w/api.php?action=parse&prop=links&format=json&origin=*&page=' + encodeURIComponent(page);
+
+  return fetch(api, { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)); })
+    .then(function(d){
+      var links = d && d.parse && d.parse.links;
+      if (!links || !links.length) return null;
+
+      for (var i=0; i<links.length; i++){
+        var L = links[i] || {};
+        var title = L['*'] || '';
+        if (L.ns !== 0) continue;                     // ns:0 = articles
+        if (!title) continue;
+        if (String(title).toLowerCase() === String(term).toLowerCase()) continue;
+        if (/\(disambiguation\)$/i.test(title)) continue;
+        return title;
+      }
+      return null;
+    })
+    .catch(function(){ return null; });
+}
+
+function _vttSearchBestTitle(term){
+  // Fallback if parse fails: top search result.
+  var api = 'https://en.wikipedia.org/w/api.php?action=query&list=search&srnamespace=0&format=json&origin=*&srlimit=1&srsearch=' + encodeURIComponent(term);
+  return fetch(api, { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)); })
+    .then(function(d){
+      var arr = d && d.query && d.query.search;
+      var t = arr && arr[0] && arr[0].title;
+      return t || null;
+    })
+    .catch(function(){ return null; });
+}
+
+function _vttFetchWikiSummary(title){
+  var slug = String(title || '').trim().replace(/\s+/g, '_');
+  var api = 'https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(slug);
+  return fetch(api, { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)); });
+}
+
 function buildWikiOverlay(){
   if (_vttWikiOverlayBuilt) return;
   _vttWikiOverlayBuilt = true;
@@ -478,20 +537,39 @@ function openWikiOverlay(term){
   var slug = term.replace(/\s+/g, '_');
   var api = 'https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(slug);
 
-  fetch(api, { cache: 'no-store' })
-    .then(function(r){ return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)); })
-    .then(function(data){
-      var extract = data && (data.extract || data.description) || '';
-      var snip = truncateWikiExtract(extract);
-      if (!snip) snip = 'No preview available for this topic.';
-      _vttWikiCache[term] = snip;
-      if (bodyEl) bodyEl.textContent = snip;
-    })
-    .catch(function(){
-      var fallback = 'Could not load the preview right now.';
-      _vttWikiCache[term] = fallback;
-      if (bodyEl) bodyEl.textContent = fallback;
-    });
+_vttFetchWikiSummary(term)
+  .then(function(data){
+    // Disambiguation (e.g., "Puja ... may refer to:") → resolve to the first real article.
+    var extract = data && (data.extract || data.description) || '';
+    if (_vttLooksLikeDisambiguation(data, extract) || _vttWordsCount(extract) < 25){
+      return _vttResolveDisambiguationTitle(term)
+        .then(function(best){ return best || _vttSearchBestTitle(term); })
+        .then(function(bestTitle){
+          if (!bestTitle) return data; // fallback to original
+          return _vttFetchWikiSummary(bestTitle)
+            .then(function(data2){
+              // Update overlay title/href to resolved article (cache stays under clicked term)
+              if (titleEl) titleEl.textContent = (data2 && (data2.displaytitle || data2.title)) || bestTitle;
+              if (linkEl) linkEl.setAttribute('href', wikipediaHref(bestTitle));
+              return data2;
+            })
+            .catch(function(){ return data; });
+        });
+    }
+    return data;
+  })
+  .then(function(dataFinal){
+    var extract2 = dataFinal && (dataFinal.extract || dataFinal.description) || '';
+    var snip = truncateWikiExtract(extract2);
+    if (!snip) snip = 'No preview available for this topic.';
+    _vttWikiCache[term] = snip;
+    if (bodyEl) bodyEl.textContent = snip;
+  })
+  .catch(function(){
+    var fallback = 'Could not load the preview right now.';
+    _vttWikiCache[term] = fallback;
+    if (bodyEl) bodyEl.textContent = fallback;
+  });
 }
 
 function bindWikiPopupClicks(){
