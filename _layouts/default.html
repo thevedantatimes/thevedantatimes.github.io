@@ -4,6 +4,56 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
+    {%- comment -%}Social previews (Open Graph + Twitter){%- endcomment -%}
+    {%- assign _vtt_title = page.title | default: site.title -%}
+    {%- assign _vtt_title_full = _vtt_title -%}
+    {%- if page.title and site.title and page.title != site.title -%}
+      {%- assign _vtt_title_full = page.title | append: ' · ' | append: site.title -%}
+    {%- endif -%}
+
+    {%- assign _vtt_desc = page.snippet | default: page.description -%}
+    {%- if _vtt_desc and _vtt_desc != '' -%}
+      {%- assign _vtt_desc = _vtt_desc | strip_html | strip_newlines | escape -%}
+    {%- elsif page.excerpt and page.excerpt != '' -%}
+      {%- assign _vtt_desc = page.excerpt | strip_html | strip_newlines | truncate: 200 | escape -%}
+    {%- elsif site.description and site.description != '' -%}
+      {%- assign _vtt_desc = site.description | strip_html | strip_newlines | escape -%}
+    {%- else -%}
+      {%- assign _vtt_desc = site.title | escape -%}
+    {%- endif -%}
+
+    {%- assign _vtt_url = page.url | absolute_url -%}
+
+    {%- assign _vtt_img = page.image | default: page.og_image | default: site.social_image -%}
+    {%- if _vtt_img and _vtt_img != '' -%}
+      {%- assign _vtt_img_abs = _vtt_img | absolute_url -%}
+    {%- else -%}
+      {%- assign _vtt_img_abs = nil -%}
+    {%- endif -%}
+
+    {%- assign _vtt_type = 'website' -%}
+    {%- if page.layout == 'post' -%}
+      {%- assign _vtt_type = 'article' -%}
+    {%- endif -%}
+
+    <link rel="canonical" href="{{ _vtt_url }}" />
+    <meta name="description" content="{{ _vtt_desc }}" />
+
+    <meta property="og:site_name" content="{{ site.title | escape }}" />
+    <meta property="og:type" content="{{ _vtt_type }}" />
+    <meta property="og:title" content="{{ _vtt_title_full | escape }}" />
+    <meta property="og:description" content="{{ _vtt_desc }}" />
+    <meta property="og:url" content="{{ _vtt_url }}" />
+    {%- if _vtt_img_abs -%}
+    <meta property="og:image" content="{{ _vtt_img_abs }}" />
+    {%- endif -%}
+
+    <meta name="twitter:card" content="{% if _vtt_img_abs %}summary_large_image{% else %}summary{% endif %}" />
+    <meta name="twitter:title" content="{{ _vtt_title_full | escape }}" />
+    <meta name="twitter:description" content="{{ _vtt_desc }}" />
+    {%- if _vtt_img_abs -%}
+    <meta name="twitter:image" content="{{ _vtt_img_abs }}" />
+    {%- endif -%}
     <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}" />
     <link rel="icon" type="image/png" href="/assets/favicon/favicon.png">
   </head>
