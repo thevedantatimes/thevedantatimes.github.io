@@ -342,17 +342,34 @@
   }
 
   function inForbiddenContext(node) {
-    if (!node) return true;
-    var p = node.parentNode;
-    while (p && p.nodeType === 1) {
-      var tag = (p.tagName || '').toUpperCase();
-      if (tag === 'A' || tag === 'SCRIPT' || tag === 'STYLE' || tag === 'CODE' || tag === 'PRE' || tag === 'TEXTAREA') {
-        return true;
-      }
-      p = p.parentNode;
+  if (!node) return true;
+  var p = node.parentNode;
+  while (p && p.nodeType === 1) {
+    var tag = (p.tagName || '').toUpperCase();
+
+    // Never auto-link inside existing links, code, or headings/titles.
+    if (
+      tag === 'A' ||
+      tag === 'SCRIPT' ||
+      tag === 'STYLE' ||
+      tag === 'CODE' ||
+      tag === 'PRE' ||
+      tag === 'TEXTAREA' ||
+      tag === 'HEADER' ||
+      tag === 'H1' || tag === 'H2' || tag === 'H3' || tag === 'H4' || tag === 'H5' || tag === 'H6'
+    ) {
+      return true;
     }
-    return false;
+
+    // Also block common title containers
+    if (p.classList && (p.classList.contains('post-head') || p.classList.contains('post-title'))) {
+      return true;
+    }
+
+    p = p.parentNode;
   }
+  return false;
+}
 
   function wikipediaHref(term) {
     var t = String(term || '').trim();
@@ -361,6 +378,135 @@
     var slug = t.replace(/\s+/g, '_');
     return 'https://en.wikipedia.org/wiki/' + encodeURIComponent(slug);
   }
+// ------------------------------------------------------------
+// Wikipedia popup (inline overlay with first ~100 words)
+// ------------------------------------------------------------
+var _vttWikiCache = Object.create(null);
+var _vttWikiOverlayBuilt = false;
+
+function normalizeWikiTerm(term){
+  return String(term || '').trim();
+}
+
+function truncateWikiExtract(extract){
+  var txt = String(extract || '').replace(/\s+/g, ' ').trim();
+  if (!txt) return '';
+  // Capture first 100 words, then extend to the first period after that.
+  var m = txt.match(/^(\S+(?:\s+\S+){0,99})/);
+  if (!m) return '';
+  var head = m[1];
+  if (head.split(/\s+/).length < 100) return txt;
+  var cut = head.length;
+  var dot = txt.indexOf('.', cut);
+  if (dot !== -1) return txt.slice(0, dot + 1);
+  return head + '…';
+}
+
+function buildWikiOverlay(){
+  if (_vttWikiOverlayBuilt) return;
+  _vttWikiOverlayBuilt = true;
+
+  var overlay = document.createElement('div');
+  overlay.id = 'vttWikiOverlay';
+  overlay.className = 'vtt-wiki-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.style.display = 'none';
+
+  overlay.innerHTML =
+    '<div class="vtt-wiki-modal" role="document">' +
+      '<button class="vtt-wiki-close" type="button" aria-label="Close">×</button>' +
+      '<div class="vtt-wiki-title"></div>' +
+      '<div class="vtt-wiki-body"></div>' +
+      '<div class="vtt-wiki-foot"><a class="vtt-wiki-read" href="#" rel="nofollow">Read on Wikipedia</a></div>' +
+    '</div>';
+
+  document.body.appendChild(overlay);
+
+  function close(){
+    overlay.style.display = 'none';
+    document.documentElement.classList.remove('vtt-has-overlay');
+    document.body.classList.remove('vtt-has-overlay');
+  }
+
+  overlay.addEventListener('click', function(e){
+    if (e.target === overlay) close();
+  });
+
+  var btn = overlay.querySelector('.vtt-wiki-close');
+  if (btn) btn.addEventListener('click', close);
+
+  document.addEventListener('keydown', function(e){
+    if (overlay.style.display !== 'none' && (e.key === 'Escape' || e.keyCode === 27)) close();
+  });
+
+  overlay._vttClose = close;
+}
+
+function openWikiOverlay(term){
+  term = normalizeWikiTerm(term);
+  if (!term) return;
+
+  buildWikiOverlay();
+
+  var overlay = document.getElementById('vttWikiOverlay');
+  if (!overlay) return;
+
+  var titleEl = overlay.querySelector('.vtt-wiki-title');
+  var bodyEl = overlay.querySelector('.vtt-wiki-body');
+  var readEl = overlay.querySelector('.vtt-wiki-read');
+
+  var href = wikipediaHref(term);
+
+  if (titleEl) titleEl.textContent = term;
+  if (bodyEl) bodyEl.textContent = 'Loading…';
+  if (readEl){
+    readEl.setAttribute('href', href);
+  }
+
+  overlay.style.display = 'flex';
+  document.documentElement.classList.add('vtt-has-overlay');
+  document.body.classList.add('vtt-has-overlay');
+
+  // Cache per session
+  if (_vttWikiCache[term]){
+    if (bodyEl) bodyEl.textContent = _vttWikiCache[term];
+    return;
+  }
+
+  // Wikipedia REST summary endpoint (CORS-friendly)
+  var slug = term.replace(/\s+/g, '_');
+  var api = 'https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(slug);
+
+  fetch(api, { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)); })
+    .then(function(data){
+      var extract = data && (data.extract || data.description) || '';
+      var snip = truncateWikiExtract(extract);
+      if (!snip) snip = 'No preview available for this topic.';
+      _vttWikiCache[term] = snip;
+      if (bodyEl) bodyEl.textContent = snip;
+    })
+    .catch(function(){
+      var fallback = 'Could not load the preview right now.';
+      _vttWikiCache[term] = fallback;
+      if (bodyEl) bodyEl.textContent = fallback;
+    });
+}
+
+function bindWikiPopupClicks(){
+  if (bindWikiPopupClicks._bound) return;
+  bindWikiPopupClicks._bound = true;
+
+  document.addEventListener('click', function(e){
+    var a = e.target && (e.target.closest ? e.target.closest('a.vtt-wiki') : null);
+    if (!a) return;
+    var term = a.getAttribute('data-vtt-wiki') || (a.textContent || '');
+    if (!term) return;
+    e.preventDefault();
+    openWikiOverlay(term);
+  });
+}
 
   function linkFirstOccurrence(root, term) {
     var rx = buildMatchRegex(term);
@@ -397,8 +543,9 @@
       var a = document.createElement('a');
       a.className = 'vtt-wiki';
       a.setAttribute('href', wikipediaHref(term));
-      a.setAttribute('target', '_blank');
-      a.setAttribute('rel', 'noopener noreferrer');
+      a.setAttribute('data-vtt-wiki', term);
+      a.setAttribute('aria-haspopup', 'dialog');
+      a.setAttribute('rel', 'nofollow');
       a.textContent = match;
       frag.appendChild(a);
 
@@ -614,7 +761,127 @@
     'Bodh Gaya',
   ];
 
-  function initWikiAutoLinks(postArticle) {
+  
+// ------------------------------------------------------------
+// Category auto-linking (top menu categories; no duplicates per post)
+// ------------------------------------------------------------
+function normalizeKey(s){
+  return String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
+function buildFlexiblePhraseRegex(phrase){
+  phrase = String(phrase || '').trim();
+  if (!phrase) return null;
+
+  // Allow flexible whitespace inside multi-word labels.
+  var esc = escapeRegExp(phrase).replace(/\s+/g, '\\s+');
+
+  // Word-ish boundary on both sides when the phrase starts/ends with a word char.
+  var startsWord = /[A-Za-z0-9_]$/.test(String(phrase || '').charAt(0));
+  var endsWord = /[A-Za-z0-9_]$/.test(String(phrase || '').slice(-1));
+
+  var pre = startsWord ? '(^|[^\\w])' : '';
+  var post = endsWord ? '(?![\\w])' : '';
+
+  // Capture group 2 is the phrase.
+  var pat = pre + '(' + esc + ')' + post;
+  try { return new RegExp(pat, 'i'); } catch(e){ return null; }
+}
+
+function linkFirstOccurrenceCustom(root, rx, href, cls, key){
+  if (!root || !rx || !href) return false;
+
+  var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+  var n;
+  while ((n = walker.nextNode())) {
+    if (!n || !n.nodeValue) continue;
+    if (inForbiddenContext(n)) continue;
+
+    var txt = n.nodeValue;
+    var m = rx.exec(txt);
+    if (!m) continue;
+
+    var leading = m[1] || '';
+    var match = m[2] || m[0] || '';
+    var startIdx = (m.index || 0) + leading.length;
+
+    var before = txt.slice(0, startIdx);
+    var after = txt.slice(startIdx + match.length);
+
+    var frag = document.createDocumentFragment();
+    if (before) frag.appendChild(document.createTextNode(before));
+
+    var a = document.createElement('a');
+    a.className = cls || 'vtt-catlink';
+    a.setAttribute('href', href);
+    a.setAttribute('rel', 'nofollow');
+    if (key) a.setAttribute('data-vtt-cat', key);
+    a.textContent = match;
+    frag.appendChild(a);
+
+    if (after) frag.appendChild(document.createTextNode(after));
+
+    if (n.parentNode) n.parentNode.replaceChild(frag, n);
+    return true;
+  }
+  return false;
+}
+
+function collectTopMenuCategories(){
+  var out = [];
+  var menu = document.querySelector('.nav-dd-menu[aria-label="Categories"]') || document.querySelector('.nav-dd-menu');
+  if (!menu) return out;
+
+  var items = menu.querySelectorAll('a[role="menuitem"] .nav-dd-label');
+  if (!items || !items.length) return out;
+
+  for (var i = 0; i < items.length; i++){
+    var labelEl = items[i];
+    var a = labelEl && labelEl.closest ? labelEl.closest('a') : null;
+    var label = labelEl ? String(labelEl.textContent || '').trim() : '';
+    var href = a ? a.getAttribute('href') : '';
+    if (!label || !href) continue;
+
+    var key = normalizeKey(label);
+    var rx = buildFlexiblePhraseRegex(label);
+    if (!rx) continue;
+
+    out.push({ label: label, key: key, href: href, rx: rx });
+  }
+
+  return out;
+}
+
+function initCategoryAutoLinks(postArticle){
+  var body = postArticle && postArticle.querySelector ? postArticle.querySelector('.post-body') : null;
+  if (!body) return;
+
+  var cats = collectTopMenuCategories();
+  if (!cats.length) return;
+
+  var used = Object.create(null);
+  var paras = body.querySelectorAll('p');
+  if (!paras || !paras.length) return;
+
+  for (var p = 0; p < paras.length; p++){
+    var para = paras[p];
+    if (!para) continue;
+
+    var txt = String(para.textContent || '');
+    if (!txt.trim()) continue;
+
+    for (var c = 0; c < cats.length; c++){
+      var it = cats[c];
+      if (!it || used[it.key]) continue;
+      if (!it.rx.test(txt)) continue;
+
+      if (linkFirstOccurrenceCustom(para, it.rx, it.href, 'vtt-catlink', it.key)){
+        used[it.key] = true;
+        break; // at most 1 category link per paragraph
+      }
+    }
+  }
+}function initWikiAutoLinks(postArticle) {
     var body = postArticle.querySelector('.post-body');
     if (!body) return;
 
@@ -671,8 +938,10 @@
     var postArticle = document.querySelector('article.post');
     if (!postArticle) return;
 
+    bindWikiPopupClicks();
     upgradeYouTubeEmbeds(postArticle);
     initRecommendations(postArticle);
+    initCategoryAutoLinks(postArticle);
     initWikiAutoLinks(postArticle);
   }
 

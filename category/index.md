@@ -376,7 +376,7 @@ title: Categories
     const start = (p - 1) * PAGE_SIZE;
     const slice = filtered.slice(start, start + PAGE_SIZE);
 
-    if (!gridEl) return;
+    if (!gridEl) return total;
 
     if (total === 0){
       gridEl.innerHTML = `<div class="cat-card"><h3>No posts found</h3></div>`;
@@ -412,6 +412,9 @@ title: Categories
         };
       }
     }
+
+    return total;
+
   }
 
   function fitSelectToWidest(selectEl){
@@ -444,31 +447,77 @@ title: Categories
   }
 
   function bindFilters(posts){
-    function currentFilters(){
-      return {
-        venue: (selVenue && selVenue.value) || '',
-        speaker: (selSpeaker && selSpeaker.value) || '',
-        subject: (selSubject && selSubject.value) || '',
-        text: (selText && selText.value) || '',
-        format: (selFormat && selFormat.value) || '',
-        year: (selYear && selYear.value) || ''
-      };
-    }
+  function currentFilters(){
+    return {
+      venue: (selVenue && selVenue.value) || '',
+      speaker: (selSpeaker && selSpeaker.value) || '',
+      subject: (selSubject && selSubject.value) || '',
+      text: (selText && selText.value) || '',
+      format: (selFormat && selFormat.value) || '',
+      year: (selYear && selYear.value) || ''
+    };
+  }
 
-    function onChange(){
-      const filters = currentFilters();
-      setParams({ ...filters, p: 1 });
-      fitAllSelects();
-      render(posts, filters, 1);
-    }
+  function keyFromEl(el){
+    if (!el) return '';
+    if (el === selVenue) return 'venue';
+    if (el === selSpeaker) return 'speaker';
+    if (el === selSubject) return 'subject';
+    if (el === selText) return 'text';
+    if (el === selFormat) return 'format';
+    if (el === selYear) return 'year';
+    return '';
+  }
 
-    [selVenue, selSpeaker, selSubject, selText, selFormat, selYear].forEach(el => {
+  function nudgeOtherActiveFilters(lastKey, filters){
+    var map = {
+      venue: selVenue,
+      speaker: selSpeaker,
+      subject: selSubject,
+      text: selText,
+      format: selFormat,
+      year: selYear
+    };
+
+    Object.keys(map).forEach(function(k){
+      var el = map[k];
       if (!el) return;
-      el.addEventListener('change', onChange);
+      el.classList.remove('vtt-filter-nudge');
+    });
+
+    // If the latest change caused 0 results, gently hint which *other* active filters to relax.
+    Object.keys(map).forEach(function(k){
+      if (k === lastKey) return;
+      if (!filters || !filters[k]) return;
+      var el = map[k];
+      if (!el) return;
+      el.classList.add('vtt-filter-nudge');
+      setTimeout(function(){
+        el.classList.remove('vtt-filter-nudge');
+      }, 900);
     });
   }
 
-  async function main(){
+  function onChange(e){
+    const filters = currentFilters();
+    const lastKey = keyFromEl(e && e.target);
+
+    setParams({ ...filters, p: 1 });
+    fitAllSelects();
+
+    const total = render(posts, filters, 1);
+    if (total === 0){
+      nudgeOtherActiveFilters(lastKey, filters);
+    }
+  }
+
+  [selVenue, selSpeaker, selSubject, selText, selFormat, selYear].forEach(el => {
+    if (!el) return;
+    el.addEventListener('change', onChange);
+  });
+}
+
+async function main(){
     const res = await fetch(DATA_URL, { cache: 'no-store' });
     const posts = await res.json();
 
