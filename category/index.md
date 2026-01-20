@@ -28,6 +28,11 @@ title: Categories
         <option value="Kathamrita">Kathamrita</option>
         <option value="Durga Puja">Durga Puja</option>
         <option value="Kali Puja">Kali Puja</option>
+        <option value="Gita">Gita</option>
+        <option value="Yoga">Yoga</option>
+        <option value="Maya">Maya</option>
+        <option value="Meditation">Meditation</option>
+        <option value="Maa Sarada">Maa Sarada</option>
       </select>
     </label>
 
