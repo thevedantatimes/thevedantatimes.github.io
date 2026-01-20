@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The Freedom that Surrenders: Free Will, Grace, and the Joy of Living Unbound"
+title: "Jnana Yoga Stages"
 date: 2025-12-20 00:34:00 -0600
 image: /assets/img/swami_ishatmananda.webp
 categories:
