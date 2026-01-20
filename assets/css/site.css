@@ -414,3 +414,25 @@ html.vtt-vo-open,html.vtt-vo-open body{overflow:hidden}
 .vtt-rec-meta{margin-top:6px;font-size:12px;color:rgba(0,0,0,.6)}
 .vtt-rec-close{position:absolute;right:8px;top:6px;border:0;background:transparent;cursor:pointer;font-size:16px;line-height:1;color:rgba(0,0,0,.58)}
 .vtt-rec-close:hover{color:rgba(0,0,0,.8)}
+
+.newsletter-form {
+  margin-top: 2rem;
+}
+
+.newsletter-form input[type="email"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.newsletter-form input[type="submit"] {
+  width: 100%;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.newsletter-note {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
