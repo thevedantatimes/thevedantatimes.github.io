@@ -415,24 +415,70 @@ html.vtt-vo-open,html.vtt-vo-open body{overflow:hidden}
 .vtt-rec-close{position:absolute;right:8px;top:6px;border:0;background:transparent;cursor:pointer;font-size:16px;line-height:1;color:rgba(0,0,0,.58)}
 .vtt-rec-close:hover{color:rgba(0,0,0,.8)}
 
-.newsletter-form {
-  margin-top: 2rem;
+.vb-subscribe{
+  max-width: 640px;
+  border-radius: 16px;
+  padding: 18px 18px 16px;
+  background: #f5f5f7;
+  border: 1px solid #e0e0e5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
-
-.newsletter-form input[type="email"] {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 8px;
-  font-size: 0.95rem;
+.vb-headline{
+  font-size: 17px;
+  margin: 0 0 12px 0;
+  color: #1d1d1f;
+  line-height: 1.4;
 }
-
-.newsletter-form input[type="submit"] {
-  width: 100%;
-  padding: 8px;
+.vb-row{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin: 0;
+}
+.vb-row input{
+  flex: 1;
+  padding: 12px 14px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid #d2d2d7;
+  outline: none;
+  background: #ffffff;
+  color: #1d1d1f;
+  min-width: 0;
+}
+.vb-row input::placeholder{ color:#86868b; }
+.vb-row input:focus{
+  border-color: #0071e3;
+  box-shadow: 0 0 0 3px rgba(0,113,227,0.15);
+}
+.vb-row button{
+  padding: 12px 18px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: none;
+  background: #0071e3;
+  color: #ffffff;
   cursor: pointer;
+  white-space: nowrap;
 }
+.vb-row button:hover{ background:#0077ed; }
+.vb-row button:active{ background:#006edb; }
 
-.newsletter-note {
-  font-size: 0.85rem;
-  opacity: 0.7;
+.vb-note{
+  margin: 10px 0 0 0;
+  font-size: 14px;
+  color: #1d1d1f;
+  opacity: 0.9;
+}
+.vb-msg{
+  margin-top: 10px;
+  font-size: 14px;
+  color: #1d1d1f;
+}
+.vb-msg.is-error{ color:#b42318; }
+
+@media (max-width: 520px){
+  .vb-row{ flex-wrap: wrap; }
+  .vb-row input, .vb-row button{ width:100%; }
 }
