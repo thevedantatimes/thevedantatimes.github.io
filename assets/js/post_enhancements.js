@@ -274,12 +274,384 @@
       });
   }
 
+  // ------------------------------------------------------------
+  // Wikipedia auto-linking (up to 5 terms per post)
+  // ------------------------------------------------------------
+  function fnv1a(str) {
+    str = String(str || '');
+    var h = 2166136261;
+    for (var i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
+    }
+    return h >>> 0;
+  }
+
+  function mulberry32(seed) {
+    var t = seed >>> 0;
+    return function () {
+      t += 0x6d2b79f5;
+      var x = t;
+      x = Math.imul(x ^ (x >>> 15), x | 1);
+      x ^= x + Math.imul(x ^ (x >>> 7), x | 61);
+      return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function escapeRegExp(s) {
+    return String(s || '').replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
+  }
+
+  function isWordishTerm(term) {
+    // Only letters/numbers/spaces/hyphens/apostrophes
+    return /^[A-Za-z0-9\s\-']+$/.test(String(term || '').trim());
+  }
+
+  function buildMatchRegex(term) {
+    term = String(term || '').trim();
+    if (!term) return null;
+    var core = escapeRegExp(term);
+    // Prefer word boundaries for "wordish" terms to avoid partial matches.
+    // For terms with punctuation (e.g., parentheses), avoid \b and match literally.
+    var pat = isWordishTerm(term) ? ('\\b' + core + '\\b') : core;
+    try {
+      return new RegExp(pat, 'i');
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function inForbiddenContext(node) {
+    if (!node) return true;
+    var p = node.parentNode;
+    while (p && p.nodeType === 1) {
+      var tag = (p.tagName || '').toUpperCase();
+      if (tag === 'A' || tag === 'SCRIPT' || tag === 'STYLE' || tag === 'CODE' || tag === 'PRE' || tag === 'TEXTAREA') {
+        return true;
+      }
+      p = p.parentNode;
+    }
+    return false;
+  }
+
+  function wikipediaHref(term) {
+    var t = String(term || '').trim();
+    if (!t) return '';
+    // Wikipedia prefers underscores for spaces.
+    var slug = t.replace(/\s+/g, '_');
+    return 'https://en.wikipedia.org/wiki/' + encodeURIComponent(slug);
+  }
+
+  function linkFirstOccurrence(root, term) {
+    var rx = buildMatchRegex(term);
+    if (!rx) return false;
+
+    var walker;
+    try {
+      walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+        acceptNode: function (n) {
+          if (!n || !n.nodeValue) return NodeFilter.FILTER_REJECT;
+          if (inForbiddenContext(n)) return NodeFilter.FILTER_REJECT;
+          if (!rx.test(n.nodeValue)) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        },
+      });
+    } catch (e) {
+      return false;
+    }
+
+    var n;
+    while ((n = walker.nextNode())) {
+      var txt = n.nodeValue;
+      rx.lastIndex = 0;
+      var m = rx.exec(txt);
+      if (!m || m.index == null) continue;
+
+      var before = txt.slice(0, m.index);
+      var match = txt.slice(m.index, m.index + m[0].length);
+      var after = txt.slice(m.index + m[0].length);
+
+      var frag = document.createDocumentFragment();
+      if (before) frag.appendChild(document.createTextNode(before));
+
+      var a = document.createElement('a');
+      a.className = 'vtt-wiki';
+      a.setAttribute('href', wikipediaHref(term));
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener noreferrer');
+      a.textContent = match;
+      frag.appendChild(a);
+
+      if (after) frag.appendChild(document.createTextNode(after));
+
+      if (n.parentNode) n.parentNode.replaceChild(frag, n);
+      return true;
+    }
+
+    return false;
+  }
+
+  var VTT_WIKI_DICTIONARY = [
+    'Vedanta',
+    'Advaita Vedanta',
+    'Vishishtadvaita',
+    'Dvaita',
+    'Bhedabheda',
+    'Achintya Bheda Abheda',
+    'Shuddhadvaita',
+    'Kashmir Shaivism',
+    'Shaivism',
+    'Vaishnavism',
+    'Shaktism',
+    'Smartism',
+    'Samkhya',
+    'Yoga (philosophy)',
+    'Nyaya',
+    'Vaisheshika',
+    'Mimamsa',
+    'Nondualism',
+    'Bhakti',
+    'Jnana',
+    'Karma',
+    'Tantra',
+    'Integral yoga',
+    'Kriya Yoga',
+    'Mantra yoga',
+    'Vedas',
+    'Rigveda',
+    'Samaveda',
+    'Yajurveda',
+    'Atharvaveda',
+    'Upanishads',
+    'Principal Upanishads',
+    'Bhagavad Gita',
+    'Brahma Sutras',
+    'Mahabharata',
+    'Ramayana',
+    'Bhagavata Purana',
+    'Markandeya Purana',
+    'Devi Mahatmya',
+    'Yoga Sutras of Patanjali',
+    'Narada Bhakti Sutra',
+    'Vivekachudamani',
+    'Upadesa Sahasri',
+    'Mandukya Karika',
+    'Panchadasi',
+    'Drig-Drishya-Viveka',
+    'Bhaja Govindam',
+    'Ashtavakra Gita',
+    'Avadhuta Gita',
+    'Hatha Yoga Pradipika',
+    'Gheranda Samhita',
+    'Shiva Samhita',
+    'Saundarya Lahari',
+    'Shiva Sutras',
+    'Ramakrishna Kathamrita',
+    'The Gospel of Sri Ramakrishna',
+    'Raja Yoga (book)',
+    'Karma Yoga (book)',
+    'Bhakti Yoga (book)',
+    'Jnana Yoga (book)',
+    'Atman',
+    'Brahman',
+    'Ishvara',
+    'Maya',
+    'Avidya',
+    'Moksha',
+    'Samsara',
+    'Dharma',
+    'Karma (concept)',
+    'Yoga',
+    'Meditation',
+    'Dhyana',
+    'Pranayama',
+    'Asana',
+    'Samadhi',
+    'Dharana',
+    'Pratyahara',
+    'Yama',
+    'Niyama',
+    'Ahimsa',
+    'Satya',
+    'Asteya',
+    'Brahmacharya',
+    'Aparigraha',
+    'Shaucha',
+    'Santosha',
+    'Svadhyaya',
+    'Ishvarapranidhana',
+    'Om',
+    'Gayatri Mantra',
+    'Mahamrityunjaya Mantra',
+    'Japa',
+    'Kirtan',
+    'Bhajan',
+    'Satsang',
+    'Seva',
+    'Tapas',
+    'Vairagya',
+    'Viveka',
+    'Sannyasa',
+    'Ashrama',
+    'Guru',
+    'Disciple',
+    'Parampara',
+    'Darshan',
+    'Puja',
+    'Arati',
+    'Prasad',
+    'Homa',
+    'Yajna',
+    'Tirtha',
+    'Kundalini',
+    'Chakra',
+    'Nadi (yoga)',
+    'Sushumna',
+    'Adi Shankara',
+    'Gaudapada',
+    'Ramanuja',
+    'Madhvacharya',
+    'Nimbarka',
+    'Vallabhacharya',
+    'Chaitanya Mahaprabhu',
+    'Kabir',
+    'Tulsidas',
+    'Mirabai',
+    'Surdas',
+    'Namdev',
+    'Tukaram',
+    'Eknath',
+    'Ramananda',
+    'Basava',
+    'Vyasa',
+    'Valmiki',
+    'Patanjali',
+    'Dattatreya',
+    'Narada',
+    'Ramakrishna',
+    'Sarada Devi',
+    'Swami Vivekananda',
+    'Sister Nivedita',
+    'Swami Brahmananda',
+    'Swami Saradananda',
+    'Swami Ranganathananda',
+    'Swami Prabhavananda',
+    'Swami Tapasyananda',
+    'Ramana Maharshi',
+    'Sri Aurobindo',
+    'The Mother (Mirra Alfassa)',
+    'Swami Sivananda',
+    'Swami Chinmayananda',
+    'Swami Dayananda Saraswati',
+    'Paramahansa Yogananda',
+    'Sri Yukteswar',
+    'Lahiri Mahasaya',
+    'Mahavatar Babaji',
+    'Neem Karoli Baba',
+    'Anandamayi Ma',
+    'Mata Amritanandamayi',
+    'Jiddu Krishnamurti',
+    'Dalai Lama',
+    'Thich Nhat Hanh',
+    'Buddha',
+    'Mahavira',
+    'Nagarjuna',
+    'Shantideva',
+    'Ramakrishna Mission',
+    'Ramakrishna Math',
+    'Belur Math',
+    'Dakshineswar Kali Temple',
+    'Vedanta Society',
+    'Vedanta Society of New York',
+    'Vedanta Society of Chicago',
+    'Chinmaya Mission',
+    'Divine Life Society',
+    'Self-Realization Fellowship',
+    'Shiva',
+    'Vishnu',
+    'Krishna',
+    'Rama',
+    'Kali',
+    'Durga',
+    'Ganesha',
+    'Saraswati',
+    'Lakshmi',
+    'Navaratri',
+    'Durga Puja',
+    'Kali Puja',
+    'Diwali',
+    'Holi',
+    'Janmashtami',
+    'Rama Navami',
+    'Maha Shivaratri',
+    'Guru Purnima',
+    'Saraswati Puja',
+    'Kalpataru Day',
+    'Kumbh Mela',
+    'Ganga',
+    'Varanasi',
+    'Rishikesh',
+    'Bodh Gaya',
+  ];
+
+  function initWikiAutoLinks(postArticle) {
+    var body = postArticle.querySelector('.post-body');
+    if (!body) return;
+
+    // Build candidate set based on actual content.
+    var contentText = String(body.textContent || '');
+    if (!contentText.trim()) return;
+    var candidates = [];
+
+    for (var i = 0; i < VTT_WIKI_DICTIONARY.length; i++) {
+      var term = String(VTT_WIKI_DICTIONARY[i] || '').trim();
+      if (!term) continue;
+      var rx = buildMatchRegex(term);
+      if (!rx) continue;
+      if (rx.test(contentText)) candidates.push(term);
+    }
+
+    if (!candidates.length) return;
+
+    // Stable randomness per post.
+    var seedStr =
+      (postArticle.getAttribute('data-post-url') || '') +
+      '|' +
+      (postArticle.getAttribute('data-post-title') || document.title || '') +
+      '|' +
+      (document.querySelector('meta[name="date"]') ? document.querySelector('meta[name="date"]').getAttribute('content') : '');
+    var rnd = mulberry32(fnv1a(seedStr));
+
+    // Shuffle candidates.
+    for (var j = candidates.length - 1; j > 0; j--) {
+      var k = Math.floor(rnd() * (j + 1));
+      var tmp = candidates[j];
+      candidates[j] = candidates[k];
+      candidates[k] = tmp;
+    }
+
+    var chosen = candidates.slice(0, 5);
+    // Prefer longer terms first to avoid a shorter term stealing a longer phrase.
+    chosen.sort(function (a, b) {
+      return String(b).length - String(a).length;
+    });
+
+    var linked = 0;
+    for (var t = 0; t < chosen.length; t++) {
+      if (linkFirstOccurrence(body, chosen[t])) {
+        linked++;
+        if (linked >= 5) break;
+      }
+    }
+  }
+
   function init() {
     var postArticle = document.querySelector('article.post');
     if (!postArticle) return;
 
     upgradeYouTubeEmbeds(postArticle);
     initRecommendations(postArticle);
+    initWikiAutoLinks(postArticle);
   }
 
   if (document.readyState === 'loading') {
