@@ -519,9 +519,7 @@ html.vtt-vo-open,html.vtt-vo-open body{overflow:hidden}
   align-items: center;
   justify-content: center;
   padding: 18px;
-  background: rgba(10, 10, 16, 0.45);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.12);
 }
 
 .vtt-wiki-modal{
@@ -529,11 +527,15 @@ html.vtt-vo-open,html.vtt-vo-open body{overflow:hidden}
   width: min(720px, 100%);
   max-height: min(78vh, 720px);
   overflow: auto;
-  background: rgba(255, 255, 255, 0.96);
-  border: 1px solid rgba(0,0,0,0.10);
-  border-radius: 16px;
+
+  background: linear-gradient(135deg, rgba(255,255,255,.40), rgba(255,255,255,.22));
+  border: 1px solid rgba(255,255,255,.55);
+  backdrop-filter: blur(14px) saturate(1.15);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+
+  border-radius: 18px;
   padding: 16px 16px 14px;
-  box-shadow: 0 18px 50px rgba(0,0,0,0.30);
+  box-shadow: 0 18px 55px rgba(0,0,0,.18);
 }
 
 .vtt-wiki-close{
