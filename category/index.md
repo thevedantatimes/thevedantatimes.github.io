@@ -9,25 +9,25 @@ title: Categories
     .cat-page { padding-top: 8px; }
     .cat-filters {
       display: flex;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       gap: 10px;
       align-items: center;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      overflow-x: visible;
       padding: 8px 2px 10px;
       border-bottom: 1px solid rgba(0,0,0,0.10);
       margin-bottom: 10px;
     }
-    .cat-filters::-webkit-scrollbar { height: 6px; }
+    .cat-filters::-webkit-scrollbar { height: 0; }
 
     .cat-select {
       width: auto;
       max-width: 100%;
-      padding: 8px 10px;
+      padding: 6px 9px;
       border-radius: 10px;
       border: 1px solid rgba(0,0,0,0.14);
       background: #fff;
       font: inherit;
+      font-size: 13px;
       line-height: 1.1;
       white-space: nowrap;
     }
@@ -40,7 +40,7 @@ title: Categories
     }
 
     @media (max-width: 560px){
-      .cat-select { padding: 7px 9px; }
+      .cat-select { padding: 6px 8px; font-size: 12.5px; }
       .cat-summary { font-size: 13px; }
     }
   </style>
@@ -296,9 +296,20 @@ title: Categories
   function matchFormat(post, format){
     if (!format) return true;
 
+    const want = String(format || '').trim();
+    const explicit = String((post && post.format) || '').trim();
+    if (explicit) {
+      return normText(explicit) === normText(want);
+    }
+
     const puja = isPujaPost(post);
-    if (format === 'Puja') return puja;
-    if (format === 'Talk') return !puja;
+    const hasYoutube = !!(post && post.hasYoutube);
+
+    // Derived formats for older posts:
+    // - Puja: only posts that clearly indicate a puja/pujo
+    // - Talk: posts that have a YouTube embed and are not puja
+    if (want === 'Puja') return puja;
+    if (want === 'Talk') return hasYoutube && !puja;
 
     return true;
   }
@@ -316,27 +327,27 @@ title: Categories
     return clean.slice(0, -1).join(', ') + ', and ' + clean[clean.length - 1];
   }
 
-  function describeFilters(filters){
+  function describeFiltersHtml(filters){
     const out = [];
-    if (filters.venue) out.push('Venue ' + filters.venue);
-    if (filters.speaker) out.push('Speaker ' + filters.speaker);
-    if (filters.subject) out.push('Subject ' + filters.subject);
-    if (filters.text) out.push('Text ' + filters.text);
-    if (filters.format) out.push('Format ' + filters.format);
-    if (filters.year) out.push('Year ' + filters.year);
+    if (filters.venue) out.push('Venue <strong>' + esc(filters.venue) + '</strong>');
+    if (filters.speaker) out.push('Speaker <strong>' + esc(filters.speaker) + '</strong>');
+    if (filters.subject) out.push('Subject <strong>' + esc(filters.subject) + '</strong>');
+    if (filters.text) out.push('Text <strong>' + esc(filters.text) + '</strong>');
+    if (filters.format) out.push('Format <strong>' + esc(filters.format) + '</strong>');
+    if (filters.year) out.push('Year <strong>' + esc(filters.year) + '</strong>');
     return out;
   }
 
   function setSummary(total, filters){
     if (!sumEl) return;
 
-    const parts = describeFilters(filters);
+    const parts = describeFiltersHtml(filters);
     const tail = parts.length ? (' for ' + joinPretty(parts)) : '';
 
     if (total > 0){
-      sumEl.textContent = 'Showing ' + total + ' results' + tail + '.';
+      sumEl.innerHTML = 'Showing ' + esc(total) + ' results' + tail + '.';
     } else {
-      sumEl.textContent = 'No results' + tail + '. Try changing the filter?';
+      sumEl.innerHTML = 'No results' + tail + '. Try changing the filter?';
     }
   }
 

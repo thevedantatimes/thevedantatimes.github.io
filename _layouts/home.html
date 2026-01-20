@@ -21,7 +21,7 @@ layout: default
         <h2 class="rail-title"><a href="{{ left_top.url | relative_url }}">{{ left_top.title }}</a></h2>
         {% assign dek = left_top.snippet | default: left_top.excerpt %}
         {% if dek %}
-          <p class="rail-dek">{{ dek | strip_html | strip_newlines | truncate: 180 }}</p>
+          <a class="rail-dek" href="{{ left_top.url | relative_url }}">{{ dek | strip_html | strip_newlines | truncate: 180 }}</a>
         {% endif %}
         <div class="rail-meta">{{ left_top.date | date: '%b %-d' }} · {{ left_top.content | number_of_words | divided_by: 220 | plus: 1 }} min read</div>
       </div>
@@ -40,7 +40,7 @@ layout: default
         <h3 class="rail-title small"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
         {% assign dek = p.snippet | default: p.excerpt %}
         {% if dek %}
-          <p class="rail-dek">{{ dek | strip_html | strip_newlines | truncate: 120 }}</p>
+          <a class="rail-dek" href="{{ p.url | relative_url }}">{{ dek | strip_html | strip_newlines | truncate: 120 }}</a>
         {% endif %}
         <div class="rail-meta">{{ p.date | date: '%b %-d' }} · {{ p.content | number_of_words | divided_by: 220 | plus: 1 }} min read</div>
       </div>
@@ -66,7 +66,7 @@ layout: default
 
       {% assign dek = hero.snippet | default: hero.excerpt %}
       {% if dek %}
-        <p class="hero-dek">{{ dek | strip_html | strip_newlines | truncate: 220 }}</p>
+        <a class="hero-dek" href="{{ hero.url | relative_url }}">{{ dek | strip_html | strip_newlines | truncate: 220 }}</a>
       {% endif %}
 
       {% assign hero_img = hero.image | default: '/assets/img/hero.svg' %}
@@ -96,7 +96,7 @@ layout: default
                     <h3 class="cm-title"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
                     {% assign dek = p.snippet | default: p.excerpt %}
                     {% if dek %}
-                      <p class="cm-dek">{{ dek | strip_html | strip_newlines | truncate: 150 }}</p>
+                      <a class="cm-dek" href="{{ p.url | relative_url }}">{{ dek | strip_html | strip_newlines | truncate: 150 }}</a>
                     {% endif %}
                   </div>
                 </div>
@@ -110,7 +110,7 @@ layout: default
                 <h3 class="cm-title"><a href="{{ pair_first.url | relative_url }}">{{ pair_first.title }}</a></h3>
                 {% assign dek = pair_first.snippet | default: pair_first.excerpt %}
                 {% if dek %}
-                  <p class="cm-dek">{{ dek | strip_html | strip_newlines | truncate: 140 }}</p>
+                  <a class="cm-dek" href="{{ pair_first.url | relative_url }}">{{ dek | strip_html | strip_newlines | truncate: 140 }}</a>
                 {% endif %}
               </div>
 
@@ -118,7 +118,7 @@ layout: default
                 <h3 class="cm-title"><a href="{{ pair_second.url | relative_url }}">{{ pair_second.title }}</a></h3>
                 {% assign dek = pair_second.snippet | default: pair_second.excerpt %}
                 {% if dek %}
-                  <p class="cm-dek">{{ dek | strip_html | strip_newlines | truncate: 140 }}</p>
+                  <a class="cm-dek" href="{{ pair_second.url | relative_url }}">{{ dek | strip_html | strip_newlines | truncate: 140 }}</a>
                 {% endif %}
               </div>
 
@@ -154,7 +154,7 @@ layout: default
         <h2 class="feature-title"><a href="{{ right.url | relative_url }}">{{ right.title }}</a></h2>
         {% assign dek = right.snippet | default: right.excerpt %}
         {% if dek %}
-          <p class="feature-dek">{{ dek | strip_html | strip_newlines | truncate: 170 }}</p>
+          <a class="feature-dek" href="{{ right.url | relative_url }}">{{ dek | strip_html | strip_newlines | truncate: 170 }}</a>
         {% endif %}
       {% else %}
         <h2 class="feature-title"><a href="#">A second feature story will appear here</a></h2>

@@ -9,6 +9,8 @@ layout: null
     "date": {{ post.date | date_to_xmlschema | jsonify }},
     "dateHuman": {{ post.date | date: '%b %-d, %Y' | jsonify }},
     "categories": {{ post.categories | jsonify }},
+    "format": {{ post.format | default: '' | jsonify }},
+    "hasYoutube": {{ post.content contains 'youtube.com/embed' or post.content contains 'youtube-nocookie.com/embed' | jsonify }},
     "snippet": {{ post.snippet | default: post.excerpt | strip_html | strip_newlines | truncate: 240 | jsonify }},
     "featured": {{ post.featured | default: false | jsonify }}
   }{% unless forloop.last %},{% endunless %}
