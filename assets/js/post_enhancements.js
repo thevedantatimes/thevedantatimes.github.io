@@ -371,9 +371,36 @@
   return false;
 }
 
+  // Hard-coded Wikipedia title overrides (fixes disambiguation / canonical titles)
+  // Keep this list small and targeted; most terms work as-is.
+  var VTT_WIKI_OVERRIDES = {
+    // Disambiguation fixes / canonical titles
+    'Puja': 'Puja (Hinduism)',
+    'Pooja': 'Puja (Hinduism)',
+    'Arati': 'Arti (Hinduism)',
+    'Aarti': 'Arti (Hinduism)',
+    'Prasad': 'Prasada',
+    'Darshan': 'Darshan (Indian religions)',
+    'Tirtha': 'Tirtha (Hinduism)',
+
+    // Your dictionary items that benefit from canonical titles/diacritics
+    'Ramakrishna Kathamrita': 'Sri Sri Ramakrishna Kathamrita',
+    'Upadesa Sahasri': 'Upadeśasāhasrī',
+    'Drig-Drishya-Viveka': 'Dṛg-Dṛśya-Viveka',
+    'Sri Yukteswar': 'Swami Sri Yukteswar Giri',
+    'Swami Saradananda': 'Saradananda',
+    'Swami Dayananda Saraswati': 'Dayananda Saraswati (Arsha Vidya)'
+  };
+
+  function resolveWikiTitle(term){
+    var t = String(term || '').trim();
+    if (!t) return '';
+    return VTT_WIKI_OVERRIDES[t] || t;
+  }
+
+
   function wikipediaHref(term) {
     var t = resolveWikiTitle(term);
-    t = String(t || '').trim();
     if (!t) return '';
     // Wikipedia prefers underscores for spaces.
     var slug = t.replace(/\s+/g, '_');
@@ -457,9 +484,11 @@ function openWikiOverlay(term){
   var bodyEl = overlay.querySelector('.vtt-wiki-body');
   var readEl = overlay.querySelector('.vtt-wiki-read');
 
-  var href = wikipediaHref(term);
 
-  if (titleEl) titleEl.textContent = term;
+  var resolved = resolveWikiTitle(term);
+  var href = wikipediaHref(resolved);
+
+  if (titleEl) titleEl.textContent = resolved || term;
   if (bodyEl) bodyEl.textContent = 'Loading…';
   if (readEl){
     readEl.setAttribute('href', href);
@@ -470,14 +499,13 @@ function openWikiOverlay(term){
   document.body.classList.add('vtt-has-overlay');
 
   // Cache per session
-  if (_vttWikiCache[term]){
-    if (bodyEl) bodyEl.textContent = _vttWikiCache[term];
+  if (_vttWikiCache[resolved || term]){
+    if (bodyEl) bodyEl.textContent = _vttWikiCache[resolved || term];
     return;
   }
 
   // Wikipedia REST summary endpoint (CORS-friendly)
-  var resolved = resolveWikiTitle(term);
-  var slug = String(resolved || '').trim().replace(/\s+/g, '_');
+  var slug = String(resolved || term || '').replace(/\s+/g, '_');
   var api = 'https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(slug);
 
   fetch(api, { cache: 'no-store' })
@@ -486,12 +514,12 @@ function openWikiOverlay(term){
       var extract = data && (data.extract || data.description) || '';
       var snip = truncateWikiExtract(extract);
       if (!snip) snip = 'No preview available for this topic.';
-      _vttWikiCache[term] = snip;
+      _vttWikiCache[resolved || term] = snip;
       if (bodyEl) bodyEl.textContent = snip;
     })
     .catch(function(){
       var fallback = 'Could not load the preview right now.';
-      _vttWikiCache[term] = fallback;
+      _vttWikiCache[resolved || term] = fallback;
       if (bodyEl) bodyEl.textContent = fallback;
     });
 }
@@ -764,26 +792,6 @@ function bindWikiPopupClicks(){
   ];
 
   
-
-  // Hard-coded Wikipedia page title overrides for ambiguous/disambiguation terms.
-  // Keyed by normalized (lowercased) term; value is the Wikipedia page title to fetch/link.
-  // Keep this list small and intentional; everything else falls back to the term itself.
-  var VTT_WIKI_OVERRIDES = {
-    'puja': 'Puja (Hinduism)',
-    'arati': 'Arti (Hinduism)',
-    'prasad': 'Prasada',
-    'darshan': 'Darshan (Indian religions)',
-    'tirtha': 'Tirtha (Hinduism)',
-    'maya': 'Maya (religion)',
-    'swami dayananda saraswati': 'Dayananda Saraswati (Arsha Vidya)',
-    'the mother (mirra alfassa)': 'Mirra Alfassa'
-  };
-
-  function resolveWikiTitle(term){
-    var k = String(term || '').trim().toLowerCase();
-    return (k && VTT_WIKI_OVERRIDES[k]) ? VTT_WIKI_OVERRIDES[k] : String(term || '').trim();
-  }
-
 // ------------------------------------------------------------
 // Category auto-linking (top menu categories; no duplicates per post)
 // ------------------------------------------------------------
