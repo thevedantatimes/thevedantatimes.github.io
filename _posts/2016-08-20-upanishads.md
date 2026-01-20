@@ -6,7 +6,7 @@ image: /assets/img/swami_sarvapriyananda.webp
 categories:
   - New York
   - Swami Sarvapriyananda
-  - Upanishad
+  - Upanishads
 snippet: "Upanishad teaches self is witness beyond body, prana, mind, intellect, sleep—pure consciousness always present."
 ---
 A single line from the *Taittiriya Upanishad* is often quoted as if it were an inspiring slogan. But it is far more than that—it is a complete map of the spiritual life in miniature:
