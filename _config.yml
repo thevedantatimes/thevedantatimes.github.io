@@ -3,6 +3,9 @@ theme: minima
 baseurl: ""
 url: "https://thevedantatimes.github.io"
 
+plugins:
+  - jekyll-sitemap
+
 excerpt_separator: "<!--more-->"
 # Home page autoplay tiles (2 channels).
 # Put YouTube Channel IDs here (they start with 'UC').
