@@ -579,7 +579,7 @@ html.vtt-vo-open,html.vtt-vo-open body{overflow:hidden}
 
 @keyframes vttFilterNudge {
   0% { opacity: 1; }
-  35% { opacity: 0.55; }
+  35% { opacity: 0.2; }
   70% { opacity: 1; }
   100% { opacity: 1; }
 }
