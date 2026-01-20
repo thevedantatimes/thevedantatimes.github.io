@@ -479,6 +479,26 @@ html.vtt-vo-open,html.vtt-vo-open body{overflow:hidden}
 .vb-msg.is-error{ color:#b42318; }
 
 @media (max-width: 520px){
-  .vb-row{ flex-wrap: wrap; }
-  .vb-row input, .vb-row button{ width:100%; }
+  .vb-row{ flex-wrap: nowrap; gap: 8px; }
+  .vb-row input{
+    padding: 11px 12px;
+    font-size: 15px;
+  }
+  .vb-row button{
+    padding: 11px 14px;
+    font-size: 15px;
+  }
 }
+
+/* Extra-tight phones */
+@media (max-width: 380px){
+  .vb-row input{
+    padding: 10px 10px;
+    font-size: 14px;
+  }
+  .vb-row button{
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+}
+
