@@ -1,20 +1,25 @@
-<form
-  action="https://buttondown.com/api/emails/embed-subscribe/vedantatimes"
-  method="post"
-  target="popupwindow"
-  onsubmit="window.open('https://buttondown.email/vedantatimes', 'popupwindow')"
-  class="newsletter-form"
->
-  <input
-    type="email"
-    name="email"
-    placeholder="Your email address"
-    required
+<div class="vb-subscribe">
+  <p class="vb-headline">You will get Vedanta updates in your inbox.</p>
+
+  <form
+    id="subForm"
+    action="https://buttondown.com/api/emails/embed-subscribe/vedantatimes"
+    method="post"
+    target="popupwindow"
+    class="vb-row"
   >
-  <input type="submit" value="Subscribe">
-</form>
+    <input
+      id="email"
+      type="email"
+      name="email"
+      placeholder="Enter your email id"
+      required
+      autocomplete="email"
+      inputmode="email"
+    />
+    <button type="submit">Subscribe</button>
+  </form>
 
-<p class="newsletter-note">
-  Occasional reflections on Vedanta. Unsubscribe anytime.
-</p>
-
+  <p class="vb-note">Occasional reflections on Vedanta. Unsubscribe anytime.</p>
+  <div class="vb-msg" id="msg" aria-live="polite"></div>
+</div>
