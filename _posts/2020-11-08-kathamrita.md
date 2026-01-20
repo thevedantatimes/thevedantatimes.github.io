@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The Freedom that Surrenders: Free Will, Grace, and the Joy of Living Unbound"
+title: "Kathamrita: Free Will, Grace, and the Joy of Living Unbound"
 date: 2020-11-08 00:34:00 -0600
 image: /assets/img/swami_ishatmananda.webp
 categories:
