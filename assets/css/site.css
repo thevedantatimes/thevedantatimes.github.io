@@ -525,11 +525,11 @@ html.vtt-vo-open,html.vtt-vo-open body{overflow:hidden}
 
 
 .vtt-wiki-ico{
-  width: 14px;
-  height: 14px;
-  margin-left: 6px;
-  vertical-align: -2px;
-  opacity: 0.85;
+  width: 11px;
+  height: 11px;
+  margin-left: 3px;
+  vertical-align: -1px;
+  opacity: 0.9;
 }
 a.vtt-wiki{
   white-space: nowrap;
