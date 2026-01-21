@@ -62,33 +62,62 @@
       .filter((x) => !!x.thumb);
   }
 
-  function show(i) {
-    if (!all.length) return;
-    const it = all[i % all.length];
-    if (!it) return;
+const FADE_MS = 260; // keep close to the CSS opacity transition
+
+function restartKenBurns() {
+  imgEl.classList.remove('kb');
+  void imgEl.offsetWidth; // force reflow so animation restarts reliably
+  imgEl.classList.add('kb');
+}
+
+function preloadUrl(primaryUrl, fallbackUrl, cb) {
+  const pre = new Image();
+  pre.onload = function () { cb(primaryUrl); };
+  pre.onerror = function () {
+    if (!fallbackUrl) cb(primaryUrl);
+    else {
+      const pre2 = new Image();
+      pre2.onload = function () { cb(fallbackUrl); };
+      pre2.onerror = function () { cb(primaryUrl); };
+      pre2.src = fallbackUrl;
+    }
+  };
+  pre.src = primaryUrl;
+}
+
+function show(i) {
+  if (!all.length) return;
+  const it = all[i % all.length];
+  if (!it) return;
+
+  const myReq = ++reqId;
+
+  const bigUrl = it.big;
+  const thumbUrl = it.thumb;
+
+  preloadUrl(bigUrl, thumbUrl, function (readyUrl) {
+    if (myReq !== reqId) return;
 
     statusEl && (statusEl.textContent = '');
     titleEl.textContent = it.title || '';
     dateEl.textContent = fmtDate(it.published);
 
-    const myReq = ++reqId;
-
+    // fade out current image first, without resetting transform while visible
     imgEl.classList.remove('is-ready');
-    void imgEl.offsetWidth; // restart CSS animation reliably
 
-    imgEl.onload = function () {
-      if (myReq !== reqId) return; // ignore late loads
-      imgEl.classList.add('is-ready');
-    };
-
-    imgEl.onerror = function () {
+    setTimeout(function () {
       if (myReq !== reqId) return;
-      imgEl.onerror = null;
-      imgEl.src = it.thumb; // fallback; onload above will add is-ready
-    };
 
-    imgEl.src = it.big;
-  }
+      imgEl.onload = function () {
+        if (myReq !== reqId) return;
+        restartKenBurns();
+        imgEl.classList.add('is-ready');
+      };
+
+      imgEl.src = readyUrl;
+    }, FADE_MS);
+  });
+}
 
   
   function ensureWindow() {
