@@ -12,7 +12,7 @@
   const USER_ID = '112254964@N05';
   const MAX_PER_FETCH = 20;
   const BATCH_SIZE = 10;
-  const INTERVAL_MS = 3800;
+  const INTERVAL_MS = 6200;
 
   let all = [];
   let seen = new Set();
