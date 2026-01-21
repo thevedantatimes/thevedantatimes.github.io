@@ -180,6 +180,82 @@ permalink: /events/
 </div>
 
 <script>
+  const EVENT_TIMEZONE = "America/Chicago";
+  const HIDE_AFTER_HOURS = 8;
+
+  // Hide an event once it is more than HIDE_AFTER_HOURS past its scheduled start (Central time).
+  function isExpired(ev, now){
+    const start = eventStartInstant(ev);
+    if (!start) return false;
+    const cutoffMs = start.getTime() + HIDE_AFTER_HOURS * 60 * 60 * 1000;
+    return now.getTime() > cutoffMs;
+  }
+
+  function eventStartInstant(ev){
+    const dateStr = String(ev && ev.date || "").trim();
+    const timeStr = String(ev && ev.time || "").trim();
+    const m = timeStr.match(/^(\d{1,2}):(\d{2})$/);
+    if (!dateStr || !m) return null;
+
+    const hh = String(m[1]).padStart(2, "0");
+    const mm = m[2];
+    return zonedTimeToUtc(dateStr, hh + ":" + mm, EVENT_TIMEZONE);
+  }
+
+  // Convert "YYYY-MM-DD" + "HH:MM" interpreted in timeZone into a Date representing the correct instant.
+  function zonedTimeToUtc(dateStr, timeStr, timeZone){
+    const parts = String(dateStr || "").split("-");
+    if (parts.length !== 3) return null;
+
+    const y  = parseInt(parts[0], 10);
+    const mo = parseInt(parts[1], 10);
+    const d  = parseInt(parts[2], 10);
+
+    const t = String(timeStr || "").split(":");
+    if (t.length < 2) return null;
+
+    const hh = parseInt(t[0], 10);
+    const mm = parseInt(t[1], 10);
+
+    if (![y, mo, d, hh, mm].every(Number.isFinite)) return null;
+
+    // First guess: treat the wall time as if it were UTC, then shift by the zone offset at that instant.
+    const utcGuess = new Date(Date.UTC(y, mo - 1, d, hh, mm, 0));
+    const offsetMin = getTimeZoneOffsetMinutes(utcGuess, timeZone);
+
+    return new Date(utcGuess.getTime() - offsetMin * 60 * 1000);
+  }
+
+  // Returns the offset in minutes for timeZone at the instant represented by date.
+  function getTimeZoneOffsetMinutes(date, timeZone){
+    const dtf = new Intl.DateTimeFormat("en-US", {
+      timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false
+    });
+
+    const map = {};
+    dtf.formatToParts(date).forEach(p => {
+      if (p.type !== "literal") map[p.type] = p.value;
+    });
+
+    const asUTC = Date.UTC(
+      parseInt(map.year, 10),
+      parseInt(map.month, 10) - 1,
+      parseInt(map.day, 10),
+      parseInt(map.hour, 10),
+      parseInt(map.minute, 10),
+      parseInt(map.second, 10)
+    );
+
+    return (asUTC - date.getTime()) / 60000;
+  }
+
   // Dummy events spanning next ~2 months from 2026-01-18
   const EVENTS = [
     // Chicago Vedanta
@@ -220,9 +296,10 @@ permalink: /events/
   const countPill      = document.getElementById("countPill");
 
   // Populate dropdowns (derived from the data so you only maintain EVENTS)
-  fillSelect(venueFilter, "ALL", "All venues", uniqueInOrder(EVENTS.map(x => x.venue)));
-  fillSelect(monthFilter, "ALL", "All months", uniqueInOrder(EVENTS.map(x => monthKey(x.date))).map(k => ({ value:k, label: monthLabel(k) })));
-  fillSelect(categoryFilter, "ALL", "All categories", uniqueInOrder(EVENTS.map(x => x.category)));
+  const BASE_EVENTS_AT_LOAD = EVENTS.filter(ev => !isExpired(ev, new Date()));
+  fillSelect(venueFilter, "ALL", "All venues", uniqueInOrder(BASE_EVENTS_AT_LOAD.map(x => x.venue)));
+  fillSelect(monthFilter, "ALL", "All months", uniqueInOrder(BASE_EVENTS_AT_LOAD.map(x => monthKey(x.date))).map(k => ({ value:k, label: monthLabel(k) })));
+  fillSelect(categoryFilter, "ALL", "All categories", uniqueInOrder(BASE_EVENTS_AT_LOAD.map(x => x.category)));
 
   venueFilter.addEventListener("change", render);
   monthFilter.addEventListener("change", render);
@@ -235,7 +312,10 @@ permalink: /events/
     const m = monthFilter.value;
     const c = categoryFilter.value;
 
-    return EVENTS.filter(ev => {
+    const now = new Date();
+    const base = EVENTS.filter(ev => !isExpired(ev, now));
+
+    return base.filter(ev => {
       if (v !== "ALL" && ev.venue !== v) return false;
       if (m !== "ALL" && monthKey(ev.date) !== m) return false;
       if (c !== "ALL" && ev.category !== c) return false;
