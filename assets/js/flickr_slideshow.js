@@ -19,6 +19,7 @@
   let cursor = 0;
   let windowEnd = 0;
   let timer = null;
+  let reqId = 0;
 
   function fmtDate(iso) {
     if (!iso) return '';
@@ -70,17 +71,26 @@
     titleEl.textContent = it.title || '';
     dateEl.textContent = fmtDate(it.published);
 
+    const myReq = ++reqId;
+
     imgEl.classList.remove('is-ready');
-    imgEl.onerror = function () {
-      imgEl.onerror = null;
-      imgEl.src = it.thumb;
-    };
+    void imgEl.offsetWidth; // restart CSS animation reliably
+
     imgEl.onload = function () {
+      if (myReq !== reqId) return; // ignore late loads
       imgEl.classList.add('is-ready');
     };
+
+    imgEl.onerror = function () {
+      if (myReq !== reqId) return;
+      imgEl.onerror = null;
+      imgEl.src = it.thumb; // fallback; onload above will add is-ready
+    };
+
     imgEl.src = it.big;
   }
 
+  
   function ensureWindow() {
     if (!all.length) return;
 
@@ -161,7 +171,8 @@
       'https://www.flickr.com/services/feeds/photos_public.gne' +
       '?id=' + encodeURIComponent(USER_ID) +
       '&format=json' +
-      '&jsoncallback=' + encodeURIComponent(cbName);
+      '&jsoncallback=' + encodeURIComponent(cbName) +
+      '&_ts=' + Date.now();
 
     const s = document.createElement('script');
     s.id = tagId;
