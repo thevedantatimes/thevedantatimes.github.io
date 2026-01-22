@@ -6,7 +6,7 @@ image: /assets/img/maya.webp
 categories:
   - Upanishads
   - Śruti
-snippet: ""
+snippet: "Upaniṣads, supreme Śruti of Vedānta, reveal Ātman-Brahman identity, dissolving ignorance and suffering, granting liberation."
 ---
 Om.  
 The **Upaniṣads** stand at the summit of India’s spiritual literature and form the core of **Vedānta** philosophy. When we say *Upaniṣads*, we are not referring to a single book but to a vast family of texts—traditionally regarded as the concluding, most inward portion of the **Vedas**. Because the Upaniṣads belong to **Śruti** (“that which is heard”), they are considered revealed wisdom rather than authored compositions. Their aim is not merely to provide information, but to transform the seeker’s understanding of life, identity, and reality.
