@@ -413,7 +413,8 @@
     'Ramakrishna Kathamrita': 'Sri Sri Ramakrishna Kathamrita',
     'Upadesa Sahasri': 'Upadeśasāhasrī',
     'Drig-Drishya-Viveka': 'Dṛg-Dṛśya-Viveka',
-    'Swami Saradananda': 'Saradananda'
+    'Swami Saradananda': 'Saradananda',
+    'Drig-Drishya-Viveka': 'Dṛg-Dṛśya-Viveka'
   };
 
   function resolveWikiTitle(term){
@@ -690,9 +691,6 @@ try{
     'Upanishads',
     'Principal Upanishads',
     'Bhagavad Gita',
-
-
-    
     'Brahma Sutras',
     'Bhagavata Purana',
     'Markandeya Purana',
@@ -701,9 +699,12 @@ try{
     'Narada Bhakti Sutra',
     'Vivekachudamani',
     'Upadesa Sahasri',
-    'Mandukya Karika',
-    'Panchadasi',
     'Drig-Drishya-Viveka',
+
+    
+
+    
+    
     'Bhaja Govindam',
     'Ashtavakra Gita',
     'Avadhuta Gita',
@@ -846,7 +847,7 @@ try{
     'Ganga',
     'Varanasi',
     'Rishikesh',
-    'Bodh Gaya',
+    'Bodh Gaya'
   ];
 
   
