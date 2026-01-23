@@ -672,9 +672,7 @@ try{
     'Mahabharata',
     'Ramayana',
     'Kalpataru',
-    
-
-    
+    'Kalpataru Day',
     'Nyaya',
     'Vaisheshika',
     'Mimamsa',
@@ -684,8 +682,6 @@ try{
     'Karma',
     'Tantra',
     'Integral yoga',
-    'Kriya Yoga',
-    'Mantra yoga',
     'Vedas',
     'Rigveda',
     'Samaveda',
@@ -694,6 +690,9 @@ try{
     'Upanishads',
     'Principal Upanishads',
     'Bhagavad Gita',
+
+
+    
     'Brahma Sutras',
     'Bhagavata Purana',
     'Markandeya Purana',
@@ -782,7 +781,6 @@ try{
     'Eknath',
     'Ramananda',
     'Basava',
-
     'Patanjali',
     'Dattatreya',
     'Narada',
