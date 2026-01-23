@@ -1,6 +1,10 @@
 (function () {
   'use strict';
 
+  // Wiki UI state (kept inside this IIFE to avoid leaking globals)
+  var _vttWikiCache = Object.create(null);
+  var _vttWikiOverlayBuilt = false;
+
   function $all(sel, root) {
     return Array.prototype.slice.call((root || document).querySelectorAll(sel));
   }
