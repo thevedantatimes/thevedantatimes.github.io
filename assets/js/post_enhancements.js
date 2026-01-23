@@ -159,32 +159,49 @@
     return false;
   }
 
-  function pickRecommendation(posts, currentUrl, currentCatsLower) {
+  function pickRecommendation(posts, currentUrl) {
     if (!Array.isArray(posts) || !posts.length) return null;
 
-    var cleaned = posts
+    function norm(u) {
+      var s = String(u || '').trim();
+      // Strip protocol/host if present
+      s = s.replace(/^https?:\/\/[^/]+/i, '');
+      // Ensure leading slash
+      if (s && s.charAt(0) !== '/') s = '/' + s;
+      // Normalize trailing slash (keep single root slash)
+      if (s.length > 1 && s.endsWith('/')) s = s.slice(0, -1);
+      return s.toLowerCase();
+    }
+
+    var blocked = ['/donate', '/contact', '/about', '/events'];
+
+    var cur = norm(currentUrl);
+
+    var pool = posts
       .filter(function (p) {
-        return p && p.url && String(p.url) !== String(currentUrl);
+        if (!p || !p.url) return false;
+        var u = norm(p.url);
+        if (u === cur) return false;
+        for (var i = 0; i < blocked.length; i++) {
+          if (u === blocked[i]) return false;
+        }
+        return true;
       })
       .slice();
 
-    var pool = cleaned;
+    if (!pool.length) return null;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
 
-    if (currentCatsLower.length) {
-      var matched = cleaned.filter(function (p) {
-        var pc = uniqLower(p.categories || []);
-        return intersects(pc, currentCatsLower);
-      });
-      if (matched.length) pool = matched;
+  function shouldDisableReadMoreOnThisPage(pathname) {
+    var p = String(pathname || '').toLowerCase();
+    // Disable on non-post utility pages.
+    if (p === '/' || p === '') return false;
+    var blocked = ['/donate', '/contact', '/about', '/events', '/upcoming', '/category', '/categories'];
+    for (var i = 0; i < blocked.length; i++) {
+      if (p === blocked[i] || p.indexOf(blocked[i] + '/') === 0) return true;
     }
-
-    pool.sort(function (x, y) {
-      return new Date(y.date || 0).getTime() - new Date(x.date || 0).getTime();
-    });
-
-    var top = pool.slice(0, 25);
-    if (!top.length) return null;
-    return top[Math.floor(Math.random() * top.length)];
+    return false;
   }
 
   function ensureToast() {
@@ -268,9 +285,9 @@
   }
 
   function initRecommendations(postArticle) {
+    if (shouldDisableReadMoreOnThisPage(window.location.pathname)) return;
+
     var currentUrl = postArticle.getAttribute('data-post-url') || window.location.pathname;
-    var catsRaw = postArticle.getAttribute('data-post-cats') || '';
-    var currentCatsLower = uniqLower(catsRaw.split('||'));
 
     fetch('/assets/data/posts_index.json', { cache: 'no-store' })
       .then(function (r) {
@@ -279,7 +296,7 @@
       })
       .then(function (posts) {
         function tick() {
-          var rec = pickRecommendation(posts, currentUrl, currentCatsLower);
+          var rec = pickRecommendation(posts, currentUrl);
           if (rec) showToast(rec);
         }
 
@@ -963,7 +980,32 @@ function initCategoryAutoLinks(postArticle){
       candidates[k] = tmp;
     }
 
-    var chosen = candidates.slice(0, 5);
+    // Prioritize phrases (multi-word terms) so items like "Karma Yoga" are not
+    // skipped just because they did not land in a shuffled top-5.
+    var phrases = [];
+    var singles = [];
+    for (var ci = 0; ci < candidates.length; ci++) {
+      var tt = String(candidates[ci] || '').trim();
+      if (!tt) continue;
+      if (tt.indexOf(' ') >= 0) phrases.push(tt);
+      else singles.push(tt);
+    }
+
+    // Shuffle each group using the same stable PRNG.
+    for (var jp = phrases.length - 1; jp > 0; jp--) {
+      var kp = Math.floor(rnd() * (jp + 1));
+      var tmpP = phrases[jp];
+      phrases[jp] = phrases[kp];
+      phrases[kp] = tmpP;
+    }
+    for (var js = singles.length - 1; js > 0; js--) {
+      var ks = Math.floor(rnd() * (js + 1));
+      var tmpS = singles[js];
+      singles[js] = singles[ks];
+      singles[ks] = tmpS;
+    }
+
+    var chosen = phrases.concat(singles).slice(0, 5);
     // Prefer longer terms first to avoid a shorter term stealing a longer phrase.
     chosen.sort(function (a, b) {
       return String(b).length - String(a).length;
