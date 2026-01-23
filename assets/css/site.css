@@ -654,11 +654,14 @@ a.vtt-wiki{
   padding: 14px 14px 12px;
   border-radius: 16px;
 
-  background: linear-gradient(135deg, rgba(255,255,255,.42), rgba(255,255,255,.20));
-  border: 1px solid rgba(255,255,255,.60);
-  backdrop-filter: blur(12px) saturate(1.15);
-  -webkit-backdrop-filter: blur(12px) saturate(1.15);
-  box-shadow: none;
+  /* minimal, polished card feel */
+  background: rgba(248,250,252,0.95);
+  border: 1px solid rgba(2,6,23,0.10);
+  box-shadow: 0 10px 26px rgba(2,6,23,0.08);
+
+  /* remove glass blur so it reads clearly */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .vtt-wiki-callout-head{
