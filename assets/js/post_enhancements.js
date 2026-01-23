@@ -425,24 +425,6 @@
     return VTT_WIKI_OVERRIDES[t] || t;
   }
 
-
-  function wikipediaHref(term) {
-    var t = resolveWikiTitle(term);
-    if (!t) return '';
-    // Wikipedia prefers underscores for spaces.
-    var slug = t.replace(/\s+/g, '_');
-    return 'https://en.wikipedia.org/wiki/' + encodeURIComponent(slug);
-  }
-// ------------------------------------------------------------
-// Wikipedia popup (inline overlay with first ~100 words)
-// ------------------------------------------------------------
-var _vttWikiCache = Object.create(null);
-var _vttWikiOverlayBuilt = false;
-
-function normalizeWikiTerm(term){
-  return String(term || '').trim();
-}
-
 function truncateWikiExtract(extract){
   var txt = String(extract || '').replace(/\s+/g, ' ').trim();
   if (!txt) return '';
@@ -494,6 +476,25 @@ function fetchWikiPreview(term, done){
     });
 }
 
+function stripOutboundWikiUI(scope){
+  try {
+    var root = scope || document;
+    var nodes = root.querySelectorAll('.vtt-wiki-foot, .vtt-wiki-read, .vtt-wiki-callout-kicker');
+    for (var i = 0; i < nodes.length; i++){
+      if (nodes[i] && nodes[i].parentNode) nodes[i].parentNode.removeChild(nodes[i]);
+    }
+
+    var calloutLinks = root.querySelectorAll('.vtt-wiki-callout a');
+    for (var j = 0; j < calloutLinks.length; j++){
+      var a = calloutLinks[j];
+      var txt = a.textContent || '';
+      var span = document.createElement('span');
+      span.textContent = txt;
+      if (a && a.parentNode) a.parentNode.replaceChild(span, a);
+    }
+  } catch (e) {}
+}
+
 function buildWikiOverlay(){
   if (_vttWikiOverlayBuilt) return;
   _vttWikiOverlayBuilt = true;
@@ -510,10 +511,11 @@ function buildWikiOverlay(){
       '<button class="vtt-wiki-close" type="button" aria-label="Close">×</button>' +
       '<div class="vtt-wiki-title"></div>' +
       '<div class="vtt-wiki-body"></div>' +
-      '<div class="vtt-wiki-foot"><a class="vtt-wiki-read" href="#" rel="nofollow">Read on Wikipedia</a></div>' +
     '</div>';
 
   document.body.appendChild(overlay);
+
+  stripOutboundWikiUI(overlay);
 
   function close(){
     overlay.style.display = 'none';
@@ -544,19 +546,16 @@ function openWikiOverlay(term){
 
   var titleEl = overlay.querySelector('.vtt-wiki-title');
   var bodyEl = overlay.querySelector('.vtt-wiki-body');
-  var readEl = overlay.querySelector('.vtt-wiki-read');
 
 
   var resolved = resolveWikiTitle(term);
-  var href = wikipediaHref(resolved);
 
   if (titleEl) titleEl.textContent = resolved || term;
   if (bodyEl) bodyEl.textContent = 'Loading…';
-  if (readEl){
-    readEl.setAttribute('href', href);
-  }
 
   overlay.style.display = 'flex';
+
+  stripOutboundWikiUI(overlay);
 
   
 fetchWikiPreview(term, function(snip){
@@ -624,7 +623,7 @@ function bindWikiPopupClicks(){
 
         var a = document.createElement('a');
         a.className = 'vtt-wiki';
-        a.setAttribute('href', wikipediaHref(term));
+        a.setAttribute('href', '#');
         a.setAttribute('data-vtt-wiki', term);
         a.setAttribute('aria-haspopup', 'dialog');
         a.setAttribute('rel', 'nofollow');
@@ -669,7 +668,6 @@ function buildWikiCallout(term){
   if (!term) return null;
 
   var resolved = resolveWikiTitle(term) || term;
-  var href = wikipediaHref(resolved);
 
   var box = document.createElement('aside');
   box.className = 'vtt-wiki-callout';
@@ -677,22 +675,20 @@ function buildWikiCallout(term){
 
   box.innerHTML =
     '<div class="vtt-wiki-callout-head">' +
-      '<span class="vtt-wiki-callout-kicker"></span>' +
       '<div class="vtt-wiki-callout-title"></div>' +
     '</div>' +
-    '<div class="vtt-wiki-callout-body">Loading…</div>' +
-    '<div class="vtt-wiki-callout-foot"><a class="vtt-wiki-callout-read" href="#" rel="nofollow">Read on Wikipedia</a></div>';
+    '<div class="vtt-wiki-callout-body">Loading…</div>';
 
   var titleEl = box.querySelector('.vtt-wiki-callout-title');
   var bodyEl = box.querySelector('.vtt-wiki-callout-body');
-  var readEl = box.querySelector('.vtt-wiki-callout-read');
 
   if (titleEl) titleEl.textContent = resolved;
-  if (readEl) readEl.setAttribute('href', href);
 
   fetchWikiPreview(term, function(snip){
     if (bodyEl) bodyEl.textContent = snip || 'No preview available for this topic.';
   });
+
+  stripOutboundWikiUI(box);
 
   return box;
 }
@@ -1279,7 +1275,7 @@ function initCategoryAutoLinks(postArticle){
 
     // Track canonical Wikipedia targets so aliases do not create duplicate links.
     // This helps reach the intended max of 5 unique Wikipedia links.
-    var usedWikiHrefs = Object.create(null);
+    var usedWikiTargets = Object.create(null);
 
     var linked = 0;
     var calloutInserted = false;
@@ -1288,8 +1284,9 @@ function initCategoryAutoLinks(postArticle){
       var termToUse = attemptTerms[t];
 
       // Avoid duplicate Wikipedia targets (aliases mapping to the same page).
-      var href = wikipediaHref(termToUse);
-      if (href && usedWikiHrefs[href]) {
+      var resolvedTitle = resolveWikiTitle(termToUse) || termToUse;
+      var wikiKey = String(resolvedTitle).toLowerCase();
+      if (usedWikiTargets[wikiKey]) {
         continue;
       }
 
@@ -1297,7 +1294,7 @@ function initCategoryAutoLinks(postArticle){
       if (linked < 5) {
         if (linkFirstOccurrence(body, termToUse, halfLen)) {
           markSeen(termToUse);
-          if (href) usedWikiHrefs[href] = true;
+          usedWikiTargets[wikiKey] = true;
           linked++;
           continue;
         }
@@ -1307,7 +1304,7 @@ function initCategoryAutoLinks(postArticle){
       if (linked >= 5 && !calloutInserted) {
         if (insertWikiCalloutAfterFirstOccurrence(body, termToUse, halfLen)) {
           markSeen(termToUse);
-          if (href) usedWikiHrefs[href] = true;
+          usedWikiTargets[wikiKey] = true;
           calloutInserted = true;
           break;
         }
@@ -1326,6 +1323,7 @@ function initCategoryAutoLinks(postArticle){
     initRecommendations(postArticle);
     initCategoryAutoLinks(postArticle);
     initWikiAutoLinks(postArticle);
+    stripOutboundWikiUI(document);
   }
 
   if (document.readyState === 'loading') {

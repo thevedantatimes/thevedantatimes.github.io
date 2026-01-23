@@ -588,7 +588,7 @@ a.vtt-wiki{
 
   border-radius: 18px;
   padding: 16px 16px 14px;
-  box-shadow: 0 18px 55px rgba(0,0,0,.18);
+  box-shadow: none;
 }
 
 .vtt-wiki-close{
@@ -618,6 +618,7 @@ a.vtt-wiki{
 }
 
 .vtt-wiki-foot{
+  display: none !important;
   margin-top: 12px;
   font-size: 0.92rem;
   opacity: 0.9;
@@ -637,7 +638,7 @@ a.vtt-wiki{
   border: 1px solid rgba(255,255,255,.60);
   backdrop-filter: blur(12px) saturate(1.15);
   -webkit-backdrop-filter: blur(12px) saturate(1.15);
-  box-shadow: 0 12px 35px rgba(0,0,0,.12);
+  box-shadow: none;
 }
 
 .vtt-wiki-callout-head{
@@ -657,26 +658,17 @@ a.vtt-wiki{
 }
 
 .vtt-wiki-callout-title{
-  font-size: 1.02rem;
+  font-size: 0.90rem;
   font-weight: 700;
 }
 
 .vtt-wiki-callout-body{
-  font-size: 0.98rem;
-  line-height: 1.55;
+  font-size: 0.86rem;
+  line-height: 1.5;
   white-space: pre-wrap;
 }
 
-.vtt-wiki-callout-foot{
-  margin-top: 10px;
-  font-size: 0.92rem;
-  opacity: 0.9;
-}
 
-.vtt-wiki-callout-foot a{
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
 .vtt-catlink{
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -696,3 +688,17 @@ a.vtt-wiki{
 .vtt-filter-nudge{
   animation: vttFilterNudge 0.9s ease-in-out 1;
 }
+
+/* Hide outbound Wikipedia UI elements (no external links) */
+.vtt-wiki-read,
+.vtt-wiki-foot,
+.vtt-wiki-callout-kicker,
+.vtt-wiki-callout a{
+  display: none !important;
+}
+
+/* Hide any outbound Wikipedia UI elements */
+.vtt-wiki-read{ display:none !important; }
+.vtt-wiki-foot{ display:none !important; }
+.vtt-wiki-callout-kicker{ display:none !important; }
+.vtt-wiki-callout a{ display:none !important; }
