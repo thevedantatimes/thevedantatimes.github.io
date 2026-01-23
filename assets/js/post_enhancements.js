@@ -413,6 +413,7 @@
     'Kalpataru': 'Kalpataru_Day',
     'Avidya': 'Avidyā (Hinduism)',
     'Vidya': 'Vidya (philosophy)',
+    'Dhyana': 'Dhyana in Hinduism',
 
     // Your dictionary items that benefit from canonical titles/diacritics
     'Kathamrita': 'Sri Sri Ramakrishna Kathamrita',
