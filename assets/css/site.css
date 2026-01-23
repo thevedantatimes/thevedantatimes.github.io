@@ -595,13 +595,12 @@ a.vtt-wiki{
   position: absolute;
   top: 10px;
   right: 12px;
-  width: 34px;
-  height: 34px;
+  width: 24px;
+  height: 24px;
   border-radius: 10px;
-  border: 1px solid rgba(0,0,0,0.10);
-  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(77,77,77,0.10);
   cursor: pointer;
-  font-size: 22px;
+  font-size: 14px;
   line-height: 32px;
 }
 
