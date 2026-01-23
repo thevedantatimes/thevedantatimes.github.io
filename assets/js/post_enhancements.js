@@ -402,6 +402,7 @@
     'Tirtha': 'Tirtha (Hinduism)',
     'Yoga': 'Three_Yogas',
     'Vivekananda Vedanta Society': 'Vedanta_Society',
+    'four yogas': 'Three_Yogas',
 
     // Your dictionary items that benefit from canonical titles/diacritics
     'Kathamrita': 'Sri Sri Ramakrishna Kathamrita',
@@ -652,6 +653,9 @@ try{
     'Karma Yoga',
     'Bhakti Yoga',
     'Jnana Yoga',
+    'Sanskrit',
+    'Hinduism',
+    'four yogas',
     
     'Nyaya',
     'Vaisheshika',
