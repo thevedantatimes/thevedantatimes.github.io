@@ -951,76 +951,98 @@ function initCategoryAutoLinks(postArticle){
     // Build candidate set based on actual content.
     var contentText = String(body.textContent || '');
     if (!contentText.trim()) return;
-    var candidates = [];
 
+    // Session memory: do not re-link the same terms again in this browser tab session.
+    var SEEN_KEY = 'vtt_wiki_seen_terms';
+    function loadSeenMap() {
+      try {
+        var raw = sessionStorage.getItem(SEEN_KEY);
+        if (!raw) return Object.create(null);
+        var obj = JSON.parse(raw);
+        if (!obj || typeof obj !== 'object') return Object.create(null);
+        return obj;
+      } catch (e) {
+        return Object.create(null);
+      }
+    }
+    function saveSeenMap(map) {
+      try {
+        sessionStorage.setItem(SEEN_KEY, JSON.stringify(map || {}));
+      } catch (e) {}
+    }
+    function markSeen(term) {
+      var seen = loadSeenMap();
+      seen[String(term || '')] = true;
+      saveSeenMap(seen);
+    }
+    var seenMap = loadSeenMap();
+
+    // Collect matched dictionary terms and compute rarity (occurrence count) within this post.
+    var items = [];
     for (var i = 0; i < VTT_WIKI_DICTIONARY.length; i++) {
       var term = String(VTT_WIKI_DICTIONARY[i] || '').trim();
       if (!term) continue;
+
+      // Skip terms already linked in this session.
+      if (seenMap[term]) continue;
+
       var rx = buildMatchRegex(term);
       if (!rx) continue;
-      if (rx.test(contentText)) candidates.push(term);
+
+      if (!rx.test(contentText)) continue;
+
+      // Count occurrences using a global regex based on the same pattern.
+      var count = 0;
+      try {
+        var rg = new RegExp(rx.source, 'gi');
+        var mm;
+        while ((mm = rg.exec(contentText)) !== null) {
+          count++;
+          if (mm.index === rg.lastIndex) rg.lastIndex++;
+        }
+      } catch (e) {
+        count = 1;
+      }
+
+      items.push({
+        term: term,
+        count: count || 1,
+        isPhrase: term.indexOf(' ') >= 0,
+        len: term.length
+      });
     }
 
-    if (!candidates.length) return;
+    if (!items.length) return;
 
-    // Stable randomness per post.
-    var seedStr =
-      (postArticle.getAttribute('data-post-url') || '') +
-      '|' +
-      (postArticle.getAttribute('data-post-title') || document.title || '') +
-      '|' +
-      (document.querySelector('meta[name="date"]') ? document.querySelector('meta[name="date"]').getAttribute('content') : '');
-    var rnd = mulberry32(fnv1a(seedStr));
-
-    // Shuffle candidates.
-    for (var j = candidates.length - 1; j > 0; j--) {
-      var k = Math.floor(rnd() * (j + 1));
-      var tmp = candidates[j];
-      candidates[j] = candidates[k];
-      candidates[k] = tmp;
-    }
-
-    // Prioritize phrases (multi-word terms) so items like "Karma Yoga" are not
-    // skipped just because they did not land in a shuffled top-5.
-    var phrases = [];
-    var singles = [];
-    for (var ci = 0; ci < candidates.length; ci++) {
-      var tt = String(candidates[ci] || '').trim();
-      if (!tt) continue;
-      if (tt.indexOf(' ') >= 0) phrases.push(tt);
-      else singles.push(tt);
-    }
-
-    // Shuffle each group using the same stable PRNG.
-    for (var jp = phrases.length - 1; jp > 0; jp--) {
-      var kp = Math.floor(rnd() * (jp + 1));
-      var tmpP = phrases[jp];
-      phrases[jp] = phrases[kp];
-      phrases[kp] = tmpP;
-    }
-    for (var js = singles.length - 1; js > 0; js--) {
-      var ks = Math.floor(rnd() * (js + 1));
-      var tmpS = singles[js];
-      singles[js] = singles[ks];
-      singles[ks] = tmpS;
-    }
-
-    var chosen = phrases.concat(singles).slice(0, 5);
-    // Prefer longer terms first to avoid a shorter term stealing a longer phrase.
-    chosen.sort(function (a, b) {
-      return String(b).length - String(a).length;
+    // Choose up to 5 terms, prioritizing:
+    // 1) phrases (multi-word terms)
+    // 2) rarity within the post (lower count first)
+    // 3) longer terms (helps avoid stealing)
+    // 4) stable tie-break by alphabetical order
+    items.sort(function (a, b) {
+      if (a.isPhrase !== b.isPhrase) return a.isPhrase ? -1 : 1;
+      if (a.count !== b.count) return a.count - b.count;
+      if (a.len !== b.len) return b.len - a.len;
+      return String(a.term).localeCompare(String(b.term));
     });
+
+    var chosen = items.slice(0, 5).map(function (x) { return x.term; });
+
+    // Prefer longer terms first during linking to avoid a shorter term stealing a longer phrase.
+    chosen.sort(function (a, b) { return String(b).length - String(a).length; });
 
     var linked = 0;
     for (var t = 0; t < chosen.length; t++) {
-      if (linkFirstOccurrence(body, chosen[t])) {
+      var termToLink = chosen[t];
+      if (linkFirstOccurrence(body, termToLink)) {
+        markSeen(termToLink);
         linked++;
         if (linked >= 5) break;
       }
     }
   }
 
-  function init() {
+  function init() { {
     initDuoPan();
 
     var postArticle = document.querySelector('article.post');
