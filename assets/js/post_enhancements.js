@@ -1042,7 +1042,7 @@ function initCategoryAutoLinks(postArticle){
     }
   }
 
-  function init() { {
+  function init() {
     initDuoPan();
 
     var postArticle = document.querySelector('article.post');
