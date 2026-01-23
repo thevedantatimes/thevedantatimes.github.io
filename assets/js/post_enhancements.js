@@ -457,6 +457,43 @@ function truncateWikiExtract(extract){
   return head + '…';
 }
 
+
+function fetchWikiPreview(term, done){
+  term = normalizeWikiTerm(term);
+  if (!term){
+    if (typeof done === 'function') done('');
+    return;
+  }
+
+  var resolved = resolveWikiTitle(term) || term;
+  var key = resolved;
+
+  // Cache per session
+  if (_vttWikiCache[key]){
+    if (typeof done === 'function') done(_vttWikiCache[key], resolved);
+    return;
+  }
+
+  // Wikipedia REST summary endpoint (CORS-friendly)
+  var slug = String(resolved || '').replace(/\s+/g, '_');
+  var api = 'https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(slug);
+
+  fetch(api, { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)); })
+    .then(function(data){
+      var extract = data && (data.extract || data.description) || '';
+      var snip = truncateWikiExtract(extract);
+      if (!snip) snip = 'No preview available for this topic.';
+      _vttWikiCache[key] = snip;
+      if (typeof done === 'function') done(snip, resolved);
+    })
+    .catch(function(){
+      var fallback = 'Could not load the preview right now.';
+      _vttWikiCache[key] = fallback;
+      if (typeof done === 'function') done(fallback, resolved);
+    });
+}
+
 function buildWikiOverlay(){
   if (_vttWikiOverlayBuilt) return;
   _vttWikiOverlayBuilt = true;
@@ -521,30 +558,10 @@ function openWikiOverlay(term){
 
   overlay.style.display = 'flex';
 
-  // Cache per session
-  if (_vttWikiCache[resolved || term]){
-    if (bodyEl) bodyEl.textContent = _vttWikiCache[resolved || term];
-    return;
-  }
-
-  // Wikipedia REST summary endpoint (CORS-friendly)
-  var slug = String(resolved || term || '').replace(/\s+/g, '_');
-  var api = 'https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(slug);
-
-  fetch(api, { cache: 'no-store' })
-    .then(function(r){ return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)); })
-    .then(function(data){
-      var extract = data && (data.extract || data.description) || '';
-      var snip = truncateWikiExtract(extract);
-      if (!snip) snip = 'No preview available for this topic.';
-      _vttWikiCache[resolved || term] = snip;
-      if (bodyEl) bodyEl.textContent = snip;
-    })
-    .catch(function(){
-      var fallback = 'Could not load the preview right now.';
-      _vttWikiCache[resolved || term] = fallback;
-      if (bodyEl) bodyEl.textContent = fallback;
-    });
+  
+fetchWikiPreview(term, function(snip){
+    if (bodyEl) bodyEl.textContent = snip || 'No preview available for this topic.';
+  });
 }
 
 function bindWikiPopupClicks(){
@@ -646,7 +663,130 @@ try{
     return false;
   }
 
-  var VTT_WIKI_DICTIONARY = [
+  
+function buildWikiCallout(term){
+  term = normalizeWikiTerm(term);
+  if (!term) return null;
+
+  var resolved = resolveWikiTitle(term) || term;
+  var href = wikipediaHref(resolved);
+
+  var box = document.createElement('aside');
+  box.className = 'vtt-wiki-callout';
+  box.setAttribute('data-vtt-wiki', term);
+
+  box.innerHTML =
+    '<div class="vtt-wiki-callout-head">' +
+      '<span class="vtt-wiki-callout-kicker">Wikipedia preview</span>' +
+      '<div class="vtt-wiki-callout-title"></div>' +
+    '</div>' +
+    '<div class="vtt-wiki-callout-body">Loading…</div>' +
+    '<div class="vtt-wiki-callout-foot"><a class="vtt-wiki-callout-read" href="#" rel="nofollow">Read on Wikipedia</a></div>';
+
+  var titleEl = box.querySelector('.vtt-wiki-callout-title');
+  var bodyEl = box.querySelector('.vtt-wiki-callout-body');
+  var readEl = box.querySelector('.vtt-wiki-callout-read');
+
+  if (titleEl) titleEl.textContent = resolved;
+  if (readEl) readEl.setAttribute('href', href);
+
+  fetchWikiPreview(term, function(snip){
+    if (bodyEl) bodyEl.textContent = snip || 'No preview available for this topic.';
+  });
+
+  return box;
+}
+
+function pickWikiCalloutAnchor(textNode, root){
+  if (!textNode) return null;
+
+  var el = textNode.parentNode;
+  while (el && el !== root && el.nodeType === 1){
+    var tag = (el.tagName || '').toUpperCase();
+
+    // If inside a list item, anchor to the full list, not the <li>.
+    if (tag === 'LI'){
+      var list = el.parentNode;
+      while (list && list !== root && list.nodeType === 1){
+        var t = (list.tagName || '').toUpperCase();
+        if (t === 'UL' || t === 'OL') return list;
+        list = list.parentNode;
+      }
+    }
+
+    if (tag === 'P' || tag === 'UL' || tag === 'OL' || tag === 'BLOCKQUOTE'){
+      return el;
+    }
+
+    el = el.parentNode;
+  }
+
+  // Fallback: insert at end of the root.
+  return root && root.nodeType === 1 ? root : null;
+}
+
+function insertWikiCalloutAfterFirstOccurrence(root, term, maxChars) {
+  var rx = buildMatchRegex(term);
+  if (!rx) return false;
+
+  var limit = (typeof maxChars === 'number' && isFinite(maxChars) && maxChars > 0) ? Math.floor(maxChars) : null;
+
+  var walker;
+  try {
+    walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        if (!n || !n.nodeValue) return NodeFilter.FILTER_REJECT;
+        if (inForbiddenContext(n)) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      },
+    });
+  } catch (e) {
+    return false;
+  }
+
+  var n;
+  var seen = 0;
+  while ((n = walker.nextNode())) {
+    var nodeText = n.nodeValue || '';
+    var nodeStart = seen;
+
+    if (limit !== null && nodeStart >= limit) break;
+
+    rx.lastIndex = 0;
+    var m = rx.exec(nodeText);
+    if (m && m.index != null) {
+      if (limit !== null && (nodeStart + m.index) >= limit) break;
+
+      var anchor = pickWikiCalloutAnchor(n, root);
+      if (!anchor) return false;
+
+      // Avoid inserting multiple callouts back-to-back.
+      var nextEl = anchor.nextElementSibling;
+      if (nextEl && nextEl.classList && nextEl.classList.contains('vtt-wiki-callout')){
+        return false;
+      }
+
+      var callout = buildWikiCallout(term);
+      if (!callout) return false;
+
+      if (anchor === root){
+        root.appendChild(callout);
+      } else if (anchor.parentNode){
+        anchor.parentNode.insertBefore(callout, anchor.nextSibling);
+      } else {
+        return false;
+      }
+
+      return true;
+    }
+
+    seen += nodeText.length;
+  }
+
+  return false;
+}
+
+var VTT_WIKI_DICTIONARY = [
     'Vedanta',
     'Vivekananda Vedanta Society',
     'Vedanta Society',
@@ -1142,20 +1282,35 @@ function initCategoryAutoLinks(postArticle){
     var usedWikiHrefs = Object.create(null);
 
     var linked = 0;
+    var calloutInserted = false;
+
     for (var t = 0; t < attemptTerms.length; t++) {
-      var termToLink = attemptTerms[t];
+      var termToUse = attemptTerms[t];
 
       // Avoid duplicate Wikipedia targets (aliases mapping to the same page).
-      var href = wikipediaHref(termToLink);
+      var href = wikipediaHref(termToUse);
       if (href && usedWikiHrefs[href]) {
         continue;
       }
 
-      if (linkFirstOccurrence(body, termToLink, halfLen)) {
-        markSeen(termToLink);
-        if (href) usedWikiHrefs[href] = true;
-        linked++;
-        if (linked >= 5) break;
+      // First 5: normal wiki links
+      if (linked < 5) {
+        if (linkFirstOccurrence(body, termToUse, halfLen)) {
+          markSeen(termToUse);
+          if (href) usedWikiHrefs[href] = true;
+          linked++;
+          continue;
+        }
+      }
+
+      // 6th: inline callout instead of a link
+      if (linked >= 5 && !calloutInserted) {
+        if (insertWikiCalloutAfterFirstOccurrence(body, termToUse, halfLen)) {
+          markSeen(termToUse);
+          if (href) usedWikiHrefs[href] = true;
+          calloutInserted = true;
+          break;
+        }
       }
     }
   }

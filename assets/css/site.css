@@ -623,6 +623,60 @@ a.vtt-wiki{
   opacity: 0.9;
 }
 
+
+
+/* ------------------------------------------------------------
+   Wikipedia callout block (shown when wiki cap is reached)
+   ------------------------------------------------------------ */
+.vtt-wiki-callout{
+  margin: 14px 0 18px;
+  padding: 14px 14px 12px;
+  border-radius: 16px;
+
+  background: linear-gradient(135deg, rgba(255,255,255,.42), rgba(255,255,255,.20));
+  border: 1px solid rgba(255,255,255,.60);
+  backdrop-filter: blur(12px) saturate(1.15);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  box-shadow: 0 12px 35px rgba(0,0,0,.12);
+}
+
+.vtt-wiki-callout-head{
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.vtt-wiki-callout-kicker{
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+  text-transform: uppercase;
+}
+
+.vtt-wiki-callout-title{
+  font-size: 1.02rem;
+  font-weight: 700;
+}
+
+.vtt-wiki-callout-body{
+  font-size: 0.98rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.vtt-wiki-callout-foot{
+  margin-top: 10px;
+  font-size: 0.92rem;
+  opacity: 0.9;
+}
+
+.vtt-wiki-callout-foot a{
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 .vtt-catlink{
   text-decoration: underline;
   text-underline-offset: 2px;
