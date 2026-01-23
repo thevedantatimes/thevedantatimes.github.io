@@ -552,9 +552,13 @@ function bindWikiPopupClicks(){
   });
 }
 
-  function linkFirstOccurrence(root, term) {
+  function linkFirstOccurrence(root, term, maxChars) {
     var rx = buildMatchRegex(term);
     if (!rx) return false;
+
+    // If maxChars is provided, only link within the first maxChars characters
+    // of the post body textContent (document order).
+    var limit = (typeof maxChars === 'number' && isFinite(maxChars) && maxChars > 0) ? Math.floor(maxChars) : null;
 
     var walker;
     try {
@@ -562,7 +566,6 @@ function bindWikiPopupClicks(){
         acceptNode: function (n) {
           if (!n || !n.nodeValue) return NodeFilter.FILTER_REJECT;
           if (inForbiddenContext(n)) return NodeFilter.FILTER_REJECT;
-          if (!rx.test(n.nodeValue)) return NodeFilter.FILTER_REJECT;
           return NodeFilter.FILTER_ACCEPT;
         },
       });
@@ -571,30 +574,38 @@ function bindWikiPopupClicks(){
     }
 
     var n;
+    var seen = 0; // cumulative characters encountered in accepted text nodes
     while ((n = walker.nextNode())) {
-      var txt = n.nodeValue;
+      var nodeText = n.nodeValue || '';
+      var nodeStart = seen;
+
+      // If we have passed the limit, stop searching.
+      if (limit !== null && nodeStart >= limit) break;
+
       rx.lastIndex = 0;
-      var m = rx.exec(txt);
-      if (!m || m.index == null) continue;
+      var m = rx.exec(nodeText);
+      if (m && m.index != null) {
+        // If match starts beyond the limit, stop (later nodes will be even further).
+        if (limit !== null && (nodeStart + m.index) >= limit) break;
 
-      var before = txt.slice(0, m.index);
-      var match = txt.slice(m.index, m.index + m[0].length);
-      var after = txt.slice(m.index + m[0].length);
+        var before = nodeText.slice(0, m.index);
+        var match = nodeText.slice(m.index, m.index + m[0].length);
+        var after = nodeText.slice(m.index + m[0].length);
 
-      var frag = document.createDocumentFragment();
-      if (before) frag.appendChild(document.createTextNode(before));
+        var frag = document.createDocumentFragment();
+        if (before) frag.appendChild(document.createTextNode(before));
 
-      var a = document.createElement('a');
-      a.className = 'vtt-wiki';
-      a.setAttribute('href', wikipediaHref(term));
-      a.setAttribute('data-vtt-wiki', term);
-      a.setAttribute('aria-haspopup', 'dialog');
-      a.setAttribute('rel', 'nofollow');
+        var a = document.createElement('a');
+        a.className = 'vtt-wiki';
+        a.setAttribute('href', wikipediaHref(term));
+        a.setAttribute('data-vtt-wiki', term);
+        a.setAttribute('aria-haspopup', 'dialog');
+        a.setAttribute('rel', 'nofollow');
 
-      // Text + small Wikipedia icon (clicking either opens the same popup)
-      a.appendChild(document.createTextNode(match));
+        // Text + small Wikipedia icon (clicking either opens the same popup)
+        a.appendChild(document.createTextNode(match));
 
-      try{
+try{
         var svgNS = 'http://www.w3.org/2000/svg';
         var ico = document.createElementNS(svgNS, 'svg');
         ico.setAttribute('class', 'vtt-wiki-ico');
@@ -610,12 +621,16 @@ function bindWikiPopupClicks(){
         a.appendChild(ico);
       }catch(_e){}
 
-      frag.appendChild(a);
 
-      if (after) frag.appendChild(document.createTextNode(after));
+        frag.appendChild(a);
 
-      if (n.parentNode) n.parentNode.replaceChild(frag, n);
-      return true;
+        if (after) frag.appendChild(document.createTextNode(after));
+
+        if (n.parentNode) n.parentNode.replaceChild(frag, n);
+        return true;
+      }
+
+      seen += nodeText.length;
     }
 
     return false;
@@ -1034,7 +1049,7 @@ function initCategoryAutoLinks(postArticle){
     var linked = 0;
     for (var t = 0; t < chosen.length; t++) {
       var termToLink = chosen[t];
-      if (linkFirstOccurrence(body, termToLink)) {
+      if (linkFirstOccurrence(body, termToLink, Math.floor(contentText.length * 0.5))) {
         markSeen(termToLink);
         linked++;
         if (linked >= 5) break;
