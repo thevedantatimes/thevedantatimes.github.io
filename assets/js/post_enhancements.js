@@ -965,9 +965,14 @@ function initCategoryAutoLinks(postArticle){
     var body = postArticle.querySelector('.post-body');
     if (!body) return;
 
-    // Build candidate set based on actual content.
-    var contentText = String(body.textContent || '');
-    if (!contentText.trim()) return;
+    // Full post text (used only to compute the 50% boundary).
+    var fullText = String(body.textContent || '');
+    if (!fullText.trim()) return;
+
+    // Limit BOTH detection and linking scope to the first 50% of the post.
+    var halfLen = Math.floor(fullText.length * 0.5);
+    if (!isFinite(halfLen) || halfLen <= 0) return;
+    var scopedText = fullText.slice(0, halfLen);
 
     // Session memory: do not re-link the same terms again in this browser tab session.
     var SEEN_KEY = 'vtt_wiki_seen_terms';
@@ -994,10 +999,62 @@ function initCategoryAutoLinks(postArticle){
     }
     var seenMap = loadSeenMap();
 
-    // Collect matched dictionary terms and compute rarity (occurrence count) within this post.
+    function collectSpans(text, term) {
+      var rx = buildMatchRegex(term);
+      if (!rx) return [];
+      var spans = [];
+      try {
+        var rg = new RegExp(rx.source, 'gi');
+        var mm;
+        while ((mm = rg.exec(text)) !== null) {
+          spans.push([mm.index, mm.index + mm[0].length]);
+          if (mm.index === rg.lastIndex) rg.lastIndex++;
+        }
+      } catch (e) {
+        return [];
+      }
+      return spans;
+    }
+
+    function mergeSpans(spans) {
+      if (!spans || !spans.length) return [];
+      spans = spans.slice().sort(function (a, b) { return a[0] - b[0]; });
+      var out = [spans[0].slice()];
+      for (var i = 1; i < spans.length; i++) {
+        var last = out[out.length - 1];
+        var cur = spans[i];
+        if (cur[0] <= last[1]) {
+          last[1] = Math.max(last[1], cur[1]);
+        } else {
+          out.push(cur.slice());
+        }
+      }
+      return out;
+    }
+
+    function isAllCovered(spans, coverSpans) {
+      if (!spans || !spans.length) return true;
+      if (!coverSpans || !coverSpans.length) return false;
+      for (var i = 0; i < spans.length; i++) {
+        var s = spans[i];
+        var covered = false;
+        for (var j = 0; j < coverSpans.length; j++) {
+          var c = coverSpans[j];
+          if (c[0] <= s[0] && c[1] >= s[1]) {
+            covered = true;
+            break;
+          }
+          if (c[0] > s[0]) break;
+        }
+        if (!covered) return false;
+      }
+      return true;
+    }
+
+    // Collect matched dictionary terms and compute rarity (occurrence count) within the scoped text.
     var items = [];
-    for (var i = 0; i < VTT_WIKI_DICTIONARY.length; i++) {
-      var term = String(VTT_WIKI_DICTIONARY[i] || '').trim();
+    for (var d = 0; d < VTT_WIKI_DICTIONARY.length; d++) {
+      var term = String(VTT_WIKI_DICTIONARY[d] || '').trim();
       if (!term) continue;
 
       // Skip terms already linked in this session.
@@ -1006,16 +1063,15 @@ function initCategoryAutoLinks(postArticle){
       var rx = buildMatchRegex(term);
       if (!rx) continue;
 
-      if (!rx.test(contentText)) continue;
+      if (!rx.test(scopedText)) continue;
 
-      // Count occurrences using a global regex based on the same pattern.
       var count = 0;
       try {
-        var rg = new RegExp(rx.source, 'gi');
-        var mm;
-        while ((mm = rg.exec(contentText)) !== null) {
+        var rgCount = new RegExp(rx.source, 'gi');
+        var mmCount;
+        while ((mmCount = rgCount.exec(scopedText)) !== null) {
           count++;
-          if (mm.index === rg.lastIndex) rg.lastIndex++;
+          if (mmCount.index === rgCount.lastIndex) rgCount.lastIndex++;
         }
       } catch (e) {
         count = 1;
@@ -1031,9 +1087,9 @@ function initCategoryAutoLinks(postArticle){
 
     if (!items.length) return;
 
-    // Choose up to 5 terms, prioritizing:
+    // Prioritize candidate ordering:
     // 1) phrases (multi-word terms)
-    // 2) rarity within the post (lower count first)
+    // 2) rarity within the scoped text (lower count first)
     // 3) longer terms (helps avoid stealing)
     // 4) stable tie-break by alphabetical order
     items.sort(function (a, b) {
@@ -1043,15 +1099,35 @@ function initCategoryAutoLinks(postArticle){
       return String(a.term).localeCompare(String(b.term));
     });
 
-    var chosen = items.slice(0, 5).map(function (x) { return x.term; });
+    // Build a larger attempt list from the scoped text, avoiding "wasted slots"
+    // where a shorter term appears only inside an already-selected longer match.
+    var attemptTerms = [];
+    var coverSpans = [];
+    var maxAttempts = 40; // enough buffer to still get 5 successful links
 
-    // Prefer longer terms first during linking to avoid a shorter term stealing a longer phrase.
-    chosen.sort(function (a, b) { return String(b).length - String(a).length; });
+    for (var k = 0; k < items.length; k++) {
+      if (attemptTerms.length >= maxAttempts) break;
+      var cand = items[k].term;
+
+      var spans = collectSpans(scopedText, cand);
+      if (!spans.length) continue;
+
+      // If every occurrence is entirely inside already selected spans, skip and keep searching.
+      if (isAllCovered(spans, coverSpans)) continue;
+
+      attemptTerms.push(cand);
+      coverSpans = mergeSpans(coverSpans.concat(spans));
+    }
+
+    if (!attemptTerms.length) return;
+
+    // Link longer terms first to avoid a shorter term stealing a longer phrase.
+    attemptTerms.sort(function (a, b) { return String(b).length - String(a).length; });
 
     var linked = 0;
-    for (var t = 0; t < chosen.length; t++) {
-      var termToLink = chosen[t];
-      if (linkFirstOccurrence(body, termToLink, Math.floor(contentText.length * 0.5))) {
+    for (var t = 0; t < attemptTerms.length; t++) {
+      var termToLink = attemptTerms[t];
+      if (linkFirstOccurrence(body, termToLink, halfLen)) {
         markSeen(termToLink);
         linked++;
         if (linked >= 5) break;
