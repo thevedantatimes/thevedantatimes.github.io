@@ -1133,11 +1133,23 @@ function initCategoryAutoLinks(postArticle){
     // Link longer terms first to avoid a shorter term stealing a longer phrase.
     attemptTerms.sort(function (a, b) { return String(b).length - String(a).length; });
 
+    // Track canonical Wikipedia targets so aliases do not create duplicate links.
+    // This helps reach the intended max of 5 unique Wikipedia links.
+    var usedWikiHrefs = Object.create(null);
+
     var linked = 0;
     for (var t = 0; t < attemptTerms.length; t++) {
       var termToLink = attemptTerms[t];
+
+      // Avoid duplicate Wikipedia targets (aliases mapping to the same page).
+      var href = wikipediaHref(termToLink);
+      if (href && usedWikiHrefs[href]) {
+        continue;
+      }
+
       if (linkFirstOccurrence(body, termToLink, halfLen)) {
         markSeen(termToLink);
+        if (href) usedWikiHrefs[href] = true;
         linked++;
         if (linked >= 5) break;
       }
