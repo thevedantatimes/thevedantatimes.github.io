@@ -677,7 +677,7 @@ function buildWikiCallout(term){
 
   box.innerHTML =
     '<div class="vtt-wiki-callout-head">' +
-      '<span class="vtt-wiki-callout-kicker">Wikipedia preview</span>' +
+      '<span class="vtt-wiki-callout-kicker"></span>' +
       '<div class="vtt-wiki-callout-title"></div>' +
     '</div>' +
     '<div class="vtt-wiki-callout-body">Loading…</div>' +
