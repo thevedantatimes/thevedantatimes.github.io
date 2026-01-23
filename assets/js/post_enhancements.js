@@ -407,6 +407,8 @@
     'Maya': 'Maya_(religion)',
     'Lila': 'Lila_(Hinduism)',
     'Kalpataru': 'Kalpataru_Day',
+    'Avidya': 'Avidyā (Hinduism)',
+    'Vidya': 'Vidya (philosophy)',
 
     // Your dictionary items that benefit from canonical titles/diacritics
     'Kathamrita': 'Sri Sri Ramakrishna Kathamrita',
@@ -700,7 +702,9 @@ try{
     'Vivekachudamani',
     'Upadesa Sahasri',
     'Drig-Drishya-Viveka',
-
+    'Girish Chandra Ghosh',
+    'Avidya',
+    'Vidya',
     
 
     
@@ -715,7 +719,7 @@ try{
     'Shiva Sutras',
     'Ramakrishna Kathamrita',
     'The Gospel of Sri Ramakrishna',
-    'Avidya',
+
     'Moksha',
     'Samsara',
     'Dharma',
