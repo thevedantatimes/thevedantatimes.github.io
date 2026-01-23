@@ -396,17 +396,19 @@
     'Pooja': 'Puja (Hinduism)',
     'Arati': 'Arti (Hinduism)',
     'Aarti': 'Arti (Hinduism)',
+    'Dvaita': 'Dvaita_Vedanta',
     'Prasad': 'Prasada',
     'Darshan': 'Darshan (Indian religions)',
     'Tirtha': 'Tirtha (Hinduism)',
+    'Yoga': 'Three_Yogas',
+    'Vivekananda Vedanta Society': 'Vedanta_Society',
 
     // Your dictionary items that benefit from canonical titles/diacritics
+    'Kathamrita': 'Sri Sri Ramakrishna Kathamrita',
     'Ramakrishna Kathamrita': 'Sri Sri Ramakrishna Kathamrita',
     'Upadesa Sahasri': 'Upadeśasāhasrī',
     'Drig-Drishya-Viveka': 'Dṛg-Dṛśya-Viveka',
-    'Sri Yukteswar': 'Swami Sri Yukteswar Giri',
-    'Swami Saradananda': 'Saradananda',
-    'Swami Dayananda Saraswati': 'Dayananda Saraswati (Arsha Vidya)'
+    'Swami Saradananda': 'Saradananda'
   };
 
   function resolveWikiTitle(term){
@@ -638,19 +640,19 @@ try{
 
   var VTT_WIKI_DICTIONARY = [
     'Vedanta',
+    'Vivekananda Vedanta Society',
+    'Vedanta Society',
     'Advaita Vedanta',
     'Vishishtadvaita',
     'Dvaita',
-    'Bhedabheda',
     'Achintya Bheda Abheda',
     'Shuddhadvaita',
-    'Kashmir Shaivism',
-    'Shaivism',
-    'Vaishnavism',
-    'Shaktism',
-    'Smartism',
-    'Samkhya',
-    'Yoga (philosophy)',
+    'Yoga',
+    'Raja Yoga',
+    'Karma Yoga',
+    'Bhakti Yoga',
+    'Jnana Yoga',
+    
     'Nyaya',
     'Vaisheshika',
     'Mimamsa',
@@ -693,10 +695,6 @@ try{
     'Shiva Sutras',
     'Ramakrishna Kathamrita',
     'The Gospel of Sri Ramakrishna',
-    'Raja Yoga (book)',
-    'Karma Yoga (book)',
-    'Bhakti Yoga (book)',
-    'Jnana Yoga (book)',
     'Atman',
     'Brahman',
     'Ishvara',
