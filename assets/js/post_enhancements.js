@@ -535,6 +535,22 @@ function buildWikiOverlay(){
   overlay._vttClose = close;
 }
 
+
+
+function normalizeWikiTerm(term){
+  if (term == null) return '';
+
+  // Normalize whitespace and strip common trailing punctuation / possessives.
+  term = String(term).replace(/\s+/g, ' ').trim();
+
+  // Possessives like Ramakrishna’s / Shankaracharya's / sages’
+  term = term.replace(/(?:\u2019s|'s|s\u2019|s')$/i, '');
+
+  // Trailing punctuation that may cling to a word in prose.
+  term = term.replace(/[)\]}\u201d\u2019'\".,;:!?]+$/g, '').trim();
+
+  return term;
+}
 function openWikiOverlay(term){
   term = normalizeWikiTerm(term);
   if (!term) return;
