@@ -51,6 +51,7 @@ title: Categories
       <option value="Chicago">Chicago</option>
       <option value="New York">New York</option>
       <option value="Belur Math">Belur Math</option>
+      <option value="California">California</option>
     </select>
 
     <select id="fSpeaker" class="cat-select" aria-label="Speaker">
@@ -65,21 +66,64 @@ title: Categories
       <option value="Sri Ramakrishna">Sri Ramakrishna</option>
       <option value="Swami Vivekananda">Swami Vivekananda</option>
       <option value="Maa Sarada">Maa Sarada</option>
-      <option value="Kalpataru">Kalpataru</option>
-      <option value="Kathamrita">Kathamrita</option>
-      <option value="Durga Puja">Durga Puja</option>
-      <option value="Kali Puja">Kali Puja</option>
-      <option value="Yoga">Yoga</option>
+
+      <option value="Vedanta">Vedanta</option>
+      <option value="Advaita Vedanta">Advaita Vedanta</option>
+      <option value="Vishishtadvaita">Vishishtadvaita</option>
+      <option value="Dvaita Vedanta">Dvaita Vedanta</option>
+
+      <option value="Brahman">Brahman</option>
+      <option value="Atman">Atman</option>
+      <option value="Ishvara">Ishvara</option>
+      <option value="Tattva">Tattva</option>
+
       <option value="Maya">Maya</option>
       <option value="Meditation">Meditation</option>
+
+      <option value="Yoga">Yoga</option>
+      <option value="Jnana Yoga">Jnana Yoga</option>
+      <option value="Karma Yoga">Karma Yoga</option>
+      <option value="Karma">Karma</option>
+      <option value="Raja Yoga">Raja Yoga</option>
+
+      <option value="Buddhism">Buddhism</option>
+
+      <option value="Kalpataru">Kalpataru</option>
+      <option value="Durga Puja">Durga Puja</option>
+      <option value="Amanibhava">Amanibhava</option>
+      <option value="Kathamrita">Kathamrita</option>
     </select>
 
     <select id="fText" class="cat-select" aria-label="Text">
       <option value="">Text</option>
-      <option value="Kathamrita">Kathamrita</option>
+      <option value="Upanishads">Upanishads</option>
+      <option value="Vedas">Vedas</option>
+
       <option value="Bhagavad Gita">Bhagavad Gita</option>
       <option value="Uddhava Gita">Uddhava Gita</option>
-      <option value="Upanishads">Upanishads</option>
+      <option value="Anu Gita">Anu Gita</option>
+      <option value="Ashtavakra Gita">Ashtavakra Gita</option>
+      <option value="Avadhuta Gita">Avadhuta Gita</option>
+
+      <option value="Atma Bodha">Atma Bodha</option>
+      <option value="Tattva Bodha">Tattva Bodha</option>
+      <option value="Vivekachudamani">Vivekachudamani</option>
+      <option value="Panchadasi">Panchadasi</option>
+      <option value="Drig-Drishya Viveka">Drig-Drishya Viveka</option>
+      <option value="Brahma Sutras">Brahma Sutras</option>
+
+      <option value="Kathamrita">Kathamrita</option>
+
+      <option value="Prakaraṇa">Prakaraṇa</option>
+      <option value="Prakarana Texts">Prakarana Texts</option>
+      <option value="Darśana">Darśana</option>
+
+      <option value="Gītā-prakaraṇa">Gītā-prakaraṇa</option>
+      <option value="Smṛti">Smṛti</option>
+      <option value="Śruti">Śruti</option>
+
+      <option value="Prasthana Trayi">Prasthana Trayi</option>
+      <option value="Prasthāna-trayī">Prasthāna-trayī</option>
     </select>
 
     <select id="fFormat" class="cat-select" aria-label="Format">
