@@ -5,6 +5,7 @@ date: 2026-01-26 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Vedanta
+  - Interfaith
 snippet: "Exploring Scriptures through Vedānta, showing shared foundations: revelation, transmission, and lived realization today."
 ---
 When people ask, “Can I trust Scripture?” they are usually asking two things at once: did these words come to us faithfully, and can these words carry me faithfully. Christianity frames the Bible as a living witness to God’s self disclosure, while Vedānta frames sacred testimony as a pramāṇa, a means of knowledge that points beyond ordinary perception. Read together, these traditions offer a calm answer: reliability is not only archival accuracy, but also transformative clarity for the whole person.
