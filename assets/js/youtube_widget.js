@@ -18,6 +18,7 @@
   const RETRY_EVERY_MS = 20000;      // 20 seconds
   const RETRY_MAX = 60;             // up to 60 attempts
   const STORAGE_PREFIX = 'vtt_yt_cache_v1::';
+  const CACHE_TTL_MS = 12 * 60 * 60 * 1000; // 12 hours max age for cached feeds
 
   // Feeds
   const FEEDS = [
@@ -55,6 +56,36 @@
   // In-tab video overlay player
   // -------------------------
   let _vttOverlayReady = false;
+  let _vttScrollLockY = 0;
+
+  function _vttLockScroll() {
+    try {
+      _vttScrollLockY = window.scrollY || window.pageYOffset || 0;
+      document.body.style.position = 'fixed';
+      document.body.style.top = (-_vttScrollLockY) + 'px';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  function _vttUnlockScroll() {
+    try {
+      const y = _vttScrollLockY || 0;
+      if (document.body && document.body.style && document.body.style.position === 'fixed') {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        document.body.style.width = '';
+        window.scrollTo(0, y);
+      }
+    } catch (e) {
+      // ignore
+    }
+  }
 
   function _vttEnsureOverlay() {
     if (_vttOverlayReady) return;
@@ -108,6 +139,8 @@
         'allowfullscreen></iframe>';
     }
 
+    _vttLockScroll();
+
     el.classList.add('open');
     el.setAttribute('aria-hidden', 'false');
     document.documentElement.classList.add('vtt-vo-open');
@@ -121,6 +154,8 @@
     el.classList.remove('open');
     el.setAttribute('aria-hidden', 'true');
     document.documentElement.classList.remove('vtt-vo-open');
+
+    _vttUnlockScroll();
   }
 
   function _vttExtractVideoIdFromUrl(href) {
@@ -150,7 +185,7 @@
   // Home page autoplay tiles (2 channels)
   // -------------------------
   const HOME_TILE_PREFIX = 'vtt_home_tile_v1::';
-  const HOME_TILE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
+  const HOME_TILE_TTL_MS = 12 * 60 * 60 * 1000; // 12 hours
 
   function _vttChannelIdFromFeedUrl(feedUrl) {
     try {
@@ -427,6 +462,12 @@
       const raw = localStorage.getItem(STORAGE_PREFIX + feedName);
       if (!raw) return [];
       const obj = JSON.parse(raw);
+      const updatedAt = obj && obj.updatedAt ? Date.parse(obj.updatedAt) : NaN;
+      // If the cache is too old, treat it as empty so we keep fetching fresh videos.
+      if (Number.isFinite(updatedAt)) {
+        const age = Date.now() - updatedAt;
+        if (age > CACHE_TTL_MS) return [];
+      }
       const arr = obj && Array.isArray(obj.items) ? obj.items : [];
       return arr.filter(validItem).slice(0, CACHE_TARGET);
     } catch (e) {

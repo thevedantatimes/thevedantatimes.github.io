@@ -339,26 +339,118 @@
     };
   }
 
-  function escapeRegExp(s) {
-    return String(s || '').replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
+    function escapeRegExp(s) {
+    return String(s || '').replace(/[.*+?^${}()|[\[\]\\]/g, '\\$&');
   }
 
-  function isWordishTerm(term) {
-    // Only letters/numbers/spaces/hyphens/apostrophes
-    return /^[A-Za-z0-9\s\-']+$/.test(String(term || '').trim());
+  function stripDiacritics(s) {
+    s = String(s || '');
+    try {
+      return s.normalize('NFD').replace(/\p{M}+/gu, '');
+    } catch (e) {
+      try {
+        return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      } catch (e2) {
+        return s;
+      }
+    }
+  }
+
+    function isWordishTerm(term) {
+    term = String(term || '').trim();
+    if (!term) return false;
+    try {
+      return /^[\p{L}\p{N}\s\-']+$/u.test(term);
+    } catch (e) {
+      return /^[A-Za-z0-9\s\-']+$/.test(term);
+    }
+  }
+
+    var VTT_DIACRITIC_MAP = {
+    a: 'aā',
+    ā: 'aā',
+    i: 'iī',
+    ī: 'iī',
+    u: 'uū',
+    ū: 'uū',
+    r: 'rṛṝ',
+    ṛ: 'rṛṝ',
+    ṝ: 'rṛṝ',
+    l: 'lḷ',
+    ḷ: 'lḷ',
+    n: 'nṅñṇ',
+    ṅ: 'nṅñṇ',
+    ñ: 'nṅñṇ',
+    ṇ: 'nṅñṇ',
+    m: 'mṃ',
+    ṃ: 'mṃ',
+    s: 'sśṣ',
+    ś: 'sśṣ',
+    ṣ: 'sśṣ',
+    h: 'hḥ',
+    ḥ: 'hḥ',
+    t: 'tṭ',
+    ṭ: 'tṭ',
+    d: 'dḍ',
+    ḍ: 'dḍ'
+  };
+
+  function _vttCharClassFor(ch) {
+    var c = String(ch || '');
+    if (!c) return null;
+    var low = c.toLowerCase();
+    var base = VTT_DIACRITIC_MAP[low];
+    if (!base) return null;
+
+    var chars = base + base.toUpperCase();
+    var stripped = stripDiacritics(low);
+    if (stripped && chars.indexOf(stripped) < 0) chars += stripped;
+    var strippedU = stripped ? stripped.toUpperCase() : '';
+    if (strippedU && chars.indexOf(strippedU) < 0) chars += strippedU;
+
+    var uniq = '';
+    for (var i = 0; i < chars.length; i++) {
+      var chx = chars.charAt(i);
+      if (uniq.indexOf(chx) < 0) uniq += chx;
+    }
+    return '[' + uniq + ']';
+  }
+
+  function buildDiacriticPattern(term) {
+    var s = String(term || '');
+    var out = '';
+    for (var i = 0; i < s.length; i++) {
+      var ch = s.charAt(i);
+      if (/\s/.test(ch)) {
+        out += '\\s+';
+        continue;
+      }
+      var cls = _vttCharClassFor(ch);
+      if (cls) out += cls;
+      else out += escapeRegExp(ch);
+    }
+    return out;
   }
 
   function buildMatchRegex(term) {
     term = String(term || '').trim();
     if (!term) return null;
-    var core = escapeRegExp(term);
-    // Prefer word boundaries for "wordish" terms to avoid partial matches.
-    // For terms with punctuation (e.g., parentheses), avoid \b and match literally.
-    var pat = isWordishTerm(term) ? ('\\b' + core + '\\b') : core;
+
+    var core = buildDiacriticPattern(term);
+
+    if (isWordishTerm(term)) {
+      try {
+        // Capture the leading separator so we can preserve it outside the link.
+        return new RegExp('(^|[^\\p{L}\\p{N}_])(' + core + ')(?![\\p{L}\\p{N}_])', 'iu');
+      } catch (e) {
+        return new RegExp('(^|[^A-Za-z0-9_])(' + core + ')(?![A-Za-z0-9_])', 'i');
+      }
+    }
+
     try {
-      return new RegExp(pat, 'i');
-    } catch (e) {
-      return null;
+      return new RegExp('(' + core + ')', 'iu');
+    } catch (e2) {
+      return new RegExp('(' + core + ')', 'i');
     }
   }
 
@@ -545,8 +637,10 @@ function buildWikiOverlay(){
 function normalizeWikiTerm(term){
   if (term == null) return '';
 
-  // Normalize whitespace and strip common trailing punctuation / possessives.
   term = String(term).replace(/\s+/g, ' ').trim();
+
+  // Remove leading parentheses/brackets that often wrap a term.
+  term = term.replace(/^[\(\[\{]+/g, '');
 
   // Possessives like Ramakrishna’s / Shankaracharya's / sages’
   term = term.replace(/(?:\u2019s|'s|s\u2019|s')$/i, '');
@@ -554,8 +648,16 @@ function normalizeWikiTerm(term){
   // Trailing punctuation that may cling to a word in prose.
   term = term.replace(/[)\]}\u201d\u2019'\".,;:!?]+$/g, '').trim();
 
+  // Normalize diacritics so "Vedānta" and "Vedanta" resolve to the same target.
+  term = stripDiacritics(term);
+
+  // Normalize quote variants
+  term = term.replace(/[’‘]/g, "'").replace(/[“”]/g, '"');
+
+  if (WIKI_ALIAS[term]) term = WIKI_ALIAS[term];
   return term;
 }
+
 function openWikiOverlay(term){
   term = normalizeWikiTerm(term);
   if (!term) return;
@@ -635,9 +737,22 @@ function bindWikiPopupClicks(){
         // If match starts beyond the limit, stop (later nodes will be even further).
         if (limit !== null && (nodeStart + m.index) >= limit) break;
 
-        var before = nodeText.slice(0, m.index);
-        var match = nodeText.slice(m.index, m.index + m[0].length);
-        var after = nodeText.slice(m.index + m[0].length);
+        var leading = '';
+        var match = '';
+        var matchIndex = m.index;
+
+        if (m.length >= 3 && m[2] != null) {
+          leading = m[1] || '';
+          match = m[2] || '';
+          matchIndex = m.index + leading.length;
+        } else if (m.length >= 2 && m[1] != null) {
+          match = m[1] || '';
+        } else {
+          match = m[0] || '';
+        }
+
+        var before = nodeText.slice(0, matchIndex);
+        var after = nodeText.slice(matchIndex + match.length);
 
         var frag = document.createDocumentFragment();
         if (before) frag.appendChild(document.createTextNode(before));
@@ -1342,8 +1457,13 @@ function initCategoryAutoLinks(postArticle){
     bindWikiPopupClicks();
     upgradeYouTubeEmbeds(postArticle);
     initRecommendations(postArticle);
-    initCategoryAutoLinks(postArticle);
-    initWikiAutoLinks(postArticle);
+    var path = (window.location && window.location.pathname) ? String(window.location.pathname).toLowerCase() : '';
+    var isDonate = path.indexOf('donate') >= 0;
+
+    if (!isDonate) {
+      initCategoryAutoLinks(postArticle);
+      initWikiAutoLinks(postArticle);
+    }
     stripOutboundWikiUI(document);
   }
 
