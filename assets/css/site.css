@@ -410,11 +410,12 @@ html.vtt-vo-open,html.vtt-vo-open body{overflow:hidden}
 .vtt-vo-backdrop{
   position:absolute;
   inset:0;
-  background:#000;
-  opacity:.55;
+  background:transparent !important;
+  opacity:1 !important;
   backdrop-filter:none !important;
   -webkit-backdrop-filter:none !important;
 }
+
 .vtt-vo-panel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(980px,92vw);border:1px solid var(--rule);background:#fff;border-radius:18px;box-shadow:0 18px 50px rgba(0,0,0,.18);padding:14px}
 .vtt-vo-close{position:absolute;right:10px;top:8px;border:1px solid var(--rule);background:#fff;border-radius:999px;width:34px;height:34px;cursor:pointer;font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center}
 .vtt-vo-close:hover{background:#f3f3f3}
