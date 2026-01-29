@@ -654,7 +654,9 @@ function normalizeWikiTerm(term){
   // Normalize quote variants
   term = term.replace(/[’‘]/g, "'").replace(/[“”]/g, '"');
 
-  if (WIKI_ALIAS[term]) term = WIKI_ALIAS[term];
+  // Optional external alias map. Some builds may not define it, so guard safely.
+  var aliasMap = (typeof window !== 'undefined' && window.WIKI_ALIAS) ? window.WIKI_ALIAS : null;
+  if (aliasMap && aliasMap[term]) term = aliasMap[term];
   return term;
 }
 
