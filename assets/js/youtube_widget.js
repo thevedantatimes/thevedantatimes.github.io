@@ -31,7 +31,9 @@
     { name: '@chicagokalibari409', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCcuwf7Azn8cU1oHT2-if-hg' },
     { name: '@vedantasocietyofprovidence5481', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCFof5116HcBYIpUFvKet1Uw' },
     { name: '@VSGHHouston', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCrns-wvaTNhREStmcs96CyQ' },
-    { name: '@SanDiegoVedantaMonastery', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCPt5Xl5Iu7D1pt7XMGxuYgQ' }
+    { name: '@SanDiegoVedantaMonastery', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCPt5Xl5Iu7D1pt7XMGxuYgQ' },
+    { name: '@VedantaSocietyOfNorthTexas', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCHEVy53o_mseCT6s75GWNlg' },
+    { name: '@VancouverVedanta', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCyMs6E-wSUAdod8g9SGZvQg' }
   ];
 
   // Proxy chain (Try #1 allorigins, Try #2 jina)
