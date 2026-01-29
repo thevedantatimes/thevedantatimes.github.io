@@ -752,7 +752,7 @@ a.vtt-wiki{
 .vtt-donate-fab{
   position: fixed;
   right: calc(16px + env(safe-area-inset-right, 0px));
-  bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(30px + env(safe-area-inset-bottom, 0px));
   z-index: 9999;
 
   display: inline-flex;
