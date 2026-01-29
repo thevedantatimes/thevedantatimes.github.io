@@ -5,6 +5,7 @@ date: 2026-01-27 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Vedanta
+  - Interfaith
 snippet: "Christianity and Vedanta interpret suffering differently, yet converge on providence, liberation, and love."
 ---
 People ask why God allows suffering because suffering feels personal, not theoretical. It interrupts plans, shatters certainty, and forces the heart to face questions the intellect can avoid. Christianity and Vedanta both take that question seriously, not merely as a puzzle but as a doorway into deeper truth. Each tradition insists that pain is not meaningless, that compassion is sacred, and that the ultimate reality is not indifferent. Their shared aim is transformation.
