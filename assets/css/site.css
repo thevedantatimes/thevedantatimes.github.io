@@ -410,7 +410,8 @@ html.vtt-vo-open,html.vtt-vo-open body{overflow:hidden}
 .vtt-vo-backdrop{
   position:absolute;
   inset:0;
-  background:rgba(0,0,0,.75);
+  background:#000;
+  opacity:.55;
   backdrop-filter:none !important;
   -webkit-backdrop-filter:none !important;
 }
