@@ -441,11 +441,20 @@ title: Categories
     }
 
     if (pagerEl){
-      pagerEl.hidden = total <= PAGE_SIZE;
-      if (!pagerEl.hidden){
+      var shouldShowPager = total > PAGE_SIZE;
+      pagerEl.hidden = !shouldShowPager;
+
+      if (!shouldShowPager){
+        btnPrev.disabled = true;
+        btnNext.disabled = true;
+        statEl.textContent = '';
+        btnPrev.onclick = null;
+        btnNext.onclick = null;
+      } else {
         btnPrev.disabled = p <= 1;
         btnNext.disabled = p >= pages;
         statEl.textContent = 'Page ' + p + ' of ' + pages;
+
         btnPrev.onclick = () => {
           setParams({ ...filters, p: p - 1 });
           render(posts, filters, p - 1);
