@@ -5,7 +5,7 @@ date: 2022-09-24 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Antaḥkaraṇa
-  - Manas
+  - Buddhi
 snippet: "Buddhi decides, discriminates, and clarifies experience, guiding ethics, inquiry, and lasting inner freedom."
 ---
 Buddhi is the most quietly powerful faculty within the Vedāntic map of the mind. If manas is the restless bridge that gathers impressions and tosses alternatives, buddhi is the steady lamp that sees, judges, and decides. It is the part of you that can pause, examine, and choose the higher rather than the habitual. Without buddhi, the inner life becomes reactive. With buddhi, life becomes guided. Buddhi does not remove emotions, but it can govern them.
