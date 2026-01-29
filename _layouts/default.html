@@ -207,6 +207,9 @@
         <div class="footer-meta">© {{ site.time | date: '%Y' }}. All rights reserved.</div>
       </div>
     </footer>
+
+    {% include donate_fab.html %}
+
     <script>
       window.VTT_HOME_YT_CHANNELS = {{ site.home_youtube_channels | default: nil | jsonify }};
       window.VTT_POSTS_INDEX_URL = "{{ '/assets/data/posts_index.json' | relative_url }}";
