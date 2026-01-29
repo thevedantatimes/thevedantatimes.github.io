@@ -29,7 +29,9 @@
     { name: '@VedantaDC', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC4zi_tfjGdO4Gjulz-GSAvg' },
     { name: '@belurmathofficial', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCuv4AUvgAgut3zdiPmvG5Pw' },
     { name: '@chicagokalibari409', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCcuwf7Azn8cU1oHT2-if-hg' },
-    { name: '@vedantasocietyofprovidence5481', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCFof5116HcBYIpUFvKet1Uw' }
+    { name: '@vedantasocietyofprovidence5481', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCFof5116HcBYIpUFvKet1Uw' },
+    { name: '@VSGHHouston', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCrns-wvaTNhREStmcs96CyQ' },
+    { name: '@SanDiegoVedantaMonastery', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCPt5Xl5Iu7D1pt7XMGxuYgQ' }
   ];
 
   // Proxy chain (Try #1 allorigins, Try #2 jina)
