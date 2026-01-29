@@ -407,11 +407,12 @@ body.is-home .cm-title a:hover{ color:#707070 }
 html.vtt-vo-open,html.vtt-vo-open body{overflow:hidden}
 .vtt-vo{position:fixed;inset:0;z-index:9999;display:none}
 .vtt-vo.open{display:block}
+
 .vtt-vo-backdrop{
   position:absolute;
   inset:0;
-  background:transparent !important;
-  opacity:1 !important;
+  background:#000;
+  opacity:.55; /* adjust 0.45 to 0.65 as you like */
   backdrop-filter:none !important;
   -webkit-backdrop-filter:none !important;
 }
