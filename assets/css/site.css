@@ -1,4 +1,6 @@
+[hidden]{display:none !important;}
 :root{
+
   --ink:#111;
   --muted:#666;
   --rule:#d9d9d9;
@@ -40,6 +42,7 @@ body.is-home .cm-title a:hover{ color:#707070 }
 .mast-sub{margin-top:4px}
 
 .logo{display:inline-block;font-family: 'Times New Roman', Times, serif;font-weight:700;letter-spacing:-0.3px;font-size:44px;line-height:1;color:var(--ink)}
+.logo:hover{text-decoration:none}
 
 .mast-market{display:flex;justify-content:flex-end;gap:6px;align-items:baseline}
 .muted{color:var(--muted)}
@@ -404,7 +407,7 @@ body.is-home .cm-title a:hover{ color:#707070 }
 html.vtt-vo-open,html.vtt-vo-open body{overflow:hidden}
 .vtt-vo{position:fixed;inset:0;z-index:9999;display:none}
 .vtt-vo.open{display:block}
-.vtt-vo-backdrop{position:absolute;inset:0;background:rgba(255,255,255,.75);backdrop-filter: blur(8px)}
+.vtt-vo-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter: blur(10px)}
 .vtt-vo-panel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(980px,92vw);border:1px solid var(--rule);background:#fff;border-radius:18px;box-shadow:0 18px 50px rgba(0,0,0,.18);padding:14px}
 .vtt-vo-close{position:absolute;right:10px;top:8px;border:1px solid var(--rule);background:#fff;border-radius:999px;width:34px;height:34px;cursor:pointer;font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center}
 .vtt-vo-close:hover{background:#f3f3f3}
@@ -725,3 +728,10 @@ a.vtt-wiki{
 .vtt-wiki-foot{ display:none !important; }
 .vtt-wiki-callout-kicker{ display:none !important; }
 .vtt-wiki-callout a{ display:none !important; }
+
+@media (max-width: 560px){
+  .vtt-wiki-title{font-size:1.02rem}
+  .vtt-wiki-body{font-size:.9rem}
+  .vtt-wiki-meta{font-size:.82rem}
+}
+
