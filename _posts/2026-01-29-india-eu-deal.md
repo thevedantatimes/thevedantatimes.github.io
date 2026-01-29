@@ -93,7 +93,7 @@ A trade agreement lives in vyāvahāra. Yet it is carried by pāramārthika intu
 
 ### 2.2 Symbolic illumination, not causal overclaim
 
-To say Vedānta “influenced” a trade deal can be misheard as claiming mystical causality. A more careful claim is usually stronger: Vedānta supplies a set of **categories** that help interpret how collective minds move from rigidity to workable unity. Those categories include:
+Vedānta supplies a set of **categories** that help interpret how collective minds move from rigidity to workable unity. Those categories include:
 
 *   **Adhyāsa**: superimposition and misperception
     
