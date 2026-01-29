@@ -5,6 +5,7 @@ date: 2026-01-28 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Vedanta
+  - Interfaith
 snippet: "Classical theistic arguments meet Vedanta insights, showing Christianity and Vedanta echo one sacred reality."
 ---
 People ask whether God exists because they want more than comfort; they want truth. Christianity and Vedanta both start from a similar intuition: reality is not random, consciousness is not an accident, and love is not a chemical trick. They speak in different languages, yet they point to a single depth behind the surface world. This essay explores major arguments for God’s existence and then reads them through both traditions, letting each illuminate the other in our searching and living.
