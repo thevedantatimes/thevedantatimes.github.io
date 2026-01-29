@@ -60,9 +60,24 @@
   let _vttOverlayReady = false;
   let _vttScrollLockY = 0;
 
+  function _vttIsIOS() {
+    try {
+      const ua = navigator.userAgent || '';
+      const iOS = /iP(hone|od|ad)/.test(ua);
+      const iPadOS = (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
+      return iOS || iPadOS;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _vttLockScroll() {
     try {
       _vttScrollLockY = window.scrollY || window.pageYOffset || 0;
+
+      // iOS Safari: body position fixed can create a white/blank background behind overlays.
+      if (_vttIsIOS()) return;
+
       document.body.style.position = 'fixed';
       document.body.style.top = (-_vttScrollLockY) + 'px';
       document.body.style.left = '0';
@@ -76,14 +91,17 @@
   function _vttUnlockScroll() {
     try {
       const y = _vttScrollLockY || 0;
+
       if (document.body && document.body.style && document.body.style.position === 'fixed') {
         document.body.style.position = '';
         document.body.style.top = '';
         document.body.style.left = '';
         document.body.style.right = '';
         document.body.style.width = '';
-        window.scrollTo(0, y);
       }
+
+      // Always restore the scroll position.
+      window.scrollTo(0, y);
     } catch (e) {
       // ignore
     }
@@ -145,7 +163,7 @@
 
     el.classList.add('open');
     el.setAttribute('aria-hidden', 'false');
-    document.documentElement.classList.add('vtt-vo-open');
+    if (!_vttIsIOS()) document.documentElement.classList.add('vtt-vo-open');
   }
 
   function _vttCloseOverlay() {
@@ -155,7 +173,7 @@
     if (frame) frame.innerHTML = '';
     el.classList.remove('open');
     el.setAttribute('aria-hidden', 'true');
-    document.documentElement.classList.remove('vtt-vo-open');
+    if (!_vttIsIOS()) document.documentElement.classList.remove('vtt-vo-open');
 
     _vttUnlockScroll();
   }
