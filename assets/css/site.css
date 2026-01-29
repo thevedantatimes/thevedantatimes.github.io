@@ -745,3 +745,61 @@ a.vtt-wiki{
   .vtt-wiki-meta{font-size:.82rem}
 }
 
+/* ------------------------------------------------------------
+   Donate FAB
+   ------------------------------------------------------------ */
+
+.vtt-donate-fab{
+  position: fixed;
+  right: calc(16px + env(safe-area-inset-right, 0px));
+  bottom: calc(86px + env(safe-area-inset-bottom, 0px));
+  z-index: 9999;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px 16px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: 0 16px 34px rgba(0,0,0,0.28);
+  text-decoration: none;
+
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.vtt-donate-fab:hover{
+  text-decoration: none;
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.vtt-donate-fab:active{
+  transform: translateY(0);
+}
+
+.vtt-donate-fab:focus-visible{
+  outline: 3px solid rgba(17,17,17,0.30);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .vtt-donate-fab{ transition: none; }
+}
+
+@media (max-width: 520px){
+  .vtt-donate-fab{ padding: 11px 14px; font-size: 12.5px; }
+}
+
+@media print{
+  .vtt-donate-fab{ display: none !important; }
+}
+
