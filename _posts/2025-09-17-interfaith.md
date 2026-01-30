@@ -15,7 +15,7 @@ This essay builds a bridge without flattening differences. Christian teaching sp
 <iframe
   width="100%"
   height="500"
-  src="https://www.youtube.com/embed/K2H_Tm00yGo"
+  src="https://www.youtube.com/embed/vn6szyVLUgU"
   title="YouTube video player"
   frameborder="0"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
