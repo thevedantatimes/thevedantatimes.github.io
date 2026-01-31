@@ -5,7 +5,6 @@ date: 2006-09-14 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Prasthāna-trayī
-  - Prasthana Trayi
 snippet: "Prasthāna-trayī unites Upaniṣads, Gita, and Brahma Sutras as Vedānta’s core authoritative foundations."
 ---
 In the world of Hindu philosophy, **Vedānta** stands out as one of the most influential and enduring streams of thought. It shaped spiritual practice, metaphysical reflection, devotional theology, and philosophical debate across centuries.
