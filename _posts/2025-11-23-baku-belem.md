@@ -2,7 +2,7 @@
 layout: post
 title: "Baku to Belém Roadmap: Vedanta for Climate Finance"
 date: 2025-11-23 00:34:00 -0600
-image: /assets/img/maa_sarada.webp
+image: /assets/img/maya.webp
 categories:
   - Current Affairs
 snippet: "Brazil’s roadmap urges $1.3T climate finance; Vedanta frames it as dharma, yajna, and dana."
