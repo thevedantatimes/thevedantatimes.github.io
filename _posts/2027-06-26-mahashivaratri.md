@@ -7,14 +7,19 @@ categories:
   - Maha Shivaratri
 snippet: "Arjuna’s ekagrata becomes a modern path: concentration that matures into Self-knowledge and freedom."
 ---
-
-# Shivaratri Arjuna: Single-Pointed Focus As Inner Liberation Practice
-
-**14-word summary:** Arjuna's ekagrata trains attention, ends distraction, and reveals the witnessing Self behind every thought.
-
 On Maha Shivaratri, the mind naturally asks for power, visions, and dramatic experiences. Vedanta suggests another miracle: steady seeing. Arjuna is remembered not only for victory, but for concentration that becomes devotion. When he was asked to aim, the world around him vanished and only the target remained. In a distracted age, ekagrata is not a hobby; it is a doorway. Focus gathers scattered prana, quiets inner noise, and prepares the mind for Self-knowledge. It makes ethics practical today.
 
 Shivaratri worship honors Shiva as stillness itself, the silent witness in whom all thoughts rise and fall. Ekagrata is the training that lets you taste that witness, even before lofty philosophy lands. This essay turns Arjuna's single-pointedness into a modern method: how to work with devices, feeds, interruptions, and restlessness without hate or suppression. We will connect concentration to viveka and vairagya, and then to the direct inquiry, "Who is aware?" Not as theory, but lived practice hourly today.
+
+<iframe
+  width="100%"
+  height="500"
+  src="https://www.youtube.com/embed/ej_1DzkG9k8"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
 
 ## Shivaratri and the inward battlefield
 
