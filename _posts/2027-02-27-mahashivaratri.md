@@ -7,13 +7,19 @@ categories:
   - Maha Shivaratri
 snippet: "Ganesha shows how vows and steady practice dissolve inner obstacles, clearing the way for freedom."
 ---
-# Shivaratri Ganesha: Removing Inner Obstacles Through Daily Sadhana
-
-**Summary:** Ganesha teaches vows and sadhana to dissolve vasanas, making inner paths clear again steadily.
-
 Shivaratri worship often begins by honoring Ganesha, the remover of obstacles and the guardian of beginnings. We may imagine obstacles as outer events, yet the heaviest blocks are usually inside: habits that repeat, reactions that flare, and desires that pull the mind away from prayer. Vedanta calls these grooves vasanas, tendencies stored as impressions. They do not vanish by wishing. They soften through practice. On Shivaratri, vows, fasting, and night vigil become a laboratory for removing inner obstructions with care.
 
 Ganesha's image carries a psychology of sadhana: ears for learning, a trunk for discernment, and a belly that can digest experience. When the mind cannot digest, it turns life into anxiety, procrastination, or resentment. When it can digest, it turns life into wisdom. This digestion is tapas guided by compassion and clarity. In the spirit of "neti neti," we drop what is not essential and keep what liberates. Here we map obstacles to vasanas and offer steps to clear them.
+
+<iframe
+  width="100%"
+  height="500"
+  src="https://www.youtube.com/embed/IIIlUFOt1mk"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
 
 ## Mythic Frame: Ganesha And Beginnings
 
