@@ -7,14 +7,19 @@ categories:
   - Maha Shivaratri
 snippet: "Bilva leaves teach how minimal ritual, offered sincerely, becomes inner purification and nondual clarity."
 ---
-
-# Shivaratri Bilva Leaves: Simple Offerings, Deep Transformation Within
-
-**14-word summary:** One bilva leaf, offered sincerely, turns ritual into inner purification, devotion, and clarity daily.
-
 On Shivaratri, a single bilva leaf can carry an entire universe of meaning. The gesture looks small, almost childish, yet it trains something rare: sincerity without display. Vedanta reminds us that the mind is purified less by quantity than by attention. When you offer one leaf with steady breath and clear intent, you learn to offer your reactions, your pride, and your fear in the same way. The outer ritual becomes an inner turning toward Shiva, the Self, right now.
 
 This essay explores why minimal ritual can be profound. The bilva leaf becomes a symbol of disciplined simplicity, like a monk's bowl or a yogi's seat. We will connect its threefold form to the triads Vedanta repeatedly heals: the three gunas, the three bodies, and the three states of waking, dream, and deep sleep. Step by step, we will move from symbol to psychology, then to practice, and finally to Self-recognition, "aham brahmasmi". Not a slogan, but direct seeing.
+
+<iframe
+  width="100%"
+  height="500"
+  src="https://www.youtube.com/embed/C5KkVXydeHg"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
 
 ## The bilva leaf and the spirit of Shivaratri
 
