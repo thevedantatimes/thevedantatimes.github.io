@@ -8,13 +8,19 @@ categories:
 snippet: "Kartikeya’s warrior symbolism becomes inner courage: disciplining anger and fear into compassionate clarity."
 ---
 
-# Shivaratri Kartikeya: Spiritual Courage Without Violence
-
-## Four scenes of Shivaratri courage
-
 Mahashivaratri is often pictured as a night of stillness, yet within that stillness the tradition also remembers the many forms of Shiva’s shakti. Kartikeya, also called Skanda, Murugan, or Subrahmanya, appears as the archetype of youthful bravery, luminous direction, and the steady force that protects dharma. If we read him only as an external warrior, we miss the deeper invitation. The Upanishads repeatedly point inward: the true battlefield is the mind, and victory is freedom from bondage.
 
 On Shivaratri we can honor Kartikeya by turning the warrior motif inward. The goal is not aggression, dominance, or winning arguments. The goal is courage without violence: the courage to face fear without fleeing, to meet anger without becoming it, and to train impulse into discernment. Such courage is gentle in expression, firm in principle, and compassionate in motive. It is the kind of strength that can sit quietly, listen deeply, and still refuse the pull of tamas.
+
+<iframe
+  width="100%"
+  height="500"
+  src="https://www.youtube.com/embed/4OpM-jfee5E"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
 
 ## A Vedantic lens: what a "warrior" protects
 
