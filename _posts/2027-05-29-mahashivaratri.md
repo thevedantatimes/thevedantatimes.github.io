@@ -7,14 +7,19 @@ categories:
   - Maha Shivaratri
 snippet: "Ravana shows how devotion and ego can coexist; tapas must be refined by ethics, humility, and service."
 ---
-
-# Shivaratri Ravana: When Tapas Fuels Pride And Power
-
-## The uncomfortable Shivaratri mirror
-
 Mahashivaratri is a night for honesty. Many Shivaratri stories inspire devotion by highlighting Shiva’s compassion. The Ravana episodes do something else: they offer a mirror that is uncomfortable and therefore useful. Ravana is not portrayed as a simple villain. He is intelligent, intense, devoted in his own way, and capable of extraordinary tapas. Yet his devotion coexists with ego, grasping, and harm. This paradox is not a distant myth. It is a living human possibility. It asks for honest self-audit.
 
 The story matters because spiritual intensity can magnify whatever is inside us. Tapas can sharpen attention, strengthen will, and generate power. If the heart is not purified, the same tapas can inflate pride, justify exploitation, and turn spiritual practice into a weapon. In careers, leadership, and online life, the same pattern appears: discipline without ethics becomes a refined form of harm. Shivaratri therefore becomes a chance to ask: is my practice making me freer and kinder, or merely stronger and louder?
+
+<iframe
+  width="100%"
+  height="500"
+  src="https://www.youtube.com/embed/0Ck5GFDyJeQ"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
 
 ## Ravana as a composite figure: devotion, brilliance, shadow
 
