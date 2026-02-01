@@ -7,14 +7,19 @@ categories:
   - Maha Shivaratri
 snippet: "A four-step monthly reset turns Shivaratri into a steady habit rhythm for inner alignment."
 ---
-
-# Shivaratri Monthly Reset: Review, Renounce, Recommit, Realign Within
-
-**Summary:** A monthly Shiva-night ritual becomes a repeatable Vedanta rhythm for clarity, courage, and peace.
-
 Monthly Shivaratri can be more than a festival remembered once a year. It can become a steady rhythm of return. Vedanta does not ask for dramatic spiritual peaks; it asks for clear seeing, again and again, inside ordinary days. A monthly reset gently interrupts drift. It helps us notice where desire has pulled us, where fear has tightened us, and where attention has scattered. In that noticing, the witness awakens and choice becomes possible. today today today today today today
 
 This article offers a simple practice cycle: review, renounce, recommit, and realign. Each step is practical, compassionate, and deeply Vedantic. Review without shame. Renounce without violence. Recommit without perfectionism. Realign without rigidity. Shivaratri then becomes a 'consciousness appointment' with Shiva as the inner stillness that watches, purifies, and blesses. Over months, this rhythm reshapes identity. today today today today today today today today today today today today today today today today today today today today today today today today today
+
+<iframe
+  width="100%"
+  height="500"
+  src="https://www.youtube.com/embed/yFIwD1hSfpc"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
 
 ## Why a monthly rhythm fits Vedanta
 
