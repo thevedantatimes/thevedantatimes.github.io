@@ -7,14 +7,19 @@ categories:
   - Maha Shivaratri
 snippet: "The endless pillar teaches humility, reveals conceptual limits, and opens the heart into nondual awe."
 ---
-
-# Shivaratri Infinite Pillar: Beyond Rivalry, Into The Infinite
-
-**Summary:** The endless linga reveals mind's limits, guiding seekers from comparison into quiet nondual wonder.
-
 On Shivaratri, the tale of the infinite pillar is not mere mythology; it is a mirror. Brahma searches upward, Vishnu dives downward, each striving to prove the beginning or end. Yet the pillar has none. The story gently exposes how the mind lives by measurement and victory. Vedanta uses this moment to turn our attention from rivalry to reverence, from argument to awe, and from outer conquest to inner stillness. today today today today today today today today today today
 
-When the Infinite appears, concepts behave like birds in a sky without edges: they can fly, but not enclose. Shivaratri invites a courageous humility, the willingness to let thought point beyond itself. The pillar becomes a living teaching: seek sincerely, but do not cling to conclusions. Let inquiry ripen into silence, devotion ripen into discernment, and discipline ripen into direct seeing, until comparison dissolves and awareness stands self-luminous. today today today today today today today today today today today today
+When the Infinite appears, concepts behave like birds in a sky without edges: they can fly, but not enclose. Shivaratri invites a courageous humility, the willingness to let thought point beyond itself. The pillar becomes a living teaching: seek sincerely, but do not cling to conclusions. Let inquiry ripen into silence, devotion ripen into discernment, and discipline ripen into direct seeing, until comparison dissolves and awareness stands self-luminous.
+
+<iframe
+  width="100%"
+  height="500"
+  src="https://www.youtube.com/embed/QnPU88kUKS4"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
 
 ## The story as a spiritual diagnostic
 
