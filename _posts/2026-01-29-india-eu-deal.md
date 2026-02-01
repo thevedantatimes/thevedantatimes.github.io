@@ -4,7 +4,6 @@ title: "Advaita Vedānta Reading of India-EU FTA"
 date: 2026-01-29 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
-  - Vedanta
   - Current Affairs
 snippet: "Vivekananda calls Maya life’s contradictions; transcend them inwardly to realize Brahman within yourself."
 ---
