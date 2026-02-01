@@ -5,6 +5,7 @@ date: 2026-01-29 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Vedanta
+  - Current Affairs
 snippet: "Vivekananda calls Maya life’s contradictions; transcend them inwardly to realize Brahman within yourself."
 ---
 In Advaita Vedānta, wholeness is not a mood. It is a way of seeing. The heart of the Upaniṣadic vision is that reality is not fundamentally fractured, even when it appears as countless names and forms. When this wholeness is recognized, the mind relaxes its reflex of fear, and the world becomes available as relationship rather than threat.
