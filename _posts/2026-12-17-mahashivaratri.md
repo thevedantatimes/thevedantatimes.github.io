@@ -7,13 +7,19 @@ categories:
   - Maha Shivaratri
 snippet: "Shiva's stillness shows how to hold intense grace safely, letting insight flow without overwhelm."
 ---
-# Shivaratri Ganga Descent: Grace Held By Inner Stillness
-
-**Summary:** Bhagiratha's quest shows how still awareness channels grace quietly, preventing overwhelm, distortion, and pride.
-
 On Maha Shivaratri, many seekers feel a surge of devotion, memory, and inner energy. Tradition remembers the descent of Ganga as a cosmic blessing, yet also as a force too vast for ordinary ground. Bhagiratha's tapas calls grace down, but it is Shiva who receives that torrent in stillness and releases it gently. This story is not only myth. It is a practical teaching about how to hold powerful experiences without losing balance, so blessings become guidance, not turbulence today.
 
 Vedanta says liberation is not a special sensation, but clear knowledge of the Self that is already free. Even so, life brings moments of intensity: grief, joy, inspiration, insight, and silence that feels bottomless. If the mind is unprepared, the same intensity can become agitation, spiritual pride, or confusion. If the mind is trained, the experience becomes a river that cleanses. Shiva holding Ganga in his matted locks shows the method: receive, contain, discern, and then let grace flow slowly.
+
+<iframe
+  width="100%"
+  height="500"
+  src="https://www.youtube.com/embed/6JEWzjaMvro"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
 
 ## Mythic Frame: Bhagiratha And The Descent
 
