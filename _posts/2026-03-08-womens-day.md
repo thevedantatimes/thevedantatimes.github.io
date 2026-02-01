@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "International Women’s Day: Shakti Beyond Social Labels"
-date: 2026-03-06 00:34:00 -0600
+date: 2026-03-08 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Current Affairs
