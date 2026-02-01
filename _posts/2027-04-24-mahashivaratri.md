@@ -7,14 +7,19 @@ categories:
   - Maha Shivaratri
 snippet: "Markandeya’s legend becomes a fear-to-freedom map: surrendering time, resting as awareness, living dharmically."
 ---
-
-# Shivaratri Markandeya: Meeting Death With Nondual Awareness
-
-## Two kinds of wakefulness on Shivaratri
-
 Mahashivaratri is a night of wakefulness. On the surface it is a vigil: lamps, mantras, stories, and the steady rhythm of remembrance. Beneath the surface it is a deeper wakefulness: waking up from the trance of fear, especially the fear of time and death. Among the Shivaratri legends, the story of Markandeya stands like a lamp in a storm. It does not deny mortality. It teaches how to meet mortality without losing the center. It turns darkness into a teacher of peace.
 
 The legend is not only about a boy saved from death. It is about awareness saved from identification. Fear of death is often fear of losing "me." Vedanta asks: what exactly is this "me"? Is it the body, the roles, the memories, the breath? Or is it the witnessing presence that knows all these changes? Shivaratri invites an honest experiment: shift identity from the perishable to the imperishable. When this shift matures, fear loosens, and the heart learns to live with tenderness, urgency, and truth.
+
+<iframe
+  width="100%"
+  height="500"
+  src="https://www.youtube.com/embed/4LB4uquSkd8"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
 
 ## The legend: a young life at the edge of time
 
