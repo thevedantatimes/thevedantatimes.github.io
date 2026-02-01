@@ -7,14 +7,19 @@ categories:
   - Maha Shivaratri
 snippet: "Fasting on Shivaratri becomes a laboratory for desire, revealing vasanas and strengthening inner freedom."
 ---
-
-# Shivaratri Fasting: Vedantic Experiment With Desire And Freedom
-
-**14-word summary:** Fasting becomes a consciousness lab, exposing cravings and shifting identity from hunger to awareness.
-
 Maha Shivaratri often includes fasting, yet Vedanta asks a sharper question than "Can I endure?" It asks, "Who is hungry?" Hunger is not only a bodily signal; it is a mirror that reveals clinging, impatience, and the stories we tell about comfort. When food is reduced, the mind becomes loud, then honest. If you watch closely, cravings rise like waves and fall by themselves. In that seeing, desire loses its authority and strength turns quiet. This is tapas with tenderness.
 
 This article treats fasting as a consciousness laboratory. We will map cravings to vasanas, habits, and subtle bargains the ego makes. We will also keep the practice humane: the aim is not punishment, pride, or drama, but clarity and devotion. With simple vows, mindful hydration, and honest self-study, fasting becomes karma yoga and bhakti at once. The outer restraint supports inner freedom, until the witness stands apart from sensation and says, "I am not this." Then gratitude replaces willpower.
+
+<iframe
+  width="100%"
+  height="500"
+  src="https://www.youtube.com/embed/3acHgbh86-k"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
 
 ## Why fasting belongs to Shivaratri
 
