@@ -7,13 +7,19 @@ categories:
   - Maha Shivaratri
 snippet: "Nandi's quiet devotion reveals how deep listening cultivates humility, wisdom, and speech that heals."
 ---
-# Shivaratri Nandi Devotion: The Power Of Silent Listening
-
-**Summary:** Nandi models humble listening that ripens wisdom, turning speech into service rather than ego.
-
 Maha Shivaratri is often celebrated with sound: bells, hymns, and the steady repetition of "Om Namah Shivaya." Yet Shiva is also known as the Lord of silence, the still summit where mind and speech come to rest. At that doorway stands Nandi, the faithful companion, calm and attentive. Nandi does not rush to speak. He listens, absorbs, and waits patiently until clarity ripens. In an age of fast opinions, this devotion becomes a powerful sadhana for every seeker, each day.
 
 Vedanta honors three movements of learning: shravana, manana, and nididhyasana. We first listen deeply, then reflect until doubts dissolve, and finally contemplate until truth becomes steady. Nandi symbolizes the first gate, the art of receptivity. True listening is not passive. It is an active humility that lets the other be heard without interruption, defense, or display. From such listening, speech becomes dharma: precise, kind, and timely. This article reads Nandi as a living instruction for Shivaratri and beyond, for us.
+
+<iframe
+  width="100%"
+  height="500"
+  src="https://www.youtube.com/embed/bikpMMgFGnM"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
 
 ## Mythic Frame: Nandi At The Threshold
 
