@@ -1,4 +1,4 @@
-name: Build & Deploy (Daily)
+name: Build & Deploy
 
 on:
   push:
