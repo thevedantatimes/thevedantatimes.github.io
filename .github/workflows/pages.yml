@@ -6,7 +6,7 @@ on:
   schedule:
     - cron: "17 4 * * *"  # 04:00 UTC = 10:00 PM CST (previous day)
   workflow_dispatch:
-
+ 
 permissions:
   contents: read
   pages: write
