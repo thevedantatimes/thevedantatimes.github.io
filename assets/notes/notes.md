@@ -19,7 +19,7 @@ YT Non-Liked videos using rhl8257
 
 @VedantaNY
 Done:
-Live download
-Live schedule
+Live all downloaded till Feb 5 2026:  168. Bhagavad Gita | Chapter 14 Verses 21-22 | Swami Sarvapriyananda
+Live all downloaded scheduled.
 Pending:
 
