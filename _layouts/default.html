@@ -390,30 +390,46 @@ s0.parentNode.insertBefore(s1,s0);
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <script>
-  (function () {
-    function renderXEmbeds() {
-      if (!window.twttr || !twttr.ready) return;
+(function () {
+  const SEL = "[data-x-tweet]";
 
-      twttr.ready(function () {
-        document.querySelectorAll("[data-x-tweet]").forEach(function (el) {
-          if (el.dataset.rendered === "1") return; // prevent double render
-          el.dataset.rendered = "1";
+  function ensureScriptReady(cb) {
+    if (window.twttr && twttr.ready) return twttr.ready(cb);
+    setTimeout(() => ensureScriptReady(cb), 250);
+  }
 
-          var tweetId = el.getAttribute("data-x-tweet");
-          twttr.widgets.createTweet(tweetId, el, {
-            // conversation: "none",
-            // theme: "dark"
-          });
+  function renderTweets() {
+    ensureScriptReady(function () {
+      document.querySelectorAll(SEL).forEach(function (el) {
+        const id = el.getAttribute("data-x-tweet");
+
+        // If an iframe already exists, it's rendered.
+        if (el.querySelector("iframe")) return;
+
+        // If a previous attempt failed, allow retry
+        // (don’t permanently mark as rendered).
+        twttr.widgets.createTweet(id, el, {
+          dnt: true
+          // conversation: "none",
+          // theme: "dark",
+        }).catch(function () {
+          // leave empty so it can retry on next lifecycle event
         });
       });
-    }
+    });
+  }
 
-    // Initial render
-    renderXEmbeds();
+  // Run on mobile-friendly lifecycle events
+  ["DOMContentLoaded", "load", "pageshow"].forEach(function (evt) {
+    window.addEventListener(evt, function () {
+      // small delay helps in iOS Safari / BFCache restores
+      setTimeout(renderTweets, 50);
+    });
+  });
 
-    // If your site uses PJAX/turbo/instant.page etc, this helps on navigation
-    document.addEventListener("DOMContentLoaded", renderXEmbeds);
-  })();
+  // Run once immediately too
+  setTimeout(renderTweets, 0);
+})();
 </script>
     
   </body>
