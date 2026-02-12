@@ -393,44 +393,47 @@ s0.parentNode.insertBefore(s1,s0);
 (function () {
   const SEL = "[data-x-tweet]";
 
-  function ensureScriptReady(cb) {
+  function whenTwttrReady(cb) {
     if (window.twttr && twttr.ready) return twttr.ready(cb);
-    setTimeout(() => ensureScriptReady(cb), 250);
+    setTimeout(() => whenTwttrReady(cb), 200);
   }
 
-  function renderTweets() {
-    ensureScriptReady(function () {
+  function renderTweetsOnce() {
+    whenTwttrReady(function () {
       document.querySelectorAll(SEL).forEach(function (el) {
+        // Hard locks to prevent duplicates
+        if (el.dataset.xRendered === "1" || el.dataset.xRendering === "1") return;
+
         const id = el.getAttribute("data-x-tweet");
+        if (!id) return;
 
-        // If an iframe already exists, it's rendered.
-        if (el.querySelector("iframe")) return;
+        el.dataset.xRendering = "1";       // lock immediately
+        el.innerHTML = "";                 // ensure clean mount
 
-        // If a previous attempt failed, allow retry
-        // (don’t permanently mark as rendered).
-        twttr.widgets.createTweet(id, el, {
-          dnt: true
-          // conversation: "none",
-          // theme: "dark",
-        }).catch(function () {
-          // leave empty so it can retry on next lifecycle event
-        });
+        twttr.widgets.createTweet(id, el, { dnt: true })
+          .then(function () {
+            el.dataset.xRendered = "1";    // mark done
+          })
+          .catch(function () {
+            // allow retry on next lifecycle event if it truly failed
+            delete el.dataset.xRendering;
+          });
       });
     });
   }
 
-  // Run on mobile-friendly lifecycle events
+  // Run on key lifecycle events (safe on mobile + bfcache)
   ["DOMContentLoaded", "load", "pageshow"].forEach(function (evt) {
     window.addEventListener(evt, function () {
-      // small delay helps in iOS Safari / BFCache restores
-      setTimeout(renderTweets, 50);
+      setTimeout(renderTweetsOnce, 50);
     });
   });
 
-  // Run once immediately too
-  setTimeout(renderTweets, 0);
+  // Also run once right away
+  setTimeout(renderTweetsOnce, 0);
 })();
 </script>
+
     
   </body>
 </html>
