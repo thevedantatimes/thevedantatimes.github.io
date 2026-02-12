@@ -387,5 +387,34 @@ s0.parentNode.insertBefore(s1,s0);
 
     </script>
 
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<script>
+  (function () {
+    function renderXEmbeds() {
+      if (!window.twttr || !twttr.ready) return;
+
+      twttr.ready(function () {
+        document.querySelectorAll("[data-x-tweet]").forEach(function (el) {
+          if (el.dataset.rendered === "1") return; // prevent double render
+          el.dataset.rendered = "1";
+
+          var tweetId = el.getAttribute("data-x-tweet");
+          twttr.widgets.createTweet(tweetId, el, {
+            // conversation: "none",
+            // theme: "dark"
+          });
+        });
+      });
+    }
+
+    // Initial render
+    renderXEmbeds();
+
+    // If your site uses PJAX/turbo/instant.page etc, this helps on navigation
+    document.addEventListener("DOMContentLoaded", renderXEmbeds);
+  })();
+</script>
+    
   </body>
 </html>
