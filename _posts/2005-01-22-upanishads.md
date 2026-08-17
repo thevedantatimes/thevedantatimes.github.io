@@ -9,7 +9,7 @@ categories:
 snippet: "Upaniṣads, supreme Śruti of Vedānta, reveal Ātman-Brahman identity, dissolving ignorance and suffering, granting liberation."
 ---
 Om.  
-The **Upaniṣads** stand at the summit of India’s spiritual literature and form the core of **Vedānta** philosophy. When we say *Upaniṣads*, we are not referring to a single book but to a vast family of texts—traditionally regarded as the concluding, most inward portion of the **Vedas**. Because the Upaniṣads belong to **Śruti** (“that which is heard”), they are considered revealed wisdom rather than authored compositions. Their aim is not merely to provide information, but to transform the seeker’s understanding of life, identity, and reality.
+The **Upaniṣads** stand at the summit of India’s spiritual literature and form the core of **Vedānta** philosophy. When we say *Upaniṣads*, we are not referring to a single book but to a vast family of texts—traditionally regarded as the concluding, most inward portion of the **Vedas**. Because the Upaniṣads belong to **Śruti** (“that which is heard”), they are considered revealed wisdom rather than authored compositions. Their aim is not merely to provide information, but to transform the seeker’s understanding of life, identity, and reality. 
 
 In the vast landscape of Hindu thought, the Upaniṣads are often described as “the end of the Veda” (*veda-anta*). This “end” is not simply chronological—though many Upaniṣads appear toward the end of Vedic collections—but philosophical: they represent the culmination of inquiry. Ritual and external action find their completion in inner knowledge. The Upaniṣads ask the most direct questions a human being can ask: **Who am I? What is real? What is lasting? What is the source of consciousness? What is freedom?**
 
