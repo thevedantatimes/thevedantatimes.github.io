@@ -87,47 +87,34 @@ title: Categories
       <option value="Raja Yoga">Raja Yoga</option>
 
       <option value="Buddhism">Buddhism</option>
+      <option value="Christianity">Christianity</option>
 
       <option value="Kalpataru">Kalpataru</option>
       <option value="Durga Puja">Durga Puja</option>
+      <option value="Maha Shivaratri">Maha Shivaratri</option>
       <option value="Amanibhava">Amanibhava</option>
       <option value="Kathamrita">Kathamrita</option>
 
-      <option value="Adhyasa">Adhyasa</option>
       <option value="Adhyāsa–Avidyā">Adhyāsa–Avidyā</option>
-      <option value="Ahamkara">Ahamkara</option>
       <option value="Antaḥkaraṇa">Antaḥkaraṇa</option>
       <option value="Avastha Traya">Avastha Traya</option>
-      <option value="Avidya">Avidya</option>
       <option value="Bhakti Yoga">Bhakti Yoga</option>
-      <option value="Buddhi">Buddhi</option>
       <option value="Current Affairs">Current Affairs</option>
       <option value="Interfaith">Interfaith</option>
       <option value="Jagat">Jagat</option>
       <option value="Jiva">Jiva</option>
-      <option value="Karana Sharira">Karana Sharira</option>
       <option value="Karma-śāstra">Karma-śāstra</option>
-      <option value="Kartritva Tyaga">Kartritva Tyaga</option>
       <option value="Longform">Longform</option>
       <option value="Manana">Manana</option>
-      <option value="Manas">Manas</option>
       <option value="Mumukshutva">Mumukshutva</option>
-      <option value="Māyā–Śakti">Māyā–Śakti</option>
       <option value="Nama-Rupa">Nama-Rupa</option>
       <option value="Nididhyasana">Nididhyasana</option>
-      <option value="Nishkama Karma">Nishkama Karma</option>
       <option value="Pancha Kosha">Pancha Kosha</option>
-      <option value="Phala Tyaga">Phala Tyaga</option>
       <option value="Prakriyā">Prakriyā</option>
-      <option value="Prana">Prana</option>
       <option value="Prāṇa">Prāṇa</option>
-      <option value="Raja (Dhyana) Yoga">Raja (Dhyana) Yoga</option>
       <option value="Sadhana Chatushtaya">Sadhana Chatushtaya</option>
-      <option value="Sakama Karma">Sakama Karma</option>
       <option value="Shatka Sampatti">Shatka Sampatti</option>
       <option value="Shravana">Shravana</option>
-      <option value="Sthula Sharira">Sthula Sharira</option>
-      <option value="Sukshma Sharira">Sukshma Sharira</option>
       <option value="Sādhana">Sādhana</option>
       <option value="Turiya">Turiya</option>
       <option value="Tyāga">Tyāga</option>
@@ -158,7 +145,6 @@ title: Categories
       <option value="Kathamrita">Kathamrita</option>
 
       <option value="Prakaraṇa">Prakaraṇa</option>
-      <option value="Prakarana Texts">Prakarana Texts</option>
       <option value="Darśana">Darśana</option>
 
       <option value="Gītā-prakaraṇa">Gītā-prakaraṇa</option>
