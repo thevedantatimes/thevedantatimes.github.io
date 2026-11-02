@@ -5,7 +5,6 @@ date: 2022-05-16 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Antaḥkaraṇa
-  - Manas
 snippet: "Manas filters sensations into meaning, shaping attention, emotion, choice, and inner freedom through practice."
 ---
 Manas is the most familiar mystery in Vedānta because it is the part of us that seems closest to “me.” It is the inner stage where sounds become thoughts, faces become feelings, and desires become decisions. Yet manas is not the Self. It is an instrument, a subtle bridge between the outer world of sense impressions and the deeper inward faculties that judge, decide, remember, and witness. When manas is scattered, life feels noisy inside.

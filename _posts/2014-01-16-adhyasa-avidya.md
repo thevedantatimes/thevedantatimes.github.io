@@ -5,7 +5,6 @@ date: 2014-01-16 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Adhyāsa–Avidyā
-  - Adhyasa
 snippet: "Adhyāsa superimposes body-mind on Self, causing error, suffering, and recoverable freedom through knowledge."
 ---
 Adhyāsa, translated as superimposition, is one of Advaita Vedānta’s sharpest tools for explaining why confusion feels so natural. It points to a specific kind of mistake: placing the attributes of one thing onto another, then living as if the mix were true. The classic example is mistaking a rope for a snake in dim light. But Vedānta’s focus is more intimate: mistaking the body-mind for the Self, and mistaking the Self’s awareness for the body-mind.

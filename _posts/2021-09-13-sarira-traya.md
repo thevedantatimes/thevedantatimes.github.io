@@ -5,7 +5,6 @@ date: 2021-09-13 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Śarīra-traya
-  - Sukshma Sharira
 snippet: "Sūkṣma-śarīra explains the subtle body shaping experience, identity, karma, and liberation through inner functions."
 ---
 Sūkṣma-śarīra, the subtle body, is one of Vedānta’s most practical teachings because it explains how consciousness appears to “live” a personal life. You do not merely see a world; you interpret, feel, remember, desire, decide, and act. Those inner movements are not random. Vedānta says they arise through an organized inner instrument, a refined body of functions that travels with the individual through waking, dreaming, and deep sleep. Understanding this body clarifies why you feel continuous identity.

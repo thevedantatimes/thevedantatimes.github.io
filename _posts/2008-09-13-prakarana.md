@@ -5,7 +5,6 @@ date: 2008-09-13 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Prakaraṇa
-  - Prakarana Texts
 snippet: "Prakaraṇa Granthas clarify Vedānta essentials through structured reasoning, practice guidance, and accessible teachings."
 ---
 Prakaraṇa Granthas are concise Vedāntic manuals that take vast philosophical insights and present them in a learner-friendly form. While the Upaniṣads, Bhagavad Gītā, and Brahma Sūtras are the primary scriptural foundations, their depth can feel dense without a bridge. Prakaraṇa texts serve as that bridge. They typically focus on a specific topic, method, or stage of understanding, helping students progress from basic concepts to subtler realizations with a steady sense of direction.

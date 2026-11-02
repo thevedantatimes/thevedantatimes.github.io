@@ -5,7 +5,6 @@ date: 2021-05-19 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Śarīra-traya
-  - Sthula Sharira
 snippet: "Sthūla-śarīra is the physical body, a transient instrument for experience, duty, and self-inquiry here."
 ---
 Vedānta begins with an ordinary but overlooked fact: you speak about the body as something you have. You say “my hand,” “my back,” “my eyes,” and “my health,” even while casually saying “I am tired” or “I am sick.” The śarīra-traya prakriyā turns this everyday grammar into insight by separating the owner from the owned. Sthūla-śarīra, the gross body, is examined first because it is the most visible layer of identity for nearly everyone, from childhood through adulthood most often.

@@ -5,7 +5,6 @@ date: 2023-01-21 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Antaḥkaraṇa
-  - Ahamkara
 snippet: "Ahaṁkāra personalizes experience into “me” and “mine,” enabling agency, yet binding awareness."
 ---
 Ahaṁkāra is the subtle knot where experience becomes personal. A sound is heard, a glance is seen, a comment lands, and almost instantly the inner voice translates it into “about me.” This is not merely vanity. It is a basic function of the inner instrument that allows human life to operate with continuity, responsibility, and agency. Without ahaṁkāra, the world would not cohere into a lived story called “my life.” Yet with unexamined ahaṁkāra, the same story becomes a cage.

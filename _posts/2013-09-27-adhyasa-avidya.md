@@ -5,7 +5,6 @@ date: 2013-09-27 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Adhyāsa–Avidyā
-  - Avidya
 snippet: "Avidyā misperceives self and world; understanding its mechanics dissolves bondage and reveals freedom."
 ---
 Avidyā, commonly translated as ignorance, is not simply a lack of information. In Advaita Vedānta it is a deep, structural mis-knowing that makes the real appear hidden and the unreal appear obvious. It operates quietly in ordinary life as the sense that “I am only this body-mind,” and that lasting fulfillment can be secured through changeable objects. Because it feels natural, avidyā is rarely questioned, yet it shapes every perception, desire, and fear.

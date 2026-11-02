@@ -5,7 +5,6 @@ date: 2022-01-19 00:34:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Śarīra-traya
-  - Karana Sharira
 snippet: "Kāraṇa-śarīra explains ignorance’s seed, storing tendencies that shape rebirth, sleep, and bondage."
 ---
 Kāraṇa-śarīra, the causal body, is Vedānta’s way of describing the deepest layer of the individual personality, the most hidden level where the roots of experience are stored. You can observe gross activities in the body and subtle movements in the mind, but you cannot easily observe the quiet “background” that makes those movements feel personal and continuous. Vedānta says that background is not a vague mystery. It is a structured principle, a seed-like layer holding the potential for thoughts, worlds, and identity to arise again.
