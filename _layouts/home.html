@@ -2,8 +2,15 @@
 layout: default
 ---
 
-{% assign featured_posts = site.posts | where_exp:"p","p.featured == true" %}
-{% assign hero = featured_posts.first | default: site.posts.first %}
+{% comment %}Featured = the most recent Friday article (Friday is the last Vedanta day of the weekly grid). It holds the hero until the next Friday article publishes.{% endcomment %}
+{% assign hero = nil %}
+{% for p in site.posts %}
+  {% if p.date | date: '%u' == '5' %}
+    {% assign hero = p %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+{% assign hero = hero | default: site.posts.first %}
 {% assign others = site.posts | where_exp:"p","p.url != hero.url" %}
 
 {% assign left_top = others[0] %}
@@ -46,11 +53,32 @@ layout: default
       </div>
       {% endfor %}
 
-      <div class="rail-block small muted-block">
-        <div class="rail-kicker">Analysis</div>
-        <h3 class="rail-title small"><a href="#">Why the next decade will belong to depth, not noise</a></h3>
-        <p class="rail-dek">A calm, curious approach to news, culture, and long-form thinking.</p>
+      {% comment %}Read More: the archive post dated closest to one year ago today, excluding anything already shown on this page.{% endcomment %}
+      {% assign year_ago_s = site.time | date: '%s' | minus: 31536000 %}
+      {% assign shown_urls = others | slice: 0, 9 | map: 'url' %}
+      {% assign read_more = nil %}
+      {% assign read_more_diff = nil %}
+      {% for p in site.posts %}
+        {% if p.url == hero.url %}{% continue %}{% endif %}
+        {% if shown_urls contains p.url %}{% continue %}{% endif %}
+        {% assign diff = p.date | date: '%s' | minus: year_ago_s %}
+        {% if diff < 0 %}{% assign diff = diff | times: -1 %}{% endif %}
+        {% if read_more == nil or diff < read_more_diff %}
+          {% assign read_more = p %}
+          {% assign read_more_diff = diff %}
+        {% endif %}
+      {% endfor %}
+      {% if read_more %}
+      <div class="rail-block small">
+        <div class="rail-kicker">Read More</div>
+        <h3 class="rail-title small"><a href="{{ read_more.url | relative_url }}">{{ read_more.title }}</a></h3>
+        {% assign dek = read_more.snippet | default: read_more.excerpt %}
+        {% if dek %}
+          <a class="rail-dek" href="{{ read_more.url | relative_url }}">{{ dek | strip_html | strip_newlines | truncate: 120 }}</a>
+        {% endif %}
+        <div class="rail-meta">{{ read_more.date | date: '%b %-d, %Y' }} · {{ read_more.content | number_of_words | divided_by: 220 | plus: 1 }} min read</div>
       </div>
+      {% endif %}
 
       <div class="rail-block small rail-flickr" aria-label="Belur Math photos">
         <div class="flickr-stage" data-flickr-stage>
@@ -65,7 +93,7 @@ layout: default
     <!-- Center hero -->
     <article class="hero">
       <div class="hero-topline">
-        {% if hero.featured %}<span class="live">FEATURED</span>{% else %}<span class="live">LIVE</span>{% endif %}
+        <span class="live">FEATURED</span>
         <span class="hero-line">Vedanta Desk</span>
         <span class="dot">·</span>
         <span class="hero-line">{{ hero.date | date: '%b %-d' }}</span>
