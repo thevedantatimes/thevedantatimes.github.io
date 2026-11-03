@@ -5,7 +5,8 @@ layout: default
 {% comment %}Featured = the most recent Friday article (Friday is the last Vedanta day of the weekly grid). It holds the hero until the next Friday article publishes.{% endcomment %}
 {% assign hero = nil %}
 {% for p in site.posts %}
-  {% if p.date | date: '%u' == '5' %}
+  {% assign dow = p.date | date: '%u' %}
+  {% if dow == '5' %}
     {% assign hero = p %}
     {% break %}
   {% endif %}
@@ -69,7 +70,7 @@ layout: default
         {% endif %}
       {% endfor %}
       {% if read_more %}
-      <div class="rail-block small">
+      <div class="rail-block small muted-block">
         <div class="rail-kicker">Read More</div>
         <h3 class="rail-title small"><a href="{{ read_more.url | relative_url }}">{{ read_more.title }}</a></h3>
         {% assign dek = read_more.snippet | default: read_more.excerpt %}
