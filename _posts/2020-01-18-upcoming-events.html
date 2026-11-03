@@ -256,34 +256,207 @@ permalink: /events/
     return (asUTC - date.getTime()) / 60000;
   }
 
-  // Dummy events spanning next ~2 months from 2026-01-18
+  // Venue events — verified from the societies' own pages on 2026-11-02; rebuilt every 3 weeks
   const EVENTS = [
+    // Belur Math
+    e("Belur Math", "2026-11-05", "00:00", "Ekadashi Days (Rama-Nama Sankirtanam)", "Other"),
+    e("Belur Math", "2026-11-08", "00:00", "Sri Sri Kali Puja", "Puja"),
+    e("Belur Math", "2026-11-21", "00:00", "Ekadashi Days (Rama-Nama Sankirtanam)", "Other"),
+    e("Belur Math", "2026-11-21", "00:00", "Swami Subodhananda", "Celebration"),
+    e("Belur Math", "2026-11-23", "00:00", "Swami Vijnanananda", "Celebration"),
+    e("Belur Math", "2026-11-29", "18:15", "স্বামী রঙ্গনাথানন্দজী মহারাজের স্মৃতি ও আধ্যাত্মিক জীবন", "Talk"),
+    e("Belur Math", "2026-12-04", "00:00", "Ekadashi Days (Rama-Nama Sankirtanam)", "Other"),
+
     // Chicago Vedanta
-    e("Chicago Vedanta", "2026-02-15", "18:30", "Maha Shiva Ratri Puja", "Puja"),
-    e("Chicago Vedanta", "2026-02-22", "11:00", "Sri Ramakrishna Birthday Puja", "Puja"),
-
-    // Vedanta NY
-    e("Vedanta NY", "2026-02-03", "18:30", "Gospel of Sri Ramakrishna", "Talk"),
-    e("Vedanta NY", "2026-02-10", "18:30", "Gospel of Sri Ramakrishna", "Talk"),
-    e("Vedanta NY", "2026-02-17", "18:30", "Gospel of Sri Ramakrishna", "Talk"),
-    e("Vedanta NY", "2026-01-27", "18:30", "Gospel of Sri Ramakrishna", "Talk"),
-    
-    // Vedanta Org
-    e("Vedanta Org", "2026-01-20", "13:00", "Swami Brahmananda Puja", "Puja"),
-    e("Vedanta Org", "2026-01-25", "13:00", "Swami Brahmananda Puja", "Puja"),
-    
-    // Western WA
-    e("Vedanta Society of Western WA", "2026-02-15", "20:00", "Maha Shiva Ratri Puja", "Puja"),
-    e("Vedanta Society of Western WA", "2026-02-22", "13:00", "Sri Ramakrishna Puja", "Puja"),
-
-    // Vedanta DC
-    e("Vedanta DC", "2026-01-25", "10:00", "The Graded Path: Swami Bhaswatananda", "Talk"),
-
-    // Belur Math Official
-    e("Belur Math", "2026-02-15", "00:00", "Maha Shiva Ratri Puja", "Puja"),
+    e("Chicago Vedanta", "2026-11-07", "00:00", "Sri Sri Kali Puja", "Puja"),
 
     // Chicago Kali Bari
-    e("Chicago Kali Bari", "2026-02-08", "16:00", "Shree Gajanan Maharaj Prakat Din Utsav", "Puja")
+    e("Chicago Kali Bari", "2026-11-08", "17:00", "Maa Kali Shyama Puja", "Puja"),
+
+    // Hindu Mandir Lake County
+    e("Hindu Mandir Lake County", "2026-11-06", "00:00", "Diwali Celebrations", "Celebration"),
+    e("Hindu Mandir Lake County", "2026-11-21", "00:00", "Mandir Annual Fundraiser", "Other"),
+
+    // Ramakrishna Math Chennai
+    e("Ramakrishna Math Chennai", "2026-11-02", "08:00", "Ashtami", "Other"),
+    e("Ramakrishna Math Chennai", "2026-11-05", "00:00", "Ekadashi", "Other"),
+    e("Ramakrishna Math Chennai", "2026-11-08", "00:00", "Deepavali - Kali Puja (whole night puja)", "Puja"),
+    e("Ramakrishna Math Chennai", "2026-11-17", "08:00", "Ashtami", "Other"),
+    e("Ramakrishna Math Chennai", "2026-11-20", "00:00", "Ekadashi", "Other"),
+    e("Ramakrishna Math Chennai", "2026-11-21", "00:00", "Swami Subodhananda Jayanti", "Celebration"),
+    e("Ramakrishna Math Chennai", "2026-11-23", "00:00", "Swami Vijnanananda Jayanti", "Celebration"),
+    e("Ramakrishna Math Chennai", "2026-12-01", "08:00", "Ashtami", "Other"),
+    e("Ramakrishna Math Chennai", "2026-12-04", "00:00", "Ekadashi", "Other"),
+    e("Ramakrishna Math Chennai", "2026-12-17", "08:00", "Ashtami", "Other"),
+
+    // RKVC New York
+    e("RKVC New York", "2026-11-08", "11:00", "Self-effort and Self-surrender", "Talk"),
+    e("RKVC New York", "2026-11-15", "11:00", "The Value of Steadfastness", "Talk"),
+    e("RKVC New York", "2026-11-22", "11:00", "Signs of Self-knowledge", "Talk"),
+    e("RKVC New York", "2026-11-29", "11:00", "Strength Is Life", "Talk"),
+
+    // Vedanta Providence
+    e("Vedanta Providence", "2026-11-03", "19:00", "The Gospel of Sri Ramakrishna", "Class"),
+
+    // Vedanta Toronto
+    e("Vedanta Toronto", "2026-11-06", "19:30", "Uddhava Gita", "Class"),
+    e("Vedanta Toronto", "2026-11-13", "19:30", "Gospel of Sri Ramakrishna", "Class"),
+    e("Vedanta Toronto", "2026-11-20", "19:30", "Uddhava Gita", "Class"),
+    e("Vedanta Toronto", "2026-11-27", "19:30", "Gospel of Sri Ramakrishna", "Class"),
+
+    // Vedanta DC
+    e("Vedanta DC", "2026-11-02", "20:00", "Panchadashi of Sri Vidyaranya", "Class"),
+    e("Vedanta DC", "2026-11-03", "11:00", "Sri Ramakrishna: The Great Master", "Class"),
+    e("Vedanta DC", "2026-11-04", "11:00", "Spiritual Teachings of Swami Brahmananda", "Class"),
+    e("Vedanta DC", "2026-11-06", "20:00", "Gospel of Sri Ramakrishna", "Class"),
+    e("Vedanta DC", "2026-11-07", "19:30", "Ram Nam Sankirtan", "Other"),
+    e("Vedanta DC", "2026-11-08", "19:30", "Kali Puja", "Puja"),
+    e("Vedanta DC", "2026-11-09", "20:00", "Panchadashi of Sri Vidyaranya", "Class"),
+    e("Vedanta DC", "2026-11-10", "11:00", "Sri Ramakrishna: The Great Master", "Class"),
+    e("Vedanta DC", "2026-11-11", "11:00", "Spiritual Teachings of Swami Brahmananda", "Class"),
+    e("Vedanta DC", "2026-11-13", "20:00", "Gospel of Sri Ramakrishna", "Class"),
+    e("Vedanta DC", "2026-11-15", "11:00", "Meditation Program", "Other"),
+    e("Vedanta DC", "2026-11-16", "20:00", "Panchadashi of Sri Vidyaranya", "Class"),
+    e("Vedanta DC", "2026-11-17", "11:00", "Sri Ramakrishna: The Great Master", "Class"),
+    e("Vedanta DC", "2026-11-18", "11:00", "Spiritual Teachings of Swami Brahmananda", "Class"),
+    e("Vedanta DC", "2026-11-20", "20:00", "Gospel of Sri Ramakrishna", "Class"),
+    e("Vedanta DC", "2026-11-22", "11:00", "The Seeker and the teacher II", "Talk"),
+    e("Vedanta DC", "2026-11-23", "20:00", "Panchadashi of Sri Vidyaranya", "Class"),
+    e("Vedanta DC", "2026-11-24", "11:00", "Sri Ramakrishna: The Great Master", "Class"),
+    e("Vedanta DC", "2026-11-25", "11:00", "Spiritual Teachings of Swami Brahmananda", "Class"),
+    e("Vedanta DC", "2026-11-27", "20:00", "Gospel of Sri Ramakrishna", "Class"),
+    e("Vedanta DC", "2026-11-28", "10:00", "Retreat with Swami Sarvadevananda and Swami Vimohananda", "Retreat"),
+    e("Vedanta DC", "2026-11-29", "11:00", "Vedanta Lecture", "Talk"),
+    e("Vedanta DC", "2026-11-30", "20:00", "Panchadashi of Sri Vidyaranya", "Class"),
+    e("Vedanta DC", "2026-12-01", "11:00", "Sri Ramakrishna: The Great Master", "Class"),
+    e("Vedanta DC", "2026-12-02", "11:00", "Spiritual Teachings of Swami Brahmananda", "Class"),
+    e("Vedanta DC", "2026-12-04", "20:00", "Gospel of Sri Ramakrishna", "Class"),
+    e("Vedanta DC", "2026-12-05", "19:30", "Ram Nam Sankirtan", "Other"),
+    e("Vedanta DC", "2026-12-07", "20:00", "Panchadashi of Sri Vidyaranya", "Class"),
+    e("Vedanta DC", "2026-12-08", "11:00", "Sri Ramakrishna: The Great Master", "Class"),
+    e("Vedanta DC", "2026-12-09", "11:00", "Spiritual Teachings of Swami Brahmananda", "Class"),
+    e("Vedanta DC", "2026-12-11", "20:00", "Gospel of Sri Ramakrishna", "Class"),
+
+    // Vedanta Org
+    e("Vedanta Org", "2026-11-02", "18:30", "Catching the train at Platform 9 and 3/4 - Swami Yogatmananda", "Talk"),
+    e("Vedanta Org", "2026-11-04", "17:00", "They Lived with God by Swami Chetanananda", "Class"),
+    e("Vedanta Org", "2026-11-04", "18:00", "Evening Vespers (Arati)", "Other"),
+    e("Vedanta Org", "2026-11-04", "19:30", "Satsanga with the Trabuco Brothers", "Other"),
+    e("Vedanta Org", "2026-11-07", "17:00", "Gospel of Sri Ramakrishna", "Class"),
+    e("Vedanta Org", "2026-11-08", "00:00", "KALI PUJA (In Hollywood)", "Puja"),
+    e("Vedanta Org", "2026-11-08", "11:00", "Sunday Talk: Man: the Maker of His Destiny", "Talk"),
+    e("Vedanta Org", "2026-11-11", "17:00", "They Lived with God by Swami Chetanananda", "Class"),
+    e("Vedanta Org", "2026-11-14", "00:00", "Karma Yoga Day", "Other"),
+    e("Vedanta Org", "2026-11-14", "00:00", "KALI IMMERSION (In Newport Beach)", "Other"),
+    e("Vedanta Org", "2026-11-14", "17:00", "Gospel of Sri Ramakrishna", "Class"),
+    e("Vedanta Org", "2026-11-15", "11:00", "Sunday Talk: Over the Hill", "Talk"),
+    e("Vedanta Org", "2026-11-18", "00:00", "JAGADDHATRI PUJA", "Puja"),
+    e("Vedanta Org", "2026-11-18", "17:00", "They Lived with God by Swami Chetanananda", "Class"),
+    e("Vedanta Org", "2026-11-21", "00:00", "SWAMI SUBODHANANDA", "Other"),
+    e("Vedanta Org", "2026-11-21", "17:00", "Gospel of Sri Ramakrishna", "Class"),
+    e("Vedanta Org", "2026-11-22", "11:00", "Sunday Talk: Choosing Thankfulness", "Talk"),
+    e("Vedanta Org", "2026-11-23", "00:00", "SWAMI VIJNANANANDA", "Other"),
+    e("Vedanta Org", "2026-11-26", "00:00", "THANKSGIVING", "Other"),
+    e("Vedanta Org", "2026-11-28", "17:00", "Gospel of Sri Ramakrishna", "Class"),
+    e("Vedanta Org", "2026-11-29", "11:00", "Sunday Talk: The Means to an End", "Talk"),
+    e("Vedanta Org", "2026-12-14", "00:00", "HANUKKAH", "Celebration"),
+
+    // Vedanta SF
+    e("Vedanta SF", "2026-11-08", "19:30", "Divine Mother Kali Worship", "Puja"),
+    e("Vedanta SF", "2026-11-15", "11:00", "Swami Vijnanananda: A Hidden Knower of Brahman", "Talk"),
+    e("Vedanta SF", "2026-11-22", "11:00", "Our Most Reliable Friend", "Talk"),
+    e("Vedanta SF", "2026-11-29", "11:00", "Gratitude and the Presence of God", "Talk"),
+
+    // VSGH Houston
+    e("VSGH Houston", "2026-11-07", "18:00", "Meditation", "Other"),
+    e("VSGH Houston", "2026-11-07", "19:00", "Arati", "Other"),
+    e("VSGH Houston", "2026-11-08", "18:00", "Sri Sri Kali Puja 2026", "Puja"),
+    e("VSGH Houston", "2026-11-15", "11:00", "Self-study Class: Reading on Holy Mother Sri Sarada Devi", "Class"),
+    e("VSGH Houston", "2026-11-15", "11:30", "Memorial Service for Ruma Bhattacharya", "Other"),
+    e("VSGH Houston", "2026-11-21", "11:00", "Retreat \"Four Guards of Spirituality\" - Session 1", "Retreat"),
+    e("VSGH Houston", "2026-11-21", "14:30", "Retreat \"Four Guards of Spirituality\" - Session 2", "Retreat"),
+    e("VSGH Houston", "2026-11-22", "11:00", "Talk \"Be Free\"", "Talk"),
+    e("VSGH Houston", "2026-11-28", "12:00", "Weekly Online Upanishad Class by Swami Atmarupananda", "Class"),
+    e("VSGH Houston", "2026-11-29", "11:00", "Self-study Class: Reading on Swami Vivekananda", "Class"),
+
+    // Vedanta Society of Western WA
+    e("Vedanta Society of Western WA", "2026-11-02", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-03", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-04", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-04", "19:00", "“The Gospel of the Holy Mother” Reading & Discussion Group", "Class"),
+    e("Vedanta Society of Western WA", "2026-11-05", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-06", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-06", "19:00", "Study of “VYADHA GITA” – The Pious Butcher’s Gita", "Class"),
+    e("Vedanta Society of Western WA", "2026-11-07", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-07", "19:00", "Raja Yoga Class", "Class"),
+    e("Vedanta Society of Western WA", "2026-11-08", "18:00", "Kali Puja", "Puja"),
+    e("Vedanta Society of Western WA", "2026-11-09", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-10", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-11", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-11", "19:00", "“The Gospel of the Holy Mother” Reading & Discussion Group", "Class"),
+    e("Vedanta Society of Western WA", "2026-11-12", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-13", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-13", "19:00", "Study of “VYADHA GITA” – The Pious Butcher’s Gita", "Class"),
+    e("Vedanta Society of Western WA", "2026-11-14", "11:00", "Vedantic Meditation Retreat", "Retreat"),
+    e("Vedanta Society of Western WA", "2026-11-14", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-15", "09:45", "Mother’s Children Vedantic Youth Group", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-15", "10:00", "Sunday Vedanta Practice with Swami Satyamayananda", "Talk"),
+    e("Vedanta Society of Western WA", "2026-11-15", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-15", "19:00", "Ram Naam", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-16", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-17", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-18", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-18", "19:00", "“The Gospel of the Holy Mother” Reading & Discussion Group", "Class"),
+    e("Vedanta Society of Western WA", "2026-11-19", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-20", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-20", "19:00", "Study of “VYADHA GITA” – The Pious Butcher’s Gita", "Class"),
+    e("Vedanta Society of Western WA", "2026-11-21", "10:00", "Seattle Ashrama Karma Yoga Day", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-21", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-22", "09:45", "Mother’s Children Vedantic Youth Group", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-22", "10:00", "Sunday Vedanta Practice with Swami Satyamayananda", "Talk"),
+    e("Vedanta Society of Western WA", "2026-11-22", "16:00", "Devotional Singing Group", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-22", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-23", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-24", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-25", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-26", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-27", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-27", "19:00", "Study of “VYADHA GITA” – The Pious Butcher’s Gita", "Class"),
+    e("Vedanta Society of Western WA", "2026-11-28", "10:00", "Tapovan Karma Yoga Day", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-28", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-29", "09:45", "Mother’s Children Vedantic Youth Group", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-29", "10:00", "Sunday Vedanta Practice with Swami Satyamayananda", "Talk"),
+    e("Vedanta Society of Western WA", "2026-11-29", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-11-30", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-01", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-02", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-02", "19:00", "“The Gospel of the Holy Mother” Reading & Discussion Group", "Class"),
+    e("Vedanta Society of Western WA", "2026-12-03", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-04", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-04", "19:00", "Study of “VYADHA GITA” – The Pious Butcher’s Gita", "Class"),
+    e("Vedanta Society of Western WA", "2026-12-05", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-05", "19:00", "Raja Yoga Class", "Class"),
+    e("Vedanta Society of Western WA", "2026-12-06", "09:45", "Mother’s Children Vedantic Youth Group", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-06", "10:00", "Sunday Vedanta Practice with Swami Satyamayananda", "Talk"),
+    e("Vedanta Society of Western WA", "2026-12-06", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-06", "19:00", "Ram Naam", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-07", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-08", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-09", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-09", "19:00", "“The Gospel of the Holy Mother” Reading & Discussion Group", "Class"),
+    e("Vedanta Society of Western WA", "2026-12-10", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-11", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-11", "19:00", "Study of “VYADHA GITA” – The Pious Butcher’s Gita", "Class"),
+    e("Vedanta Society of Western WA", "2026-12-12", "11:00", "Vedantic Meditation Retreat", "Retreat"),
+    e("Vedanta Society of Western WA", "2026-12-12", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-13", "09:45", "Mother’s Children Vedantic Youth Group", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-13", "10:00", "Sunday Vedanta Practice with Swami Satyamayananda", "Talk"),
+    e("Vedanta Society of Western WA", "2026-12-13", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-14", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-15", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-16", "18:00", "Vespers & Meditation", "Other"),
+    e("Vedanta Society of Western WA", "2026-12-16", "19:00", "“The Gospel of the Holy Mother” Reading & Discussion Group", "Class"),
+    e("Vedanta Society of Western WA", "2026-12-17", "18:00", "Vespers & Meditation", "Other"),
   ]
   .sort((a,b) => (a.date + " " + a.time).localeCompare(b.date + " " + b.time));
 
