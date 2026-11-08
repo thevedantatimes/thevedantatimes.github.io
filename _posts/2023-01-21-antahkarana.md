@@ -2,7 +2,7 @@
 layout: post
 title: "Ahaṁkāra: The I-Maker Shaping Identity And Suffering"
 date: 2023-01-21 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-20.webp
 categories:
   - Antaḥkaraṇa
 snippet: "Ahaṁkāra personalizes experience into “me” and “mine,” enabling agency, yet binding awareness."

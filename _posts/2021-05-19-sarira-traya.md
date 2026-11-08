@@ -2,7 +2,7 @@
 layout: post
 title: "Sthūla-śarīra: Body, Identity, And Inner Freedom"
 date: 2021-05-19 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-07.webp
 categories:
   - Śarīra-traya
 snippet: "Sthūla-śarīra is the physical body, a transient instrument for experience, duty, and self-inquiry here."

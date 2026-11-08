@@ -2,7 +2,7 @@
 layout: post
 title: "Manas: The Restless Bridge Between Sense And Soul"
 date: 2022-05-16 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-11.webp
 categories:
   - Antaḥkaraṇa
 snippet: "Manas filters sensations into meaning, shaping attention, emotion, choice, and inner freedom through practice."

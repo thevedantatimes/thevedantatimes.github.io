@@ -2,7 +2,7 @@
 layout: post
 title: "Buddhi: The Inner Light That Discerns Truth"
 date: 2022-09-24 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-23.webp
 categories:
   - Antaḥkaraṇa
 snippet: "Buddhi decides, discriminates, and clarifies experience, guiding ethics, inquiry, and lasting inner freedom."

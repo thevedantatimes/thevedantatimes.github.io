@@ -2,7 +2,7 @@
 layout: post
 title: "Manana Turns Vedānta Listening Into Unshakable Conviction"
 date: 2019-09-10 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-24.webp
 categories:
   - Vedānta-vicāra
   - Manana

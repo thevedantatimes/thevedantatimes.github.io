@@ -2,7 +2,7 @@
 layout: post
 title: "The Beatitudes: Blessed Are the Merciful, the Pure in Heart and the Peacemakers"
 date: 2026-11-08 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-25.webp
 categories:
   - Christianity
   - Interfaith

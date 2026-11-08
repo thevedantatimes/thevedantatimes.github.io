@@ -2,7 +2,7 @@
 layout: post
 title: "The Subtle Body: Bridge Between Mind And Spirit"
 date: 2021-09-13 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-18.webp
 categories:
   - Śarīra-traya
 snippet: "Sūkṣma-śarīra explains the subtle body shaping experience, identity, karma, and liberation through inner functions."

@@ -2,7 +2,7 @@
 layout: post
 title: "The Causal Body: Seed Of Experience And Selfhood"
 date: 2022-01-19 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-10.webp
 categories:
   - Śarīra-traya
 snippet: "Kāraṇa-śarīra explains ignorance’s seed, storing tendencies that shape rebirth, sleep, and bondage."

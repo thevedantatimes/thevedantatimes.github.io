@@ -2,7 +2,7 @@
 layout: post
 title: "Śravaṇa Begins Where True Listening Becomes Liberation"
 date: 2019-05-19 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-22.webp
 categories:
   - Vedānta-vicāra
   - Shravana

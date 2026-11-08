@@ -2,7 +2,7 @@
 layout: post
 title: "Nididhyāsana: Deep Abidance In Nondual Truth Daily"
 date: 2020-01-16 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-29.webp
 categories:
   - Vedānta-vicāra
   - Nididhyasana
