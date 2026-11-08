@@ -2,7 +2,7 @@
 layout: post
 title: "Meditation Beyond Concentration: Turning Inward Toward Awakening Today"
 date: 2016-01-15 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-21.webp
 categories:
   - Meditation
   - Longform

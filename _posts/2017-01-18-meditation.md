@@ -2,7 +2,7 @@
 layout: post
 title: "True Meditation Means Presence, Not Mere Concentration Only"
 date: 2017-01-18 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-29.webp
 categories:
   - Meditation
   - Longform

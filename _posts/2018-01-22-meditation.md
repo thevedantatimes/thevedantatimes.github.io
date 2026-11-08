@@ -2,7 +2,7 @@
 layout: post
 title: "Dissociation, Samskaras, and Meditation: Integrating a Divided Mind"
 date: 2018-01-22 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-30.webp
 categories:
   - Meditation
   - Longform
