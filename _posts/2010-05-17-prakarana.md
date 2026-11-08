@@ -2,7 +2,7 @@
 layout: post
 title: "Pañcadaśī Unfolds Nonduality Through Fifteen Illuminations"
 date: 2010-05-17 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-03.webp
 categories:
   - Prakaraṇa
   - Panchadasi

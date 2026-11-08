@@ -2,7 +2,7 @@
 layout: post
 title: "Adhyāsa Creates Bondage By Mixing Self With Nonself"
 date: 2014-01-16 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-29.webp
 categories:
   - Adhyāsa–Avidyā
 snippet: "Adhyāsa superimposes body-mind on Self, causing error, suffering, and recoverable freedom through knowledge."

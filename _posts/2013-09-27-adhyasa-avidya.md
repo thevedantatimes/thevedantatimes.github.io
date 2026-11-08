@@ -2,7 +2,7 @@
 layout: post
 title: "Avidyā Veils Reality, Fuels Suffering, Enables Liberation"
 date: 2013-09-27 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-08.webp
 categories:
   - Adhyāsa–Avidyā
 snippet: "Avidyā misperceives self and world; understanding its mechanics dissolves bondage and reveals freedom."
