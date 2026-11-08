@@ -16,9 +16,111 @@ Every year, in the darkest stretch of the northern winter, a story is told again
 </div>
 
 <nav class="vtt-finder">
-<p><strong>Find a celebration near you — Christmas Eve &amp; Christmas Day:</strong> <a href="#vtt-cel-india">India</a> · <a href="#vtt-cel-malaysia">Malaysia</a> · <a href="#vtt-cel-usa">United States</a> · <a href="#vtt-cel-canada">Canada</a> · <a href="#vtt-cel-australia">Australia</a> · <a href="#vtt-cel-uk">United Kingdom</a> · <a href="#vtt-cel-ireland">Ireland</a> · <a href="#vtt-cel-germany">Germany</a> · <a href="#vtt-cel-switzerland">Switzerland</a> · <a href="#vtt-cel-poland">Poland</a> · <a href="#vtt-cel-france">France</a> · <a href="#vtt-cel-brazil">Brazil</a> · <a href="#vtt-cel-vatican">Vatican City</a></p>
-<p><em>With service times already confirmed in:</em> Kolkata · Chennai · Kuala Lumpur · Seattle · Southern California · Washington, DC · New York · San Francisco · Toronto · Sydney · Melbourne · London · Canterbury · York · Edinburgh · Dublin · Berlin · Cologne · Zurich · Kraków</p>
+<p><strong>Find a celebration near you — Christmas Eve &amp; Christmas Day:</strong> <a href="#vtt-cel-india">India</a> · <a href="#vtt-cel-malaysia">Malaysia</a> · <a href="#vtt-cel-usa">United States</a> · <a href="#vtt-cel-canada">Canada</a> · <a href="#vtt-cel-australia">Australia</a> · <a href="#vtt-cel-uk">United Kingdom</a> · <a href="#vtt-cel-ireland">Ireland</a> · <a href="#vtt-cel-germany">Germany</a> · <a href="#vtt-cel-switzerland">Switzerland</a> · <a href="#vtt-cel-poland">Poland</a> · <a href="#vtt-cel-france">France</a> · <a href="#vtt-cel-greece">Greece</a> · <a href="#vtt-cel-italy">Italy</a> · <a href="#vtt-cel-brazil">Brazil</a> · <a href="#vtt-cel-vatican">Vatican City</a></p>
+<p><em>With service times already confirmed in:</em> Kolkata · Chennai · Kuala Lumpur · Seattle · Southern California · Washington, DC · New York · San Francisco · Toronto · Sydney · Melbourne · London · Canterbury · York · Edinburgh · Dublin · Berlin · Cologne · Zurich · Kraków · Athens</p>
 </nav>
+
+## Christmas Celebrations Worldwide
+
+<div class="vtt-celebrations" data-festival="christmas">
+<p><em>Every listing below is taken from the institution's own published programme. Times are local to the venue. Where an institution keeps the feast but has not yet published its time, the listing says so rather than guessing.</em></p>
+
+<h3 id="vtt-cel-india">India</h3>
+<ul>
+<li><strong>Ramakrishna Math, Belur Math (Kolkata)</strong> — <strong>Thursday 24 December</strong> — Christmas Eve celebration, from the Math's official List of Celebrations 2026–27. <em>Programme timings are announced by the Math nearer the day.</em></li>
+<li><strong>Sri Ramakrishna Math, Chennai</strong> — <strong>Thursday 24 December</strong> — Christmas Eve observance, held after the evening Arati, from the Math's Festival Calendar 2026–27. <em>The calendar gives the observance rather than a clock time.</em></li>
+<li><strong>St Mark's Cathedral, Bangalore</strong> — the cathedral's own annual programme builds through December: carol rounds on <strong>Sunday 6, Sunday 13 and Sunday 20 December</strong>, a Christmas programme and parish dinner on <strong>Thursday 24 December</strong>, and Christmas Day cake distribution on <strong>Friday 25 December</strong>. <em>The cathedral publishes no clock times for these.</em></li>
+<li><strong>St Paul's Cathedral, Kolkata</strong> — the cathedral's year, as its diocese lists it, includes a service of Nine Lessons and Carols and a Christmas Lunch, kept annually at the feast. <em>No date or time had been published for this year.</em></li>
+</ul>
+
+<h3 id="vtt-cel-malaysia">Malaysia</h3>
+<ul>
+<li><strong>Cathedral of St John the Evangelist, Kuala Lumpur</strong> — <strong>Thursday 24 December</strong> — Carols <strong>5:30 pm</strong>; Vigil Mass (English) <strong>6:00 pm</strong>; Carols <strong>8:00 pm</strong>; Midnight Mass (English) <strong>8:30 pm</strong>; Midnight Mass (Myanmar) <strong>11:00 pm</strong>. <strong>Friday 25 December</strong> — Lauds <strong>7:30 am</strong>; Dawn Mass (English) <strong>8:00 am</strong>; Rosary <strong>10:30 am</strong>; Day Mass (English) <strong>11:00 am</strong>; Mass (Myanmar) <strong>1:00 pm</strong>. <em>From the Archdiocese of Kuala Lumpur's Christmas &amp; New Year Mass Times.</em></li>
+</ul>
+
+<h3 id="vtt-cel-usa">United States</h3>
+<ul>
+<li><strong>Vedanta Society of Western Washington, Seattle</strong> — <strong>Thursday 24 December, 6:00–9:00 pm</strong> — Christ Puja &amp; Christmas Celebration: worship service, traditional carols, prayer and meditation, followed by prasad, at the Seattle Ashrama and livestreamed.</li>
+<li><strong>Vedanta Society of Southern California (Hollywood and sister centres)</strong> — <strong>Thursday 24 December, 6:30 pm</strong> — Christmas Eve Service, after evening vesper, from the society's Calendar of Observances 2026–27. <strong>Friday 25 December</strong> — Christmas Day observance. <em>Venue and further timings are published with the society's December bulletin.</em></li>
+<li><strong>Vedanta Society of New York, New York</strong> — <strong>Thursday 24 December</strong> — Christmas Eve: Reading and Carols, a festival service in the society's published schedule. <em>Time is published with the society's December programme.</em></li>
+<li><strong>Washington National Cathedral, Washington, DC</strong> — <strong>Wednesday 23 &amp; Thursday 24 December, 6:00 pm</strong> — Christmas Lessons &amp; Carols. <strong>Thursday 24 December, 10:00 pm</strong> — Christmas Eve Festival Holy Eucharist. <strong>Friday 25 December</strong> — Christmas Day Festival Holy Eucharist <strong>11:15 am</strong>; Christmas Day Organ Recital <strong>1:30 pm</strong>. <em>Free passes are required for the carol services and the Eve Eucharist, released 16 November; worship itself is never charged.</em></li>
+<li><strong>Basilica of the National Shrine of the Immaculate Conception, Washington, DC</strong> — <strong>Thursday 24 December</strong> — Vigil Mass of the Nativity <strong>4:30 pm</strong>; Choral Meditations on the Nativity <strong>10:00 pm</strong>; Solemn Mass during the Night <strong>10:30 pm</strong>. <strong>Friday 25 December</strong> — Masses at <strong>7:30 am</strong> (Crypt Church), <strong>9:00 am</strong>, <strong>10:30 am</strong>, <strong>12 noon</strong> (Solemn Mass of the Nativity), <strong>2:30 pm</strong> (in Spanish) and <strong>4:30 pm</strong>.</li>
+<li><strong>Cathedral of St John the Divine, New York</strong> — <strong>Thursday 24 December</strong> — Christmas Eve Lessons and Carols <strong>4:00 pm</strong>; Festal Eucharist <strong>10:30 pm</strong>. <strong>Friday 25 December</strong> — Christmas Day Holy Eucharist <strong>10:30 am</strong>. <em>No passes required; services are also livestreamed.</em></li>
+<li><strong>St Patrick's Cathedral, New York</strong> — the Christmas Midnight Mass is celebrated on Christmas Eve and is <strong>ticketed by lottery</strong> (applications closed in October). <em>The cathedral publishes no clock time for the Mass, and its full Christmas Eve and Day schedule follows in December.</em></li>
+<li><strong>Grace Cathedral, San Francisco</strong> — <strong>Thursday 24 December</strong> — The Cathedral Christmas Pageant <strong>11:00 am</strong>; Christmas Eve Lessons and Carols <strong>4:00 pm</strong>; Christmas Eve Choral Eucharist <strong>7:30 pm</strong>; "Midnight Mass" Choral Eucharist with Choir and Orchestra <strong>11:00 pm–12:30 am</strong>. <strong>Friday 25 December</strong> — Christmas Day Choral Eucharist <strong>11:00 am</strong>.</li>
+</ul>
+
+<h3 id="vtt-cel-canada">Canada</h3>
+<ul>
+<li><strong>Cathedral Church of St James, Toronto</strong> — <strong>Thursday 24 December</strong> — Christmas Together, a service for all ages, <strong>3:00 pm</strong>; Festal Organ Recital <strong>4:30 pm</strong>; Christmas Lessons &amp; Carols <strong>5:00 pm</strong>; Choral Eucharist <strong>8:00 pm</strong>. <strong>Friday 25 December</strong> — Said Eucharist <strong>8:00 am</strong>; Choral Eucharist <strong>10:30 am</strong>.</li>
+<li><strong>Christ Church Cathedral, Vancouver</strong> — <strong>Sunday 20 December, 4:00 pm</strong> — the Cathedral Christmas Carol Service (Nine Lessons and Carols). <em>Its Christmas Eve and Day services are published with the cathedral's Advent programme.</em></li>
+</ul>
+
+<h3 id="vtt-cel-australia">Australia</h3>
+<ul>
+<li><strong>Vedanta Centre of Sydney, Ermington (Sydney)</strong> — <strong>Thursday 24 December</strong> — Celebration of Christmas Eve: Aratrikam <strong>7:00 pm</strong>; Worship and Singing of Hymns and Christmas Carols <strong>7:30 pm</strong>; distribution of consecrated food <strong>8:30 pm</strong>.</li>
+<li><strong>St Mary's Cathedral, Sydney</strong> — <strong>Thursday 24 December</strong> — Carols in the Cathedral <strong>7:30 pm</strong>; Christmas Vigil Mass <strong>8:00 pm</strong>. <em>The cathedral's full Christmas timetable, including Christmas Day, is announced in December.</em></li>
+<li><strong>St Patrick's Cathedral, Melbourne</strong> — <strong>Thursday 24 December</strong> — Christmas Vigil <strong>11:30 pm</strong>. <strong>Friday 25 December</strong> — Christmas Day Mass <strong>11:00 am</strong>. <em>From the Archdiocese of Melbourne's 2026 key-dates calendar, whose entries are subject to change; the cathedral's full programme follows.</em></li>
+</ul>
+
+<h3 id="vtt-cel-uk">United Kingdom</h3>
+<ul>
+<li><strong>Canterbury Cathedral, Canterbury</strong> — <strong>Wednesday 23 &amp; Thursday 24 December, 5:30–7:00 pm</strong> — Cathedral Carol Services. <strong>Thursday 24 December</strong> — Family Crib Service <strong>10:00–10:45 am</strong>; Midnight Mass <strong>11:00 pm–12:05 am</strong>. <strong>Friday 25 December</strong> — Christmas Eucharist <strong>11:00 am</strong>; Evensong with Carols <strong>3:00 pm</strong>. <em>From the Cathedral's own Christmas page; most services are also livestreamed.</em></li>
+<li><strong>Westminster Abbey, London</strong> — <strong>Wednesday 23 &amp; Thursday 24 December</strong> — Service of Lessons and Carols. <strong>Thursday 24 December, late evening</strong> — First Eucharist of Christmas (Midnight Mass). <strong>Friday 25 December</strong> — Holy Communion <strong>8:00 am</strong>; Sung Eucharist <strong>10:30 am</strong>; Evensong <strong>3:00 pm</strong>. <em>The carol services and the Midnight Mass are free but ticketed — tickets are released 16 and 18 November, with service times given at booking.</em></li>
+<li><strong>St Paul's Cathedral, London</strong> — <strong>Wednesday 23 &amp; Thursday 24 December, 4:00 pm</strong> — Christmas Carol Services (free tickets by ballot). <em>The Midnight Eucharist on Christmas Eve and the Christmas Day services are held as every year; their times are published with the cathedral's booking information.</em></li>
+<li><strong>York Minster, York</strong> — <strong>Thursday 24 December</strong> — Festival of Nine Lessons and Carols <strong>4:00 pm</strong>; Midnight Mass <strong>11:30 pm</strong>. <strong>Friday 25 December</strong> — Choral Matins <strong>10:00 am</strong>; Sung Eucharist <strong>11:00 am</strong>; Choral Evensong <strong>4:00 pm</strong>. <em>No booking required for the Christmas Day services.</em></li>
+<li><strong>St Giles' Cathedral, Edinburgh</strong> — <strong>Thursday 24 December</strong> — Christingle Service <strong>4:00 pm</strong>; Christmas Eve Service <strong>7:00 pm</strong>; Watchnight Service <strong>11:30 pm</strong>. <strong>Friday 25 December</strong> — Christmas Day Communion Service <strong>9:30 am</strong>; Christmas Day Morning Service <strong>11:00 am</strong>.</li>
+</ul>
+
+<h3 id="vtt-cel-ireland">Ireland</h3>
+<ul>
+<li><strong>Christ Church Cathedral, Dublin</strong> — <strong>Monday 21 December, 6:00 pm</strong> — Nine Lessons and Carols. <strong>Thursday 24 December, 11:00 pm</strong> — Festal Eucharist for Christmas Eve. <strong>Friday 25 December, 11:00 am</strong> — Festal Eucharist for Christmas Day. <em>There is no charge to attend services.</em></li>
+<li><strong>St Patrick's Cathedral, Dublin</strong> — its Christmas Eve Service of Nine Lessons and Carols is kept every year, admission by ticket only. <em>Its December service list, with the time, is published by the cathedral in December.</em></li>
+</ul>
+
+<h3 id="vtt-cel-germany">Germany</h3>
+<ul>
+<li><strong>Berlin Cathedral (Berliner Dom), Berlin</strong> — <strong>Thursday 24 December</strong> — Christvesper (Christmas Eve vespers) at <strong>2:00 pm</strong>, <strong>4:00 pm</strong> and <strong>6:00 pm</strong>; Christmette at <strong>10:00 pm</strong> and at <strong>midnight</strong>. <strong>Friday 25 December</strong> — Christmas Day service <strong>10:00 am</strong>; evening service <strong>6:00 pm</strong>. <em>All public, no registration, and livestreamed.</em></li>
+<li><strong>Cologne Cathedral (Kölner Dom), Cologne</strong> — <strong>Thursday 24 December, midnight</strong> — the Christmette, the Christmas Eve Mass of the Night celebrated with the Archbishop. <strong>Friday 25 December, 10:00 am</strong> — Pontifical Mass of Christmas Day. <em>From the cathedral's official services list; its full Christmas programme follows.</em></li>
+</ul>
+
+<h3 id="vtt-cel-switzerland">Switzerland</h3>
+<ul>
+<li><strong>Grossmünster, Zurich</strong> — <strong>Thursday 24 December, 10:00 pm</strong> — Christnachtfeier, the Christmas Night celebration of Christmas Eve. <strong>Friday 25 December, 10:00 am</strong> — Christmas Day service. <em>From the official programme of Zurich's old-town churches.</em></li>
+</ul>
+
+<h3 id="vtt-cel-poland">Poland</h3>
+<ul>
+<li><strong>Wawel Cathedral, Kraków</strong> — <strong>Christmas Eve night, midnight</strong> — the Pasterka, the shepherds' Midnight Mass. <strong>Christmas Day</strong> — Mass at <strong>10:00 am</strong>. <em>From the cathedral parish's standing list of the year's great feasts; its dated December bulletin follows.</em></li>
+</ul>
+
+<h3 id="vtt-cel-france">France</h3>
+<ul>
+<li><strong>Centre Védantique Ramakrishna, Gretz-Armainvilliers</strong> — <strong>Christmas Eve, 24 December</strong> — the Christ Puja, which the centre's own celebrations page describes as always celebrated on Christmas Eve. <em>Time is published with the centre's December programme.</em></li>
+</ul>
+
+<h3 id="vtt-cel-greece">Greece</h3>
+<ul>
+<li><strong>Cathedral of St Dionysius the Areopagite, Athens</strong> — <strong>Friday 25 December</strong> — Christmas Day is kept with the cathedral's great-feast Masses: <strong>7:30 and 9:30 am</strong> in Greek, <strong>11:00 am</strong> in Latin, and <strong>6:30 pm</strong> in English. <em>From the cathedral's own standing schedule for Sundays and great feasts; its Christmas Eve time had not been published.</em></li>
+</ul>
+
+<h3 id="vtt-cel-italy">Italy</h3>
+<ul>
+<li><strong>Milan Cathedral (Duomo), Milan</strong> — <strong>Thursday 17 December, 8:00 pm</strong> — the cathedral's Christmas Concert, given by its own Schola Cantorum with the laBarocca and Officium Musicum ensembles; free, with booking required. <em>From the cathedral's official 2026 concert season; its Christmas Eve and Day Mass times had not been published.</em></li>
+</ul>
+
+<h3 id="vtt-cel-brazil">Brazil</h3>
+<ul>
+<li><strong>Ramakrishna Vedanta Ashrama, São Paulo</strong> — Christmas Eve is one of the ashrama's six annual celebrations, kept with its yearly festivals. <em>Its celebrations generally run 9:00 am–12:30 pm; the date for the year is announced by the ashrama.</em></li>
+</ul>
+
+<h3 id="vtt-cel-vatican">Vatican City</h3>
+<ul>
+<li><strong>St Peter's Basilica</strong> — <strong>Thursday 24 December</strong> — Christmas Eve Mass with the Holy Father. <strong>Friday 25 December</strong> — Christmas message and the Urbi et Orbi blessing. <em>The Holy See publishes the celebration times in early December; this listing is completed when its notice appears.</em></li>
+</ul>
+
+<p><em>The following centres and cathedrals are not yet listed, because their Christmas programmes had not been published (last updated 8 November 2026): the Vivekananda Vedanta Society of Chicago, the Vedanta Society of Toronto, the Ramakrishna Vedanta Centre in London and the Ramakrishna Centre in Durban; Westminster Cathedral and Notre-Dame in Paris; St Stephen's Cathedral in Vienna and the Sagrada Família in Barcelona; Christ Church Cathedral in Montreal; Manila Cathedral (whose Simbang Gabi dawn Masses are announced closer to the season), St John's Cathedral in Hong Kong and the Cathedral of the Good Shepherd in Singapore; and Sacred Heart Cathedral in Delhi, St Thomas Cathedral in Mumbai and the Basilica of Bom Jesus in Goa. Also not yet listed, with no 2026 programme published yet: Almudena Cathedral in Madrid, Lisbon Cathedral, Seville Cathedral, the Basilica of St Nicholas in Amsterdam, Brussels Cathedral, Munich's Frauenkirche, St Vitus in Prague, St Stephen's Basilica in Budapest, St John's Archcathedral in Warsaw, St Pierre in Geneva, Stockholm Cathedral, Copenhagen Cathedral Naples Cathedral and the Basilica of St Francis in Assisi, Florence Cathedral, St Mark's in Venice and the Metropolitan Cathedral of Athens. And the same holds for Holy Name Cathedral in Chicago or the cathedrals of Los Angeles, Boston, Houston and New Orleans; from Mexico City, São Paulo, Rio de Janeiro, Buenos Aires, Santiago, Lima and Bogotá; from Tokyo, Seoul, Taipei, Bangkok, Jakarta and Colombo, from Ho Chi Minh City (whose Notre-Dame Basilica remains under a major restoration), Brisbane, Perth and Auckland; and from Jerusalem and Bethlehem, Dubai, Doha, Cape Town, Johannesburg, Nairobi and Lagos — while Cairo keeps the Coptic Christmas on 7 January, its programme announced closer to the day. The Vedanta Gesellschaft in Berlin publishes no Christmas celebration in its 2026 list.</em></p>
+</div>
 
 <iframe
   width="100%"
@@ -359,95 +461,6 @@ A Vedanta journal has its own reason for making room on this crowded map, and it
 A home observance, built from the traditions this guide has drawn on, might run as follows. Begin on Christmas Eve, after dark, with quiet: lights low, devices put away, a candle lit. Read the story aloud — the second chapter of Luke and the first two of Matthew are the whole of it, and they take less than a quarter of an hour — and let the reading be slow enough to hear. Sing or play one carol rather than a playlist; a single hymn attended to is worth an evening of sacred wallpaper. Keep a silence after it, even five minutes, in which the scene is allowed to settle into the heart it was always aimed at.
 
 On Christmas Day, let the feast be a feast: the best food the household can honestly offer, shared, with a place — in fact or in intention — for the one who has no place. Give something away that costs the giver something; the tradition is unambiguous that the festival is kept by giving, and the annual temptation to keep it by acquiring is precisely the innkeeper's error in modern dress. Write to one person from whom you are estranged, or forgive one debt, of money or of grievance, in honour of the day. Visit, telephone or feed somebody for whom the season is not merry — the hospitals and shelters of every city know their names — because the story being celebrated is, at its centre, about heaven's attention to exactly such people. And end the day as it began, with a few minutes of quiet before the candle is put out, and the ancient greeting exchanged in whatever words the household owns: peace on earth, goodwill toward all — and toward each.
-
-<div class="vtt-celebrations" data-festival="christmas">
-<h2>Christmas Celebrations Worldwide</h2>
-<p><em>Every listing below is taken from the institution's own published programme. Times are local to the venue. Where an institution keeps the feast but has not yet published its time, the listing says so rather than guessing.</em></p>
-
-<h3 id="vtt-cel-india">India</h3>
-<ul>
-<li><strong>Ramakrishna Math, Belur Math (Kolkata)</strong> — <strong>Thursday 24 December</strong> — Christmas Eve celebration, from the Math's official List of Celebrations 2026–27. <em>Programme timings are announced by the Math nearer the day.</em></li>
-<li><strong>Sri Ramakrishna Math, Chennai</strong> — <strong>Thursday 24 December</strong> — Christmas Eve observance, held after the evening Arati, from the Math's Festival Calendar 2026–27. <em>The calendar gives the observance rather than a clock time.</em></li>
-</ul>
-
-<h3 id="vtt-cel-malaysia">Malaysia</h3>
-<ul>
-<li><strong>Cathedral of St John the Evangelist, Kuala Lumpur</strong> — <strong>Thursday 24 December</strong> — Carols <strong>5:30 pm</strong>; Vigil Mass (English) <strong>6:00 pm</strong>; Carols <strong>8:00 pm</strong>; Midnight Mass (English) <strong>8:30 pm</strong>; Midnight Mass (Myanmar) <strong>11:00 pm</strong>. <strong>Friday 25 December</strong> — Lauds <strong>7:30 am</strong>; Dawn Mass (English) <strong>8:00 am</strong>; Rosary <strong>10:30 am</strong>; Day Mass (English) <strong>11:00 am</strong>; Mass (Myanmar) <strong>1:00 pm</strong>. <em>From the Archdiocese of Kuala Lumpur's Christmas &amp; New Year Mass Times.</em></li>
-</ul>
-
-<h3 id="vtt-cel-usa">United States</h3>
-<ul>
-<li><strong>Vedanta Society of Western Washington, Seattle</strong> — <strong>Thursday 24 December, 6:00–9:00 pm</strong> — Christ Puja &amp; Christmas Celebration: worship service, traditional carols, prayer and meditation, followed by prasad, at the Seattle Ashrama and livestreamed.</li>
-<li><strong>Vedanta Society of Southern California (Hollywood and sister centres)</strong> — <strong>Thursday 24 December, 6:30 pm</strong> — Christmas Eve Service, after evening vesper, from the society's Calendar of Observances 2026–27. <strong>Friday 25 December</strong> — Christmas Day observance. <em>Venue and further timings are published with the society's December bulletin.</em></li>
-<li><strong>Vedanta Society of New York, New York</strong> — <strong>Thursday 24 December</strong> — Christmas Eve: Reading and Carols, a festival service in the society's published schedule. <em>Time is published with the society's December programme.</em></li>
-<li><strong>Washington National Cathedral, Washington, DC</strong> — <strong>Wednesday 23 &amp; Thursday 24 December, 6:00 pm</strong> — Christmas Lessons &amp; Carols. <strong>Thursday 24 December, 10:00 pm</strong> — Christmas Eve Festival Holy Eucharist. <strong>Friday 25 December</strong> — Christmas Day Festival Holy Eucharist <strong>11:15 am</strong>; Christmas Day Organ Recital <strong>1:30 pm</strong>. <em>Free passes are required for the carol services and the Eve Eucharist, released 16 November; worship itself is never charged.</em></li>
-<li><strong>Basilica of the National Shrine of the Immaculate Conception, Washington, DC</strong> — <strong>Thursday 24 December</strong> — Vigil Mass of the Nativity <strong>4:30 pm</strong>; Choral Meditations on the Nativity <strong>10:00 pm</strong>; Solemn Mass during the Night <strong>10:30 pm</strong>. <strong>Friday 25 December</strong> — Masses at <strong>7:30 am</strong> (Crypt Church), <strong>9:00 am</strong>, <strong>10:30 am</strong>, <strong>12 noon</strong> (Solemn Mass of the Nativity), <strong>2:30 pm</strong> (in Spanish) and <strong>4:30 pm</strong>.</li>
-<li><strong>Cathedral of St John the Divine, New York</strong> — <strong>Thursday 24 December</strong> — Christmas Eve Lessons and Carols <strong>4:00 pm</strong>; Festal Eucharist <strong>10:30 pm</strong>. <strong>Friday 25 December</strong> — Christmas Day Holy Eucharist <strong>10:30 am</strong>. <em>No passes required; services are also livestreamed.</em></li>
-<li><strong>St Patrick's Cathedral, New York</strong> — the Christmas Midnight Mass is celebrated on Christmas Eve and is <strong>ticketed by lottery</strong> (applications closed in October). <em>The cathedral publishes no clock time for the Mass, and its full Christmas Eve and Day schedule follows in December.</em></li>
-<li><strong>Grace Cathedral, San Francisco</strong> — <strong>Thursday 24 December</strong> — The Cathedral Christmas Pageant <strong>11:00 am</strong>; Christmas Eve Lessons and Carols <strong>4:00 pm</strong>; Christmas Eve Choral Eucharist <strong>7:30 pm</strong>; "Midnight Mass" Choral Eucharist with Choir and Orchestra <strong>11:00 pm–12:30 am</strong>. <strong>Friday 25 December</strong> — Christmas Day Choral Eucharist <strong>11:00 am</strong>.</li>
-</ul>
-
-<h3 id="vtt-cel-canada">Canada</h3>
-<ul>
-<li><strong>Cathedral Church of St James, Toronto</strong> — <strong>Thursday 24 December</strong> — Christmas Together, a service for all ages, <strong>3:00 pm</strong>; Festal Organ Recital <strong>4:30 pm</strong>; Christmas Lessons &amp; Carols <strong>5:00 pm</strong>; Choral Eucharist <strong>8:00 pm</strong>. <strong>Friday 25 December</strong> — Said Eucharist <strong>8:00 am</strong>; Choral Eucharist <strong>10:30 am</strong>.</li>
-<li><strong>Christ Church Cathedral, Vancouver</strong> — <strong>Sunday 20 December, 4:00 pm</strong> — the Cathedral Christmas Carol Service (Nine Lessons and Carols). <em>Its Christmas Eve and Day services are published with the cathedral's Advent programme.</em></li>
-</ul>
-
-<h3 id="vtt-cel-australia">Australia</h3>
-<ul>
-<li><strong>Vedanta Centre of Sydney, Ermington (Sydney)</strong> — <strong>Thursday 24 December</strong> — Celebration of Christmas Eve: Aratrikam <strong>7:00 pm</strong>; Worship and Singing of Hymns and Christmas Carols <strong>7:30 pm</strong>; distribution of consecrated food <strong>8:30 pm</strong>.</li>
-<li><strong>St Mary's Cathedral, Sydney</strong> — <strong>Thursday 24 December</strong> — Carols in the Cathedral <strong>7:30 pm</strong>; Christmas Vigil Mass <strong>8:00 pm</strong>. <em>The cathedral's full Christmas timetable, including Christmas Day, is announced in December.</em></li>
-<li><strong>St Patrick's Cathedral, Melbourne</strong> — <strong>Thursday 24 December</strong> — Christmas Vigil <strong>11:30 pm</strong>. <strong>Friday 25 December</strong> — Christmas Day Mass <strong>11:00 am</strong>. <em>From the Archdiocese of Melbourne's 2026 key-dates calendar, whose entries are subject to change; the cathedral's full programme follows.</em></li>
-</ul>
-
-<h3 id="vtt-cel-uk">United Kingdom</h3>
-<ul>
-<li><strong>Canterbury Cathedral, Canterbury</strong> — <strong>Wednesday 23 &amp; Thursday 24 December, 5:30–7:00 pm</strong> — Cathedral Carol Services. <strong>Thursday 24 December</strong> — Family Crib Service <strong>10:00–10:45 am</strong>; Midnight Mass <strong>11:00 pm–12:05 am</strong>. <strong>Friday 25 December</strong> — Christmas Eucharist <strong>11:00 am</strong>; Evensong with Carols <strong>3:00 pm</strong>. <em>From the Cathedral's own Christmas page; most services are also livestreamed.</em></li>
-<li><strong>Westminster Abbey, London</strong> — <strong>Wednesday 23 &amp; Thursday 24 December</strong> — Service of Lessons and Carols. <strong>Thursday 24 December, late evening</strong> — First Eucharist of Christmas (Midnight Mass). <strong>Friday 25 December</strong> — Holy Communion <strong>8:00 am</strong>; Sung Eucharist <strong>10:30 am</strong>; Evensong <strong>3:00 pm</strong>. <em>The carol services and the Midnight Mass are free but ticketed — tickets are released 16 and 18 November, with service times given at booking.</em></li>
-<li><strong>St Paul's Cathedral, London</strong> — <strong>Wednesday 23 &amp; Thursday 24 December, 4:00 pm</strong> — Christmas Carol Services (free tickets by ballot). <em>The Midnight Eucharist on Christmas Eve and the Christmas Day services are held as every year; their times are published with the cathedral's booking information.</em></li>
-<li><strong>York Minster, York</strong> — <strong>Thursday 24 December</strong> — Festival of Nine Lessons and Carols <strong>4:00 pm</strong>; Midnight Mass <strong>11:30 pm</strong>. <strong>Friday 25 December</strong> — Choral Matins <strong>10:00 am</strong>; Sung Eucharist <strong>11:00 am</strong>; Choral Evensong <strong>4:00 pm</strong>. <em>No booking required for the Christmas Day services.</em></li>
-<li><strong>St Giles' Cathedral, Edinburgh</strong> — <strong>Thursday 24 December</strong> — Christingle Service <strong>4:00 pm</strong>; Christmas Eve Service <strong>7:00 pm</strong>; Watchnight Service <strong>11:30 pm</strong>. <strong>Friday 25 December</strong> — Christmas Day Communion Service <strong>9:30 am</strong>; Christmas Day Morning Service <strong>11:00 am</strong>.</li>
-</ul>
-
-<h3 id="vtt-cel-ireland">Ireland</h3>
-<ul>
-<li><strong>Christ Church Cathedral, Dublin</strong> — <strong>Monday 21 December, 6:00 pm</strong> — Nine Lessons and Carols. <strong>Thursday 24 December, 11:00 pm</strong> — Festal Eucharist for Christmas Eve. <strong>Friday 25 December, 11:00 am</strong> — Festal Eucharist for Christmas Day. <em>There is no charge to attend services.</em></li>
-<li><strong>St Patrick's Cathedral, Dublin</strong> — its Christmas Eve Service of Nine Lessons and Carols is kept every year, admission by ticket only. <em>Its December service list, with the time, is published by the cathedral in December.</em></li>
-</ul>
-
-<h3 id="vtt-cel-germany">Germany</h3>
-<ul>
-<li><strong>Berlin Cathedral (Berliner Dom), Berlin</strong> — <strong>Thursday 24 December</strong> — Christvesper (Christmas Eve vespers) at <strong>2:00 pm</strong>, <strong>4:00 pm</strong> and <strong>6:00 pm</strong>; Christmette at <strong>10:00 pm</strong> and at <strong>midnight</strong>. <strong>Friday 25 December</strong> — Christmas Day service <strong>10:00 am</strong>; evening service <strong>6:00 pm</strong>. <em>All public, no registration, and livestreamed.</em></li>
-<li><strong>Cologne Cathedral (Kölner Dom), Cologne</strong> — <strong>Thursday 24 December, midnight</strong> — the Christmette, the Christmas Eve Mass of the Night celebrated with the Archbishop. <strong>Friday 25 December, 10:00 am</strong> — Pontifical Mass of Christmas Day. <em>From the cathedral's official services list; its full Christmas programme follows.</em></li>
-</ul>
-
-<h3 id="vtt-cel-switzerland">Switzerland</h3>
-<ul>
-<li><strong>Grossmünster, Zurich</strong> — <strong>Thursday 24 December, 10:00 pm</strong> — Christnachtfeier, the Christmas Night celebration of Christmas Eve. <strong>Friday 25 December, 10:00 am</strong> — Christmas Day service. <em>From the official programme of Zurich's old-town churches.</em></li>
-</ul>
-
-<h3 id="vtt-cel-poland">Poland</h3>
-<ul>
-<li><strong>Wawel Cathedral, Kraków</strong> — <strong>Christmas Eve night, midnight</strong> — the Pasterka, the shepherds' Midnight Mass. <strong>Christmas Day</strong> — Mass at <strong>10:00 am</strong>. <em>From the cathedral parish's standing list of the year's great feasts; its dated December bulletin follows.</em></li>
-</ul>
-
-<h3 id="vtt-cel-france">France</h3>
-<ul>
-<li><strong>Centre Védantique Ramakrishna, Gretz-Armainvilliers</strong> — <strong>Christmas Eve, 24 December</strong> — the Christ Puja, which the centre's own celebrations page describes as always celebrated on Christmas Eve. <em>Time is published with the centre's December programme.</em></li>
-</ul>
-
-<h3 id="vtt-cel-brazil">Brazil</h3>
-<ul>
-<li><strong>Ramakrishna Vedanta Ashrama, São Paulo</strong> — Christmas Eve is one of the ashrama's six annual celebrations, kept with its yearly festivals. <em>Its celebrations generally run 9:00 am–12:30 pm; the date for the year is announced by the ashrama.</em></li>
-</ul>
-
-<h3 id="vtt-cel-vatican">Vatican City</h3>
-<ul>
-<li><strong>St Peter's Basilica</strong> — <strong>Thursday 24 December</strong> — Christmas Eve Mass with the Holy Father. <strong>Friday 25 December</strong> — Christmas message and the Urbi et Orbi blessing. <em>The Holy See publishes the celebration times in early December; this listing is completed when its notice appears.</em></li>
-</ul>
-
-<p><em>The following centres and cathedrals are not yet listed, because their Christmas programmes had not been published (last updated 7 November 2026): the Vivekananda Vedanta Society of Chicago, the Vedanta Society of Toronto, the Ramakrishna Vedanta Centre in London and the Ramakrishna Centre in Durban; Westminster Cathedral and Notre-Dame in Paris; St Stephen's Cathedral in Vienna, Milan Cathedral and the Sagrada Família in Barcelona; Christ Church Cathedral in Montreal; Manila Cathedral (whose Simbang Gabi dawn Masses are announced closer to the season), St John's Cathedral in Hong Kong and the Cathedral of the Good Shepherd in Singapore; and Sacred Heart Cathedral in Delhi, St Thomas Cathedral in Mumbai and the Basilica of Bom Jesus in Goa. Also not yet listed, with no 2026 programme published yet: Almudena Cathedral in Madrid, Lisbon Cathedral, Florence Cathedral, St Mark's in Venice, Seville Cathedral, the Basilica of St Nicholas in Amsterdam, Brussels Cathedral, Munich's Frauenkirche, St Vitus in Prague, St Stephen's Basilica in Budapest, St John's Archcathedral in Warsaw, St Pierre in Geneva, Stockholm Cathedral, Copenhagen Cathedral and the Metropolitan Cathedral of Athens. And the same holds for Holy Name Cathedral in Chicago or the cathedrals of Los Angeles, Boston, Houston and New Orleans; from Mexico City, São Paulo, Rio de Janeiro, Buenos Aires, Santiago, Lima and Bogotá; from Tokyo, Seoul, Taipei, Bangkok, Jakarta and Colombo, from Ho Chi Minh City (whose Notre-Dame Basilica remains under a major restoration), Brisbane, Perth and Auckland; and from Jerusalem and Bethlehem, Dubai, Doha, Cape Town, Johannesburg, Nairobi and Lagos — while Cairo keeps the Coptic Christmas on 7 January, its programme announced closer to the day. The Vedanta Gesellschaft in Berlin publishes no Christmas celebration in its 2026 list.</em></p>
-</div>
 
 ## 14. The Christian Web: Where to Go Next
 
