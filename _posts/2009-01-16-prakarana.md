@@ -2,7 +2,7 @@
 layout: post
 title: "Tattva Bodha: A Clear Map to Truth"
 date: 2009-01-16 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-18.webp
 categories:
   - Prakaraṇa
   - Tattva Bodha

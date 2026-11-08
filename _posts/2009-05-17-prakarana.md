@@ -2,7 +2,7 @@
 layout: post
 title: "Atma Bodha: Lamp of Self-Knowledge Within"
 date: 2009-05-17 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-01.webp
 categories:
   - Prakaraṇa
   - Atma Bodha

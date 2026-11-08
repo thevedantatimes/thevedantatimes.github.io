@@ -2,7 +2,7 @@
 layout: post
 title: "Prasthāna-trayī: The Threefold Foundation of Vedānta"
 date: 2006-09-14 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-15.webp
 categories:
   - Prasthāna-trayī
 snippet: "Prasthāna-trayī unites Upaniṣads, Gita, and Brahma Sutras as Vedānta’s core authoritative foundations."

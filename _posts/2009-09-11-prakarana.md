@@ -2,7 +2,7 @@
 layout: post
 title: "Drig-Drishya Viveka: Eight Lamps Revealing Seer, Seen, and Reality Clearly"
 date: 2009-09-11 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-05.webp
 categories:
   - Prakaraṇa
   - Drig-Drishya Viveka

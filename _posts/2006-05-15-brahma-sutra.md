@@ -2,7 +2,7 @@
 layout: post
 title: "Brahma Sūtras: The Philosophical Backbone of Vedānta and the Prasthāna-trayī"
 date: 2006-05-15 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-04.webp
 categories:
   - Prasthāna-trayī
   - Brahma Sutras

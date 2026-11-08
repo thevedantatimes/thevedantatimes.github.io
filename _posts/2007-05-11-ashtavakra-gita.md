@@ -2,7 +2,7 @@
 layout: post
 title: "Aṣṭāvakra Gītā: A Radical Manual of Non-Dual Freedom in the Gītā-prakaraṇa Tradition"
 date: 2007-05-11 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-20.webp
 categories:
   - Gītā-prakaraṇa
   - Ashtavakra Gita

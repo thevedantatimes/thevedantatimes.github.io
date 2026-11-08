@@ -2,7 +2,7 @@
 layout: post
 title: "Prakaraṇa Granthas: Guiding Lamps for Vedānta Seekers"
 date: 2008-09-13 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-23.webp
 categories:
   - Prakaraṇa
 snippet: "Prakaraṇa Granthas clarify Vedānta essentials through structured reasoning, practice guidance, and accessible teachings."
