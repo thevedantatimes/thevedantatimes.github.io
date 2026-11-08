@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Christmas: The Birth of Jesus and the Light That Is Born Within"
-date: 2026-11-08 00:34:00 -0600
+date: 2026-11-08 00:14:00 -0600
 image: /assets/img/maya.webp
 categories:
   - Christianity
