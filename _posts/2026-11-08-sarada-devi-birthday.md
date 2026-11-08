@@ -16,8 +16,8 @@ She was married at five to a priest the world would come to know as Sri Ramakris
 </div>
 
 <nav class="vtt-finder">
-<p><strong>Find a celebration near you — the Holy Mother's Birthday:</strong> <a href="#vtt-cel-india">India</a> · <a href="#vtt-cel-singapore">Singapore</a> · <a href="#vtt-cel-germany">Germany</a> · <a href="#vtt-cel-usa">United States</a></p>
-<p><em>Berlin and Houston keep the Holy Mother's Puja together with Kalpataru Day on Friday 1 January; no centre has yet published a timed programme for 30 December itself.</em></p>
+<p><strong>Find a celebration near you — the Holy Mother's Birthday:</strong> <a href="#vtt-cel-india">India</a> · <a href="#vtt-cel-singapore">Singapore</a> · <a href="#vtt-cel-australia">Australia</a> · <a href="#vtt-cel-germany">Germany</a> · <a href="#vtt-cel-usa">United States</a></p>
+<p><em>With service times already confirmed in:</em> Sydney. <em>Berlin and Houston keep the Holy Mother's Puja together with Kalpataru Day on Friday 1 January.</em></p>
 </nav>
 
 ## The Holy Mother's Birthday Celebrations Worldwide
@@ -37,6 +37,11 @@ She was married at five to a priest the world would come to know as Sri Ramakris
 <li><strong>Ramakrishna Mission, Singapore</strong> — <strong>Wednesday 30 December</strong> — Sri Sarada Devi Jayanti, from the Mission's Festival Calendar. <em>The calendar gives the observance rather than a clock time.</em></li>
 </ul>
 
+<h3 id="vtt-cel-australia">Australia</h3>
+<ul>
+<li><strong>Vedanta Centre of Sydney, Ermington (Sydney)</strong> — <strong>Wednesday 30 December</strong> — the Holy Mother's birthday, from the centre's own published programme: the morning puja begins at <strong>8:45 am</strong>, with homa at <strong>11:30 am</strong>, pushpanjali (flower offering) at <strong>12:30 pm</strong> and prasad at <strong>1:00 pm</strong>; in the evening, Aratrikam and Sarada Nama Sankirtanam at <strong>6:30 pm</strong>, a talk on the Holy Mother at <strong>7:15 pm</strong> and prasad at <strong>8:15 pm</strong>.</li>
+</ul>
+
 <h3 id="vtt-cel-germany">Germany</h3>
 <ul>
 <li><strong>Vedanta Gesellschaft, Berlin</strong> — the society keeps the Holy Mother's Puja together with Kalpataru Day at its year-end retreat: <strong>Thursday 31 December, 9:30 pm</strong> — discourses on the Holy Mother and the significance of Kalpataru Day; <strong>Friday 1 January, 10:45 am</strong> — the Kalpataru Day and Holy Mother Puja, followed by lunch prasad at 12:00 noon. <em>From the society's own retreat programme.</em></li>
@@ -48,7 +53,7 @@ She was married at five to a priest the world would come to know as Sri Ramakris
 <li><strong>Vedanta Society of Greater Houston, Houston</strong> — <strong>Friday 1 January</strong> — the society keeps the Holy Mother Sri Sarada Devi's Birthday together with its Kalpataru Day celebrations, from its own published list of confirmed events. <em>No clock time is published.</em></li>
 </ul>
 
-<p><em>The following centres are not yet listed, because their programmes for the Holy Mother's birthday had not been published (last updated 8 November 2026): Sri Sarada Math in Dakshineswar and the Matri Mandir at Jayrambati, which has no official page of its own; the Ramakrishna Maths in Bengaluru and Hyderabad, the Ramakrishna Mission in Delhi and its Institute of Culture at Golpark; and the Vedanta societies and centres of Southern California, San Francisco, Seattle, Chicago, Boston, Toronto, London, Sydney and Durban.</em></p>
+<p><em>The following centres are not yet listed, because their programmes for the Holy Mother's birthday had not been published (last updated 8 November 2026): Sri Sarada Math in Dakshineswar and the Matri Mandir at Jayrambati, which has no official page of its own; the Ramakrishna Maths in Bengaluru and Hyderabad, the Ramakrishna Mission in Delhi and its Institute of Culture at Golpark; and the Vedanta societies and centres of Southern California, San Francisco, Seattle, Chicago, Boston, Toronto, London and Durban.</em></p>
 </div>
 
 <iframe
