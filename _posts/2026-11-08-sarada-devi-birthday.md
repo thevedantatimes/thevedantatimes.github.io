@@ -44,16 +44,16 @@ She was married at five to a priest the world would come to know as Sri Ramakris
 
 <h3 id="vtt-cel-germany">Germany</h3>
 <ul>
-<li><strong>Vedanta Gesellschaft, Berlin</strong> — the society keeps the Holy Mother's Puja together with Kalpataru Day at its year-end retreat: <strong>Thursday 31 December, 9:30 pm</strong> — discourses on the Holy Mother and the significance of Kalpataru Day; <strong>Friday 1 January, 10:45 am</strong> — the Kalpataru Day and Holy Mother Puja, followed by lunch prasad at 12:00 noon. <em>From the society's own retreat programme.</em></li>
+<li><strong>Vedanta Gesellschaft, Berlin</strong> — the society keeps the Holy Mother's Puja together with Kalpataru Day at its year-end retreat: <strong>Thursday 31 December, 10:30 pm</strong> — discourses on the Holy Mother and the significance of Kalpataru Day; <strong>Friday 1 January, 10:45 am</strong> — the Kalpataru Day and Holy Mother Puja, followed by lunch prasad at 12:00 noon. <em>From the society's own retreat programme.</em></li>
 </ul>
 
 <h3 id="vtt-cel-usa">United States</h3>
 <ul>
 <li><strong>Vedanta Society of New York, New York</strong> — <strong>Wednesday 30 December</strong> — Sri Sarada Devi's birthday in the society's own Festival Calendar. <em>The calendar notes that only some of its listed celebrations are held at the centre, and refers devotees to the society's monthly bulletin for the services it holds.</em></li>
-<li><strong>Vedanta Society of Greater Houston, Houston</strong> — <strong>Friday 1 January</strong> — the society keeps the Holy Mother Sri Sarada Devi's Birthday together with its Kalpataru Day celebrations, from its own published list of confirmed events. <em>No clock time is published.</em></li>
+<li><strong>Vedanta Society of Southern California, Hollywood</strong> — <strong>Sunday 27 December</strong> — Sri Sarada Devi Puja, the society's public celebration of the Holy Mother's birthday, from its own Calendar of Observances; the birthday tithi itself falls on <strong>Wednesday 30 December</strong>. <em>No clock time is published in the calendar.</em></li> <li><strong>Vedanta Society of Greater Houston, Houston</strong> — <strong>Friday 1 January</strong> — the society keeps the Holy Mother Sri Sarada Devi's Birthday together with its Kalpataru Day celebrations, from its own published list of confirmed events. <em>No clock time is published.</em></li>
 </ul>
 
-<p><em>The following centres are not yet listed, because their programmes for the Holy Mother's birthday had not been published (last updated 8 November 2026): Sri Sarada Math in Dakshineswar and the Matri Mandir at Jayrambati, which has no official page of its own; the Ramakrishna Maths in Bengaluru and Hyderabad, the Ramakrishna Mission in Delhi and its Institute of Culture at Golpark; and the Vedanta societies and centres of Southern California, San Francisco, Seattle, Chicago, Boston, Toronto, London and Durban.</em></p>
+<p><em>The following centres are not yet listed, because their programmes for the Holy Mother's birthday had not been published (last updated 15 November 2026): Sri Sarada Math in Dakshineswar and the Matri Mandir at Jayrambati, which has no official page of its own; the Ramakrishna Maths in Bengaluru and Hyderabad, the Ramakrishna Mission in Delhi and its Institute of Culture at Golpark; and the Vedanta societies and centres of San Francisco, Seattle, Chicago, Boston, Toronto, London and Durban.</em></p>
 </div>
 
 <iframe
