@@ -38,7 +38,7 @@ Of all the festivals in this series, this is the only one founded on a single af
 
 <h3 id="vtt-cel-germany">Germany</h3>
 <ul>
-<li><strong>Vedanta Gesellschaft, Berlin</strong> — the society keeps Kalpataru Day together with the Holy Mother's Puja at its year-end retreat: <strong>Thursday 31 December, 9:30 pm</strong> — discourses on the Holy Mother and the significance of Kalpataru Day; <strong>Friday 1 January, 10:45 am</strong> — the Kalpataru Day and Holy Mother Puja, followed by lunch prasad at 12:00 noon. <em>From the society's own retreat programme.</em></li>
+<li><strong>Vedanta Gesellschaft, Berlin</strong> — the society keeps Kalpataru Day together with the Holy Mother's Puja at its year-end retreat: <strong>Thursday 31 December, 10:30 pm</strong> — discourses on the Holy Mother and the significance of Kalpataru Day; <strong>Friday 1 January, 10:45 am</strong> — the Kalpataru Day and Holy Mother Puja, followed by lunch prasad at 12:00 noon. <em>From the society's own retreat programme.</em></li>
 </ul>
 
 <h3 id="vtt-cel-singapore">Singapore</h3>
@@ -54,7 +54,7 @@ Of all the festivals in this series, this is the only one founded on a single af
 <li><strong>Vedanta Society of Western Washington, Seattle</strong> — <strong>1 January</strong> — the society's own page describes its customary Kalpataru Day as a daylong meditation vigil at the ashrama, beginning at <strong>7:00 am</strong> and concluding with vespers and a special talk in the evening. <em>That is the society's standing description of the day it keeps every year; its programme for this January had not been published separately.</em></li>
 </ul>
 
-<p><em>The following centres are not yet listed, because their programmes for Kalpataru Day had not been published (last updated 8 November 2026): Belur Math, whose own programme for the day is still to come, and the Ramakrishna Math at Kashipur — the Cossipore garden house itself; and the Vedanta societies and centres of San Francisco, Chicago, Toronto, London, Durban, Gretz in France, Japan, Buenos Aires and São Paulo.</em></p>
+<p><em>The following centres are not yet listed, because their programmes for Kalpataru Day had not been published (last updated 15 November 2026): Belur Math, whose own programme for the day is still to come, and the Ramakrishna Math at Kashipur — the Cossipore garden house itself; and the Vedanta societies and centres of San Francisco, Chicago, Toronto, London, Durban, Gretz in France, Japan, Buenos Aires and São Paulo.</em></p>
 </div>
 
 <iframe
