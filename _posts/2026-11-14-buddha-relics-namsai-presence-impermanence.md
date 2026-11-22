@@ -2,7 +2,7 @@
 layout: post
 title: "The Buddha's Relics at Namsai: Presence, Impermanence and the Teacher Who Remains in the Dhamma"
 date: 2026-11-14 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-48.webp
 categories:
   - Buddhism
   - Interfaith

@@ -2,7 +2,7 @@
 layout: post
 title: "Shivaratri Bilva Leaves: Simple Offerings, Deep Transformation Within"
 date: 2027-08-28 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-36.webp
 categories:
   - Maha Shivaratri
 snippet: "Bilva leaves teach how minimal ritual, offered sincerely, becomes inner purification and nondual clarity."

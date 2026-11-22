@@ -2,7 +2,7 @@
 layout: post
 title: "Lhabab Duchen and the Buddha's Descent: Gratitude, Merit and the Return to Serve"
 date: 2026-11-07 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-51.webp
 categories:
   - Buddhism
   - Karma

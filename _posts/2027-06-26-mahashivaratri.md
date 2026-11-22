@@ -2,7 +2,7 @@
 layout: post
 title: "Arjuna’s Ekagrata: Shivaratri Focus As Liberation Practice Today"
 date: 2027-06-26 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-19.webp
 categories:
   - Maha Shivaratri
 snippet: "Arjuna’s ekagrata becomes a modern path: concentration that matures into Self-knowledge and freedom."

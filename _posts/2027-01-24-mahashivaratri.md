@@ -2,7 +2,7 @@
 layout: post
 title: "Shivaratri Nandi Devotion: The Power Of Silent Listening"
 date: 2027-01-24 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-37.webp
 categories:
   - Maha Shivaratri
 snippet: "Nandi's quiet devotion reveals how deep listening cultivates humility, wisdom, and speech that heals."

@@ -2,7 +2,7 @@
 layout: post
 title: "The Persistent Widow: Praying Without Losing Heart and the Justice God Hears"
 date: 2026-11-15 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-42.webp
 categories:
   - Christianity
   - Interfaith

@@ -2,7 +2,7 @@
 layout: post
 title: "Shivaratri Ganesha: Removing Inner Obstacles Through Daily Sadhana"
 date: 2027-02-27 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-42.webp
 categories:
   - Maha Shivaratri
 snippet: "Ganesha shows how vows and steady practice dissolve inner obstacles, clearing the way for freedom."

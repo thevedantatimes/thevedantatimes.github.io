@@ -2,7 +2,7 @@
 layout: post
 title: "Shivaratri Ganga Descent: Grace Held By Inner Stillness"
 date: 2026-12-17 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-38.webp
 categories:
   - Maha Shivaratri
 snippet: "Shiva's stillness shows how to hold intense grace safely, letting insight flow without overwhelm."

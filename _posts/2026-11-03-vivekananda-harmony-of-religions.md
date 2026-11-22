@@ -2,7 +2,7 @@
 layout: post
 title: "Swami Vivekananda and the Harmony of Religions: Pathways of Peace for One Humanity"
 date: 2026-11-03 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-53.webp
 categories:
   - Swami Vivekananda
   - Interfaith

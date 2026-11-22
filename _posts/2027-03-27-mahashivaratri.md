@@ -2,7 +2,7 @@
 layout: post
 title: "Shivaratri Kartikeya: Courageful Heart, Compassionate Inner Warrior Practice"
 date: 2027-03-27 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-19.webp
 categories:
   - Maha Shivaratri
 snippet: "Kartikeya’s warrior symbolism becomes inner courage: disciplining anger and fear into compassionate clarity."

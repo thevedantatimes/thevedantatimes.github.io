@@ -2,7 +2,7 @@
 layout: post
 title: "The Second Arrow: The Buddha on Pain, the Suffering We Add, and the Freedom of One Arrow Only"
 date: 2026-11-21 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-50.webp
 categories:
   - Buddhism
   - Meditation

@@ -2,7 +2,7 @@
 layout: post
 title: "Shivaratri Fasting: Vedantic Experiment With Desire And Freedom"
 date: 2027-07-24 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-37.webp
 categories:
   - Maha Shivaratri
 snippet: "Fasting on Shivaratri becomes a laboratory for desire, revealing vasanas and strengthening inner freedom."

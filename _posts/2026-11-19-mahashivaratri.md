@@ -2,7 +2,7 @@
 layout: post
 title: "Shivaratri Daksha Yajna: Ego, Offense, Inner Collapse"
 date: 2026-11-19 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-35.webp
 categories:
   - Maha Shivaratri
 snippet: "Daksha’s yajna warns how pride and contempt trigger offense, collapse, and spiritual blindness."

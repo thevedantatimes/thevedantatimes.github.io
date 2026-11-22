@@ -2,7 +2,7 @@
 layout: post
 title: "Shivaratri Markandeya: Death's Doorway Into Nondual Awareness Now"
 date: 2027-04-24 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-56.webp
 categories:
   - Maha Shivaratri
 snippet: "Markandeya’s legend becomes a fear-to-freedom map: surrendering time, resting as awareness, living dharmically."

@@ -2,7 +2,7 @@
 layout: post
 title: "Shivaratri Ravana: Tapas, Pride, Power, Ethical Purification Always"
 date: 2027-05-29 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-33.webp
 categories:
   - Maha Shivaratri
 snippet: "Ravana shows how devotion and ego can coexist; tapas must be refined by ethics, humility, and service."
