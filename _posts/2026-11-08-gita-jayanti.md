@@ -17,7 +17,7 @@ On a battlefield, in the last minutes before a war, a charioteer stopped the cha
 
 <nav class="vtt-finder">
 <p><strong>Find a celebration near you — Gita Jayanti:</strong> <a href="#vtt-cel-india">India</a> · <a href="#vtt-cel-uk">United Kingdom</a> · <a href="#vtt-cel-australia">Australia</a> · <a href="#vtt-cel-sweden">Sweden</a> · <a href="#vtt-cel-singapore">Singapore</a> · <a href="#vtt-cel-usa">United States</a></p>
-<p><em>With service times already confirmed in:</em> Watford · Sydney · Stockholm</p>
+<p><em>With service times already confirmed in:</em> Watford · Brisbane · Stockholm</p>
 </nav>
 
 ## Gita Jayanti Celebrations Worldwide
@@ -27,7 +27,7 @@ On a battlefield, in the last minutes before a war, a charioteer stopped the cha
 
 <h3 id="vtt-cel-india">India</h3>
 <ul>
-<li><strong>International Gita Mahotsav, Kurukshetra</strong> — the festival of the day at the place where the Gita was spoken, held around Brahma Sarovar. <em>The Kurukshetra Development Board's own documents fix this year's festival window as 5–25 December; the day-by-day programme is published by the Board as the festival opens.</em></li>
+<li><strong>International Gita Mahotsav, Kurukshetra</strong> — the festival of the day at the place where the Gita was spoken, held around Brahma Sarovar, this year from <strong>5 to 25 December</strong>. On <strong>Sunday 20 December</strong> itself: the Global Gita Chanting, <strong>10:00 am–12:30 pm</strong> at Keshav Park, where some 27,000 students take up the verses together, and the Gita Shobha Yatra, setting out at <strong>3:00 pm</strong> from Jairam Ashram. <em>From the Mahotsav's own published schedule.</em></li>
 <li><strong>ISKCON Bangalore, Bengaluru</strong> — <strong>Sunday 20 December</strong> — Gita Jayanti kept with Vaikuntha Ekadashi at the Sri Radha Krishna Temple, Hare Krishna Hill, Rajajinagar, and at Vaikuntha Hill, Vasanthapura. <em>The temple publishes no programme times for the day.</em></li>
 <li><strong>ISKCON Bhopal, Bhopal</strong> — <strong>Sunday 20 December</strong> — Gita Jayanti and Mokshada Ekadashi at the Sri Gaura Radha Vallabha Temple, Patel Nagar: recitation of all 700 verses of the Bhagavad Gita, Maha Gita Yajna, and distribution of Srila Prabhupada's Bhagavad Gita As It Is. <em>From the temple's own festivals page; no time is published.</em></li> <li><strong>Tirumala Tirupati Devasthanams, Tirumala</strong> — <strong>20–29 December</strong> — the ten days of Vaikunta Dwara Darshan, when the same Ekadashi is kept at Tirumala as Vaikuntha Ekadashi and the Vaikuntha Dwaram is opened. <em>From the Devasthanams' own announcements; darshan is by its token arrangements, and no clock times are published.</em></li>
 <li><strong>Ramakrishna Math, Belur Math (Kolkata)</strong> — <strong>Sunday 20 December</strong> — Ekadashi, kept at the Math with Rama-Nama Sankirtanam, from the Math's official List of Celebrations. <em>The Math publishes no clock time for the day.</em></li>
@@ -42,7 +42,8 @@ On a battlefield, in the last minutes before a war, a charioteer stopped the cha
 
 <h3 id="vtt-cel-australia">Australia</h3>
 <ul>
-<li><strong>Chinmaya Mission, Chinmaya Sannidhi, Castle Hill (Sydney)</strong> — <strong>Sunday 20 December, 8:30 am–12:30 pm</strong> — Bhagavad Gita Jayanti and Tapovan Jayanti: pooja for the Gita, then the chanting of all eighteen chapters, concluding with maha prasad. <em>From the centre's own event listing.</em></li>
+<li><strong>Chinmaya Mission, Chinmaya Sannidhi, Castle Hill (Sydney)</strong> — <strong>Sunday 20 December</strong> — Bhagavad Gita Jayanti and Tapovan Jayanti: pooja for the Gita, then the chanting of all eighteen chapters, concluding with maha prasad. <em>The centre keeps this celebration every year; its time for this year had not been published.</em></li>
+<li><strong>Chinmaya Mission, Chinmaya Bhuvanam, Ellen Grove (Brisbane)</strong> — <strong>Sunday 20 December, 2:00–7:30 pm</strong> — Bhagavad Geeta Jayanti and Tapovan Jayanti: the chanting of all eighteen chapters from 2:10 pm, pooja for the Gita and Swami Tapovan Maharaj at 6:00 pm, maha arati at 7:00 pm, concluding with maha prasad. <em>From the Mission's own event listing; admission is free, with registration asked for the prasad.</em></li>
 </ul>
 
 <h3 id="vtt-cel-sweden">Sweden</h3>
@@ -61,7 +62,7 @@ On a battlefield, in the last minutes before a war, a charioteer stopped the cha
 <li><strong>Vedanta Society of New York, New York</strong> — the society's Bhagavad Gita class with Swami Sarvapriyananda, held every <strong>Friday at 7:30 pm</strong>, runs through the festival week (Friday 18 December). <em>This is the society's standing class, listed here because it is the Gita study the week itself offers; the society had published no separate Jayanti service.</em></li>
 </ul>
 
-<p><em>The following centres and temples are not yet listed, because their Gita Jayanti programmes had not been published (last updated 15 November 2026): ISKCON Juhu in Mumbai, ISKCON Delhi, ISKCON Mayapur and ISKCON Vrindavan; ISKCON Gurugram, ISKCON Navi Mumbai, ISKCON Pune and ISKCON Naperville, whose calendars name the day while their programmes are still to come; Sri Ranganathaswamy Temple in Srirangam, whose Vaikuntha Ekadashi season had not been published on an official page; and the BAPS Swaminarayan temples.</em></p>
+<p><em>The following centres and temples are not yet listed, because their Gita Jayanti programmes had not been published (last updated 22 November 2026): ISKCON Juhu in Mumbai, ISKCON Delhi, ISKCON Mayapur and ISKCON Vrindavan; ISKCON Gurugram, ISKCON Navi Mumbai, ISKCON Pune and ISKCON Naperville, whose calendars name the day while their programmes are still to come; Sri Ranganathaswamy Temple in Srirangam, whose Vaikuntha Ekadashi season had not been published on an official page; and the BAPS Swaminarayan temples.</em></p>
 </div>
 
 <iframe
