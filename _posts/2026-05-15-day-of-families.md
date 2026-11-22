@@ -2,7 +2,7 @@
 layout: post
 title: "International Day Of Families: Dharma, Seva, Growth"
 date: 2026-05-15 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-32.webp
 categories:
   - Current Affairs
 snippet: "Vedanta reframes family life as sadhana: dharma, seva, conflict-transformation, and liberating love."

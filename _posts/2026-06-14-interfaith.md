@@ -2,7 +2,7 @@
 layout: post
 title: "Discipleship Basics Through Vedanta And Christian Wisdom"
 date: 2026-06-14 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-41.webp
 categories:
   - Vedanta
   - Interfaith

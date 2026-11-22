@@ -2,7 +2,7 @@
 layout: post
 title: "International Women’s Day: Shakti Beyond Social Labels"
 date: 2026-03-08 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-34.webp
 categories:
   - Current Affairs
 snippet: "Honor the Divine Shakti in all, practice dignity daily, and dissolve labels with Vedantic vision."

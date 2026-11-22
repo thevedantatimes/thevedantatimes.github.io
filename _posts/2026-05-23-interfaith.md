@@ -2,7 +2,7 @@
 layout: post
 title: "Read The Bible Daily With Vedantic Clarity Plan"
 date: 2026-05-23 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-26.webp
 categories:
   - Vedanta
   - Interfaith

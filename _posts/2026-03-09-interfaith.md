@@ -2,7 +2,7 @@
 layout: post
 title: "Holy Spirit And Antaryāmin: Inner Guidance For Transformation"
 date: 2026-03-09 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-44.webp
 categories:
   - Vedanta
   - Interfaith

@@ -2,7 +2,7 @@
 layout: post
 title: "World Press Freedom Day: Vedanta, Satya, Information Hygiene"
 date: 2026-05-03 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-49.webp
 categories:
   - Current Affairs
 snippet: "On May 3, practice truth, discernment, and calm media habits that protect inner freedom."

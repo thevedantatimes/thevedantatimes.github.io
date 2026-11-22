@@ -2,7 +2,7 @@
 layout: post
 title: "Graduation Season Purpose: Vedanta For Right Work Today"
 date: 2026-05-29 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-10.webp
 categories:
   - Current Affairs
 snippet: "Vedanta guides graduates toward dharma-driven work, calm effort, wise ambition, and freedom from comparison."

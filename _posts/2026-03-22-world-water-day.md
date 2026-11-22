@@ -2,7 +2,7 @@
 layout: post
 title: "World Water Day: Sacred Reverence, Stewardship, Vedantic Consumption"
 date: 2026-03-22 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-02.webp
 categories:
   - Current Affairs
 snippet: "Vedanta honors water as sacred, guiding stewardship, restraint, and compassionate consumption in daily life."

@@ -2,7 +2,7 @@
 layout: post
 title: "World Environment Day: Vedanta For Climate Action"
 date: 2026-06-05 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-32.webp
 categories:
   - Current Affairs
 snippet: "Vedanta reframes climate duty as interconnection, empowering fearless action, compassion, and practical systemic change."

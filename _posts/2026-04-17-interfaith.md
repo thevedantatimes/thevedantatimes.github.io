@@ -2,7 +2,7 @@
 layout: post
 title: "Can I Trust The Bible Through Vedantic Wisdom"
 date: 2026-04-17 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-28.webp
 categories:
   - Vedanta
   - Interfaith

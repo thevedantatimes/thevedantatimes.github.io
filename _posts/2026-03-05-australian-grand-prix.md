@@ -2,7 +2,7 @@
 layout: post
 title: "Australian Grand Prix 2026: Mastery Through Control, Graceful Surrender"
 date: 2026-03-05 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-17.webp
 categories:
   - Current Affairs
 snippet: "Racing reveals when disciplined control serves, and when surrender unlocks effortless, fearless flow."

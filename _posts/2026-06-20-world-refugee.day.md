@@ -2,7 +2,7 @@
 layout: post
 title: "World Refugee Day: Karma Yoga Compassion For Displaced Souls"
 date: 2026-06-20 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-51.webp
 categories:
   - Current Affairs
 snippet: "World Refugee Day invites karma yoga: serve displaced people, recognize one Self, and heal fear."
