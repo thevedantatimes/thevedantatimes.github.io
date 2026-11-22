@@ -2,7 +2,7 @@
 layout: post
 title: "International Charity Day: Dana Seva Purifying Heart"
 date: 2026-09-05 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-31.webp
 categories:
   - Current Affairs
 snippet: "Vedanta teaches generosity without ego, where dana and seva cleanse the heart, revealing joy."

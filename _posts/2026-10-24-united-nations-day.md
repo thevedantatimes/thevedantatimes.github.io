@@ -2,7 +2,7 @@
 layout: post
 title: "United Nations Day: Vedanta for One Humanity Ethics"
 date: 2026-10-24 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-51.webp
 categories:
   - Current Affairs
 snippet: "Vedanta grounds global unity in the Self, guiding service, dialogue, and nondehumanizing ethics today."

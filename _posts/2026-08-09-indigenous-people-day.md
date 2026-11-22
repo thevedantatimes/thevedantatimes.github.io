@@ -2,7 +2,7 @@
 layout: post
 title: "Indigenous Wisdom, Vedanta, And Humility Before Nature"
 date: 2026-08-09 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-32.webp
 categories:
   - Current Affairs
 snippet: "Vedanta honors Indigenous wisdom: humility, sacred ecology, and Self-seeing beyond ownership and ego."

@@ -2,7 +2,7 @@
 layout: post
 title: "Shivaratri Parvati Tapas: Discipline Ripening Into Divine Union"
 date: 2026-10-14 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-33.webp
 categories:
   - Maha Shivaratri
 snippet: "Parvati’s tapas shows steady sadhana maturing into love, clarity, and embodied integration."

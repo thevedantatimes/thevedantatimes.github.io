@@ -2,7 +2,7 @@
 layout: post
 title: "Shivaratri Linga Symbol: Form Pointing Toward Formless Absolute"
 date: 2026-09-17 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-46.webp
 categories:
   - Maha Shivaratri
 snippet: "The linga teaches how every form can guide mind to the attributeless Brahman within."

@@ -2,7 +2,7 @@
 layout: post
 title: "Spiritual Disciplines Through Christianity And Vedanta Practice"
 date: 2026-07-19 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-53.webp
 categories:
   - Vedanta
   - Interfaith

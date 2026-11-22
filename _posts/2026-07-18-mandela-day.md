@@ -2,7 +2,7 @@
 layout: post
 title: "Mandela Day: Forgiveness, Courage, Seva As Spiritual Practice"
 date: 2026-07-18 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-17.webp
 categories:
   - Current Affairs
 snippet: "Mandela Day invites forgiveness, fearless courage, and seva grounded in nondual seeing of Self."

@@ -2,7 +2,7 @@
 layout: post
 title: "International Day of Peace: Inner Ceasefires, Practical Vedanta Practices"
 date: 2026-09-21 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-47.webp
 categories:
   - Current Affairs
 snippet: "Vedanta trains peace through inner ceasefires: attention, ethics, and nonreactive love in action."

@@ -2,7 +2,7 @@
 layout: post
 title: "World Food Day: Mindful Eating, Justice, Gratitude"
 date: 2026-10-16 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-43.webp
 categories:
   - Current Affairs
 snippet: "On World Food Day, eat mindfully, pursue justice, and practice gratitude as spiritual ecology daily."

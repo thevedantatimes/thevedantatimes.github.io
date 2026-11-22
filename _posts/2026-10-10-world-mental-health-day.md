@@ -2,7 +2,7 @@
 layout: post
 title: "World Mental Health Day: Vedanta for Anxiety Relief"
 date: 2026-10-10 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-49.webp
 categories:
   - Current Affairs
 snippet: "Vedanta reframes anxiety as passing mind-wovens; freedom comes by resting as awareness, not stories."

@@ -2,7 +2,7 @@
 layout: post
 title: "Commonwealth Games 2026: Sattvic Discipline Through Friendly Rivalry"
 date: 2026-07-23 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-06.webp
 categories:
   - Current Affairs
 snippet: "Commonwealth Games 2026 invites sattvic discipline: compete warmly, refine ego, and serve excellence together."

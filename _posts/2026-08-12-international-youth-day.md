@@ -2,7 +2,7 @@
 layout: post
 title: "International Youth Day: Vedanta For Digital Identity"
 date: 2026-08-12 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-05.webp
 categories:
   - Current Affairs
 snippet: "Vedanta trains youths to reclaim attention, soften identity, and outgrow digital over-identification."
