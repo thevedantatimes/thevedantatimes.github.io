@@ -2,7 +2,7 @@
 layout: post
 title: "Lunar New Year Prosperity: Detachment, Gratitude, Fresh Identity"
 date: 2026-02-17 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-56.webp
 categories:
   - Current Affairs
 snippet: "Welcome abundance with gratitude, practice detachment, and begin anew beyond yesterday’s identities gently."

@@ -2,7 +2,7 @@
 layout: post
 title: "Olympic Gold High Fades: Vedanta on Lasting Joy"
 date: 2026-02-07 15:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-38.webp
 categories:
   - Current Affairs
 snippet: "Victory thrills the mind briefly; Vedanta reveals the Self as steady, inexhaustible bliss within."

@@ -2,7 +2,7 @@
 layout: post
 title: "Super Bowl LX Calm: Vedanta for Clutch Focus"
 date: 2026-02-08 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-50.webp
 categories:
   - Current Affairs
 snippet: "Vedanta trains attention to stay steady, turning stadium chaos into clear, decisive, compassionate action."

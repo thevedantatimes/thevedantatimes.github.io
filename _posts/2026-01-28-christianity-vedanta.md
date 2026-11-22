@@ -2,7 +2,7 @@
 layout: post
 title: "God’s Existence Through Christian Vedanta Shared Vision Today"
 date: 2026-01-28 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-55.webp
 categories:
   - Vedanta
   - Interfaith

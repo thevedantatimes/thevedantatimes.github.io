@@ -2,7 +2,7 @@
 layout: post
 title: "Suffering and God Through Christian Vedanta Unity"
 date: 2026-01-27 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-38.webp
 categories:
   - Vedanta
   - Interfaith

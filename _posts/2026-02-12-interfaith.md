@@ -2,7 +2,7 @@
 layout: post
 title: "Trinity Made Clear: Unity, Love, Nondual Insight"
 date: 2026-02-12 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-06.webp
 categories:
   - Vedanta
   - Interfaith

@@ -2,7 +2,7 @@
 layout: post
 title: "Mahashivaratri Night Vigil: Witnessing Awareness Beyond Sleep"
 date: 2026-01-31 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-33.webp
 categories:
   - Maha Shivaratri
 snippet: "Mahashivaratri jagaran trains the inner witness, refining attention, dissolving tamas, and awakening freedom."

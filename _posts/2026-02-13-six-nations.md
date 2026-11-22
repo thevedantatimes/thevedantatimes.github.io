@@ -2,7 +2,7 @@
 layout: post
 title: "Six Nations Rivalries Without Hatred: Vedanta Guide"
 date: 2026-02-13 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-55.webp
 categories:
   - Current Affairs
 snippet: "Love your team fiercely, yet remain free: Vedanta turns rivalry into joyful discipline."

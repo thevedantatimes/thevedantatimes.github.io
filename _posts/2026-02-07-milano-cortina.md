@@ -2,7 +2,7 @@
 layout: post
 title: "Milano Cortina 2026 opening ceremony: identity, emotion, meaning"
 date: 2026-02-07 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-49.webp
 categories:
   - Current Affairs
 snippet: "Olympic pageantry mirrors ego and belonging; Vedanta points beyond roles to the witness within."
