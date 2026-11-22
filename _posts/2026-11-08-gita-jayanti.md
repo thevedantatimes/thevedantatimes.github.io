@@ -2,7 +2,7 @@
 layout: post
 title: "Gita Jayanti: The Day the Bhagavad Gita Was Spoken"
 date: 2026-11-08 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-19.webp
 categories:
   - Bhagavad Gita
   - Jnana Yoga

@@ -2,7 +2,7 @@
 layout: post
 title: "Swami Vivekananda's Birthday: The Life, the Message and National Youth Day"
 date: 2026-11-08 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-53.webp
 categories:
   - Swami Vivekananda
   - Interfaith
