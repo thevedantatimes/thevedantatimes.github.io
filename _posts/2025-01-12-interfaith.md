@@ -2,7 +2,7 @@
 layout: post
 title: "Sin, Repentance, Grace: Vedanta’s Inner Turning Path"
 date: 2025-01-12 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-45.webp
 categories:
   - Vedanta
   - Interfaith

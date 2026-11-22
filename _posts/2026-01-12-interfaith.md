@@ -2,7 +2,7 @@
 layout: post
 title: "Is Jesus Truly God? Incarnation, Resurrection, Nondual Light"
 date: 2026-01-12 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-45.webp
 categories:
   - Vedanta
   - Interfaith

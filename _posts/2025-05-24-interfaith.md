@@ -2,7 +2,7 @@
 layout: post
 title: "Faith Through Doubt: Christian Deconstruction Meets Vedantic Inquiry"
 date: 2025-05-24 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-55.webp
 categories:
   - Vedanta
   - Interfaith

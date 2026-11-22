@@ -2,7 +2,7 @@
 layout: post
 title: "How To Pray: Where Christ Meets Vedantic Stillness"
 date: 2024-05-19 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-39.webp
 categories:
   - Vedanta
   - Interfaith

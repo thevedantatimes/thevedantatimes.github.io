@@ -2,7 +2,7 @@
 layout: post
 title: "January Inauguration Dawn: Vedanta Reflections on Second Term"
 date: 2025-01-25 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-56.webp
 categories:
   - Current Affairs
 snippet: "Through Advaita and karma yoga, read renewed inauguration as leadership, illusion, and service today."

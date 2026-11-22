@@ -2,7 +2,7 @@
 layout: post
 title: "One Truth, Many Texts: Bible And Vedanta Trust"
 date: 2026-01-26 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-54.webp
 categories:
   - Vedanta
   - Interfaith

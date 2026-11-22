@@ -2,7 +2,7 @@
 layout: post
 title: "Grace Already Given: Christian Gift, Vedanta Light Within"
 date: 2023-09-14 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-39.webp
 categories:
   - Vedanta
   - Interfaith

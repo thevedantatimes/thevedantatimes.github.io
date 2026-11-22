@@ -2,7 +2,7 @@
 layout: post
 title: "Forgiveness Frees: Christ’s Mercy, Vedanta’s Release"
 date: 2024-01-17 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-44.webp
 categories:
   - Vedanta
   - Interfaith

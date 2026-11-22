@@ -2,7 +2,7 @@
 layout: post
 title: "Salvation and Moksha: Discovering Heaven, Freedom, and Life’s Ultimate Goal"
 date: 2024-09-16 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-42.webp
 categories:
   - Vedanta
   - Interfaith
