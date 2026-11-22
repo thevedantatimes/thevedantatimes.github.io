@@ -2,7 +2,7 @@
 layout: post
 title: "Shivaratri Monthly Reset: Review, Renounce, Recommit, Realign Within"
 date: 2027-10-23 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-37.webp
 categories:
   - Maha Shivaratri
 snippet: "A four-step monthly reset turns Shivaratri into a steady habit rhythm for inner alignment."

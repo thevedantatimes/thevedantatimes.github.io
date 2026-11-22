@@ -2,7 +2,7 @@
 layout: post
 title: "Shivaratri Infinite Pillar: Beyond Rivalry, Into The Infinite"
 date: 2027-09-25 00:34:00 -0600
-image: /assets/img/maya.webp
+image: /assets/img/pool-09.webp
 categories:
   - Maha Shivaratri
 snippet: "The endless pillar teaches humility, reveals conceptual limits, and opens the heart into nondual awe."
